@@ -15,7 +15,7 @@
 */
 
 public class AppCenterCore.Houston : Object {
-    private const string HOUSTON_API_URL = "http://localhost:3000/api";
+    private const string HOUSTON_API_URL = "https://developer.elementary.io/api";
 
     private Soup.Session session;
 
@@ -52,10 +52,14 @@ public class AppCenterCore.Houston : Object {
 
         string[] app_ids = {};
         try {
-            var data = process_response ((string) message.response_body.data).get_array_member ("data");
+            var res = process_response ((string) message.response_body.data);
 
-            foreach (var id in data.get_elements ()) {
-                app_ids += ((string) id.get_value ());
+            if (res.has_member ("data")) {
+                var data = res.get_array_member ("data");
+
+                foreach (var id in data.get_elements ()) {
+                    app_ids += ((string) id.get_value ());
+                }
             }
         } catch (Error e) {
             stderr.printf ("Houston: %s\n", e.message);
