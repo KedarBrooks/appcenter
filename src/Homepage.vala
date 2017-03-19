@@ -36,16 +36,18 @@ namespace AppCenter {
 
             newest_banner = new Widgets.Banner ();
             var newest_ids = houston.get_newest ();
-            if (newest_ids.length > 0) {
-                // TODO: iterate over all newest packages to find the first one uninstalled
-                var newest_id = newest_ids[1] + ".desktop";
-                var newest_package = AppCenterCore.Client.get_default ().get_package_for_id (newest_id);
-                if (newest_package != null) {
-                    newest_banner.set_package (newest_package);
-
+            int i = 0;
+            while (newest_ids.length > 0 && i < newest_ids.length) {
+                var candidate = newest_ids[i] + ".desktop";
+                var candidate_package = AppCenterCore.Client.get_default ().get_package_for_id (candidate);
+                if (candidate_package != null && candidate_package.state != AppCenterCore.Package.State.INSTALLED) {
+                    newest_banner.set_package (candidate_package);
                     newest_banner.clicked.connect (() => {
-                        // show_package (newest_package);
+                        // show_package (candidate_package);
                     });
+                    i = newest_ids.length;
+                } else {
+                    i++;
                 }
             }
             banner_box.add (newest_banner);
