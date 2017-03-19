@@ -79,7 +79,9 @@ namespace AppCenter.Widgets {
             description_label.xalign = 0;
             description_label.margin_top = 25;
 
-            icon = new Gtk.Image.from_icon_name ("application-default-icon", Gtk.IconSize.DIALOG);
+            icon = new Gtk.Image ();
+            icon.icon_name = "application-default-icon";
+            icon.pixel_size = 128;
             icon.xalign = 1;
             icon.margin = 25;
             app_content_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
