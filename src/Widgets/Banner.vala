@@ -89,9 +89,13 @@ namespace AppCenter.Widgets {
             content_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
             var vertical_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
 
+            var read_more_button = new Gtk.Label (_("Read More"));
+            read_more_button.get_style_context ().add_class ("dim-label");
+            read_more_button.halign = Gtk.Align.START;
             vertical_box.pack_start (name_label, false, false, 0);
             vertical_box.pack_start (summary_label, false, false, 0);
             vertical_box.pack_start (description_label, false, false, 0);
+            vertical_box.pack_start (read_more_button, false, false, 0);
             vertical_box.valign = Gtk.Align.CENTER;
 
             content_box.pack_start (icon, true, true, 0);
@@ -123,10 +127,9 @@ namespace AppCenter.Widgets {
             summary_label.label = package.get_summary ();
 
             string description = package.get_description ();
-            GLib.Regex html_regex = new GLib.Regex ("<[^>]*>");
-            html_regex.replace (description, description.length, 0, "");
-            stdout.puts (description);
-            description_label.label = description;
+            int close_paragraph_index = description.index_of ("</p>", 0);
+            string opening_paragraph = description.slice(3, close_paragraph_index);
+            description_label.label = opening_paragraph;
 
             icon.gicon = package.get_icon (128);
 
