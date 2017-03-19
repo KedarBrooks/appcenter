@@ -40,10 +40,10 @@ namespace AppCenter.Widgets {
         public string background_color {
             get {
                 return _background_color;
-              } set {
-                  _background_color = value;
-                  on_any_color_change ();
-              }
+            } set {
+                _background_color = value;
+                on_any_color_change ();
+            }
         }
         private string _foreground_color;
         public string foreground_color {
@@ -55,12 +55,13 @@ namespace AppCenter.Widgets {
             }
         }
 
-        private Gtk.Label app_name_label;
+        private Gtk.Box content_box;
+        private Gtk.Label name_label;
         private Gtk.Label summary_label;
         private Gtk.Label description_label;
-        private Gtk.Box app_content_box;
-        private Gtk.Box spinner_box;
         private Gtk.Image icon;
+
+        public AppCenterCore.Package? current_package;
 
         public Banner () {
             foreground_color = DEFAULT_BANNER_COLOR_PRIMARY_TEXT;
@@ -68,66 +69,66 @@ namespace AppCenter.Widgets {
             reload_css ();
             this.height_request = 300;
 
-            app_name_label = new Gtk.Label ("App Name");
-            app_name_label.get_style_context ().add_class ("h1");
+            // Default AppCenter banner
+            name_label = new Gtk.Label ("Name");
+            name_label.get_style_context ().add_class ("h1");
             summary_label = new Gtk.Label ("Summary");
             summary_label.get_style_context ().add_class ("h2");
-            var description_label = new Gtk.Label ("Description");
+            description_label = new Gtk.Label ("Description");
             description_label.get_style_context ().add_class ("h3");
-            app_name_label.xalign = 0;
+            name_label.xalign = 0;
             summary_label.xalign = 0;
             description_label.xalign = 0;
             description_label.margin_top = 25;
 
             icon = new Gtk.Image ();
-            icon.icon_name = "application-default-icon";
+            icon.icon_name = "system-software-install";
             icon.pixel_size = 128;
             icon.xalign = 1;
             icon.margin = 25;
-            app_content_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
+            content_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
             var vertical_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
 
-            vertical_box.pack_start (app_name_label, false, false, 0);
+            vertical_box.pack_start (name_label, false, false, 0);
             vertical_box.pack_start (summary_label, false, false, 0);
             vertical_box.pack_start (description_label, false, false, 0);
             vertical_box.valign = Gtk.Align.CENTER;
 
-            app_content_box.pack_start (icon, true, true, 0);
-            app_content_box.pack_start (vertical_box, true, true, 0);
-            app_content_box.expand = true;
-            app_content_box.valign = Gtk.Align.CENTER;
-
-            spinner_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            var spinner = new Gtk.Spinner ();
-            spinner.height_request = 48;
-            spinner.active = true;
-            var apps_updating_label = new Gtk.Label (_("Getting the newest apps"));
-            apps_updating_label.get_style_context ().add_class ("h2");
-            spinner_box.expand = true;
-            spinner_box.valign = Gtk.Align.CENTER;
-            spinner_box.add (spinner);
-            spinner_box.add (apps_updating_label);
+            content_box.pack_start (icon, true, true, 0);
+            content_box.pack_start (vertical_box, true, true, 0);
+            content_box.expand = true;
+            content_box.valign = Gtk.Align.CENTER;
 
             var main_container = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-            main_container.add (app_content_box);
-            main_container.add (spinner_box);
+            main_container.add (content_box);
 
             this.add (main_container);
 
-            app_content_box.no_show_all = true;
-            app_content_box.hide ();
+            set_brand ();
+        }
+
+        public void set_brand () {
+            name_label.label = "AppCenter";
+            summary_label.label = "An open, pay-what-you-want app store";
+            description_label.label = "Try first, then pay what you want. Get the apps that you need, for a price you can afford.";
+
+            background_color = DEFAULT_BANNER_COLOR_PRIMARY;
+            foreground_color = DEFAULT_BANNER_COLOR_PRIMARY_TEXT;
+
+            current_package = null;
         }
 
         public void set_package (AppCenterCore.Package package) {
-            app_name_label.label = package.get_name ();
+            name_label.label = package.get_name ();
             summary_label.label = package.get_summary ();
 
             string description = package.get_description ();
             GLib.Regex html_regex = new GLib.Regex ("<[^>]*>");
             html_regex.replace (description, description.length, 0, "");
             stdout.puts (description);
+            description_label.label = description;
 
-            icon.gicon = package.get_icon ();
+            icon.gicon = package.get_icon (128);
 
             var color_primary = package.get_color_primary ();
             if (color_primary != null) {
@@ -139,11 +140,7 @@ namespace AppCenter.Widgets {
                 foreground_color = color_primary_text;
             }
 
-            app_content_box.no_show_all = false;
-            app_content_box.show ();
-
-            spinner_box.no_show_all = true;
-            spinner_box.hide ();
+            current_package = package;
         }
 
         private void on_any_color_change () {

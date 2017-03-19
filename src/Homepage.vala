@@ -52,6 +52,9 @@ namespace AppCenter {
                     i++;
                 }
             }
+            if (newest_banner.current_package == null) {
+                newest_banner.set_brand ();
+            }
             banner_box.add (newest_banner);
 
             var trending_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
