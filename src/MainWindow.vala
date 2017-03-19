@@ -145,6 +145,11 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         set_titlebar (headerbar);
 
         homepage = new Homepage ();
+        homepage.package_selected.connect ((package) => {
+            stack.set_visible_child (homepage.category_view);
+            show_package (package);
+            return_button.label = (_("Home"));
+        }); 
         installed_view = new Views.InstalledView ();
         search_view = new Views.SearchView ();
 

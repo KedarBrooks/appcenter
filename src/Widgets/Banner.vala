@@ -121,7 +121,12 @@ namespace AppCenter.Widgets {
         public void set_package (AppCenterCore.Package package) {
             app_name_label.label = package.get_name ();
             summary_label.label = package.get_summary ();
-            description_label.label = package.get_description ();
+
+            string description = package.get_description ();
+            GLib.Regex html_regex = new GLib.Regex ("<[^>]*>");
+            html_regex.replace (description, description.length, 0, "");
+            stdout.puts (description);
+
             icon.gicon = package.get_icon ();
 
             var color_primary = package.get_color_primary ();

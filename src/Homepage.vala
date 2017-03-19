@@ -22,6 +22,8 @@
 namespace AppCenter {
     public class Homepage: Gtk.Box {
 
+        public signal void package_selected (AppCenterCore.Package package);
+
         public Widgets.Banner newest_banner;
         public AppCenter.Views.CategoryView category_view;
         private Gtk.ScrolledWindow scrolled_window;
@@ -43,7 +45,7 @@ namespace AppCenter {
                 if (candidate_package != null && candidate_package.state != AppCenterCore.Package.State.INSTALLED) {
                     newest_banner.set_package (candidate_package);
                     newest_banner.clicked.connect (() => {
-                        // show_package (candidate_package);
+                        package_selected (candidate_package);
                     });
                     i = newest_ids.length;
                 } else {
