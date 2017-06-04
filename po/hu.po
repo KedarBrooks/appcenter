@@ -1,0 +1,647 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-25 08:30-0700\n"
+"PO-Revision-Date: 2017-04-27 14:07+0000\n"
+"Last-Translator: Bálint Máhonfai <mbalint314@gmail.com>\n"
+"Language-Team: Hungarian <https://l10n.elementary.io/projects/appcenter/"
+"appcenter/hu/>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.13-dev\n"
+"X-Launchpad-Export-Date: 2017-03-14 06:25+0000\n"
+
+#: ../src/Application.vala:40
+msgid "App Center"
+msgstr "Alkalmazásközpont"
+
+#: ../src/Application.vala:57
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Bence Lukács https://launchpad.net/~lukacs-bence1\n"
+"  Dono https://launchpad.net/~laszlo-bence-27\n"
+"  Török Bálint https://launchpad.net/~balint-torok-2001\n"
+"  elementaryart (old) https://launchpad.net/~elementaryart\n"
+"  schmate https://launchpad.net/~schnellbach-mate"
+
+#: ../src/Application.vala:114
+msgid "Specified link '%s' could not be found, searching instead"
+msgstr "'%s': a link nem található, keresés"
+
+#: ../src/Application.vala:216
+msgid "Application installed"
+msgstr "Alkalmazás telepítve"
+
+#: ../src/Application.vala:217
+msgid "%s has been successfully installed"
+msgstr "%s sikeresen telepítésre került"
+
+#: ../src/Application.vala:233
+msgid "Close"
+msgstr "Bezárás"
+
+#: ../src/Application.vala:235
+msgid "There Was An Error Installing %s"
+msgstr "Hiba %s telepítése közben"
+
+#: ../src/Dialogs/RestartDialog.vala:40
+msgid "Are you sure you want to Restart?"
+msgstr "Biztos újra szeretné indítani?"
+
+#: ../src/Dialogs/RestartDialog.vala:41
+msgid "This will close all open applications and restart this device."
+msgstr "Ez bezárja a futó alkalmazásokat és újraindítja a készüléket."
+
+#: ../src/Dialogs/RestartDialog.vala:42
+msgid "Restart"
+msgstr "Újraindítás"
+
+#: ../src/Dialogs/RestartDialog.vala:62 ../src/Dialogs/StripeDialog.vala:166
+#: ../src/Dialogs/StripeDialog.vala:285
+#: ../src/Widgets/AbstractAppContainer.vala:126
+msgid "Cancel"
+msgstr "Mégse"
+
+#: ../src/Dialogs/StripeDialog.vala:30
+msgid ""
+"An error occurred while processing the card. Please try again later. We "
+"apologize for any inconvenience caused."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:31
+msgid "Please review your payment info and try again."
+msgstr "Nézze át a fizetési adatait és próbálja újra."
+
+#: ../src/Dialogs/StripeDialog.vala:75
+msgid "Email"
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:77
+msgid ""
+"Your email address is used to send a receipt. It is never stored and you "
+"will not be subscribed to a mailing list."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:88
+msgid "Card Number"
+msgstr ""
+
+#. / TRANSLATORS: Don't change the order, only transliterate
+#: ../src/Dialogs/StripeDialog.vala:100
+msgid "MM / YY"
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:120
+msgid "CVC"
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:157
+msgid "Privacy Policy"
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:168 ../src/Dialogs/StripeDialog.vala:284
+#, fuzzy
+msgid "Pay $%d.00"
+msgstr "$%s.00 fizetése"
+
+#: ../src/Dialogs/StripeDialog.vala:213
+msgid "Processing"
+msgstr "Feldolgozás"
+
+#: ../src/Dialogs/StripeDialog.vala:238
+msgid "There Was a Problem Processing Your Payment"
+msgstr "Hiba történt a fizetés feldolgozása során"
+
+#: ../src/Dialogs/StripeDialog.vala:276
+msgid "Pay Later"
+msgstr "Fizetés később"
+
+#: ../src/Dialogs/StripeDialog.vala:277
+msgid "Retry"
+msgstr "Újra"
+
+#: ../src/Dialogs/StripeDialog.vala:463 ../src/Dialogs/StripeDialog.vala:528
+msgid ""
+"The card number is incorrect. Please try again using the correct card number."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:465
+msgid ""
+"The expiration month is invalid. Please try again using the correct "
+"expiration date."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:467 ../src/Dialogs/StripeDialog.vala:525
+msgid ""
+"The expiration year is invalid. Please try again using the correct "
+"expiration date."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:470 ../src/Dialogs/StripeDialog.vala:523
+msgid "The CVC number is incorrect. Please try again using the correct CVC."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:472 ../src/Dialogs/StripeDialog.vala:514
+msgid "The card has expired. Please try again with a different card."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:492
+msgid "There are too many payment requests at the moment, please retry later."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:508
+msgid ""
+"This card does not support this kind of transaction. Please try again with a "
+"different card."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:510
+msgid ""
+"The currency is not supported by this card. Please try again with a "
+"different card."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:512
+msgid "The transaction has already been processed."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:516
+msgid ""
+"The ZIP/Postal code is incorrect. Please try again using the correct ZIP/"
+"Postal code."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:518
+msgid "You don't have enough funds. Please use an alternative payment method."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:520
+msgid "The amount is incorrect. Please try again using a valid amount."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:531
+msgid "The pin number is incorrect. Please try again using the correct pin."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:533
+msgid ""
+"There has been too many pin attempts. Please try again with a different card."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:553
+msgid ""
+"Unable to complete the transaction. Please contact your bank for further "
+"information."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:556
+msgid "The balance or credit limit on the card has been reached."
+msgstr ""
+
+#: ../src/Dialogs/StripeDialog.vala:559
+msgid "The given card is a test card. Please use a real card to proceed."
+msgstr ""
+
+#: ../src/Views/InstalledView.vala:51 ../src/MainWindow.vala:130
+msgctxt "view"
+msgid "Updates"
+msgstr "Frissítések"
+
+#. / TRANSLATORS: the name of the Search view
+#: ../src/Views/SearchView.vala:37
+msgctxt "view"
+msgid "Search"
+msgstr "Keresés"
+
+#: ../src/Views/AppListView.vala:121
+msgid "A restart is required to complete the installation of updates"
+msgstr "Újraindítás szükséges a frissítések telepítésének befejezéséhez"
+
+#: ../src/Views/AppListView.vala:129
+msgid "Restart Now"
+msgstr "Újraindítás most"
+
+#: ../src/Views/AppListView.vala:222
+msgid "Update All"
+msgstr "Összes frissítése"
+
+#: ../src/Views/AppInfoView.vala:57
+msgid "Screenshot Not Available"
+msgstr "Nincs képernyőmentés"
+
+#: ../src/Views/AppInfoView.vala:170
+msgid "Extensions:"
+msgstr "Kiegészítések:"
+
+#: ../src/Views/AppInfoView.vala:184
+#, fuzzy
+msgid "Homepage"
+msgstr "Honlap"
+
+#: ../src/Views/AppInfoView.vala:191
+msgid "Suggest Translations"
+msgstr "Fordítások javaslása"
+
+#: ../src/Views/AppInfoView.vala:198
+msgid "Report a Problem"
+msgstr "Hiba jelentése"
+
+#: ../src/Views/AppInfoView.vala:205
+msgid "Help"
+msgstr "Segítség"
+
+#: ../src/Views/Homepage.vala:104
+msgid "Recently Updated"
+msgstr ""
+
+#: ../src/Views/Homepage.vala:156
+msgid "Categories"
+msgstr "Kategóriák"
+
+#: ../src/Views/Homepage.vala:211 ../src/Views/Homepage.vala:219
+#: ../src/MainWindow.vala:129 ../src/MainWindow.vala:181
+#: ../src/MainWindow.vala:223
+#, fuzzy
+msgid "Home"
+msgstr "Honlap"
+
+#: ../src/Widgets/Banner.vala:100 ../src/MainWindow.vala:110
+msgid "AppCenter"
+msgstr "Alkalmazásközpont"
+
+#: ../src/Widgets/Banner.vala:107
+msgid "An open, pay-what-you-want app store"
+msgstr ""
+
+#: ../src/Widgets/Banner.vala:120
+msgid "Get the apps that you need at a price you can afford."
+msgstr ""
+
+#: ../src/Widgets/CategoryFlowBox.vala:29
+msgid "Audio"
+msgstr "Hang"
+
+#: ../src/Widgets/CategoryFlowBox.vala:30
+msgid "Development"
+msgstr "Fejlesztés"
+
+#: ../src/Widgets/CategoryFlowBox.vala:31
+msgid "Accessories"
+msgstr "Kellékek"
+
+#: ../src/Widgets/CategoryFlowBox.vala:32
+msgid "Office"
+msgstr "Iroda"
+
+#: ../src/Widgets/CategoryFlowBox.vala:33
+msgid "System"
+msgstr "Rendszer"
+
+#: ../src/Widgets/CategoryFlowBox.vala:34
+msgid "Video"
+msgstr "Videó"
+
+#: ../src/Widgets/CategoryFlowBox.vala:35
+msgid "Graphics"
+msgstr "Grafika"
+
+#: ../src/Widgets/CategoryFlowBox.vala:36
+msgid "Games"
+msgstr "Játékok"
+
+#: ../src/Widgets/CategoryFlowBox.vala:37
+msgid "Education"
+msgstr "Oktatás"
+
+#: ../src/Widgets/CategoryFlowBox.vala:38
+msgid "Internet"
+msgstr "Internet"
+
+#: ../src/Widgets/CategoryFlowBox.vala:39
+msgid "Science & Engineering"
+msgstr ""
+
+#: ../src/Widgets/CategoryFlowBox.vala:40
+msgid "Universal Access"
+msgstr ""
+
+#: ../src/Widgets/HumbleButton.vala:85
+#: ../src/Widgets/AbstractAppContainer.vala:195
+msgid "Free"
+msgstr "Ingyenes"
+
+#. / This amount will be US Dollars. Some languages might need a "$%dUSD"
+#: ../src/Widgets/HumbleButton.vala:152
+msgid "$%d.00"
+msgstr "$%d.00"
+
+#. / This amount will be US Dollars. Some languages might need a "$%dUSD"
+#: ../src/Widgets/HumbleButton.vala:155
+msgid "$%d"
+msgstr "$%d"
+
+#: ../src/Widgets/AbstractAppContainer.vala:105
+msgid "Uninstall"
+msgstr "Eltávolítás"
+
+#: ../src/Widgets/AbstractAppContainer.vala:108
+msgid "Open"
+msgstr "Nyílt"
+
+#: ../src/Widgets/AbstractAppContainer.vala:161
+msgid "The %s Developers"
+msgstr "A(z) %s fejlesztők"
+
+#: ../src/Widgets/AbstractAppContainer.vala:165
+msgid "by %s"
+msgstr "%s által"
+
+#: ../src/Widgets/AbstractAppContainer.vala:209
+msgid "Update"
+msgstr "Frissítés"
+
+#: ../src/Widgets/AbstractAppList.vala:35
+msgid "No Results"
+msgstr "Nincs találat"
+
+#: ../src/Widgets/AbstractAppList.vala:35
+msgid "No apps could be found. Try changing search terms."
+msgstr "Nem találhatók alkalmazások. Próbálja más keresési feltételekkel."
+
+#: ../src/Widgets/UpdateHeaderRow.vala:68
+msgid "%u Update Available"
+msgid_plural "%u Updates Available"
+msgstr[0] "%u frissítés elérhető"
+msgstr[1] "%u frissítés elérhető"
+
+#: ../src/Widgets/UpdateHeaderRow.vala:69
+msgid "Size: %s"
+msgstr "Méret: %s"
+
+#: ../src/Widgets/UpdateHeaderRow.vala:105
+msgid "Searching for updates…"
+msgstr "Frissítések keresése…"
+
+#: ../src/Widgets/UpdateHeaderRow.vala:112
+msgid "Up to Date"
+msgstr "Naprakész"
+
+#: ../src/Widgets/UpdateHeaderRow.vala:120
+msgid "Drivers"
+msgstr ""
+
+#: ../src/MainWindow.vala:118 ../src/MainWindow.vala:146
+#: ../src/MainWindow.vala:316 ../src/MainWindow.vala:338
+msgid "Search Apps"
+msgstr "Alkalmazások keresése"
+
+#: ../src/MainWindow.vala:161
+#, fuzzy
+msgid "Network Is Not Available"
+msgstr "Nincs képernyőmentés"
+
+#: ../src/MainWindow.vala:162
+msgid "Connect to the internet to install or update apps."
+msgstr ""
+
+#: ../src/MainWindow.vala:165
+msgid "Network Settings…"
+msgstr ""
+
+#: ../src/MainWindow.vala:298
+msgid "Search %s"
+msgstr "%s keresése"
+
+#: ../src/Core/Client.vala:94
+msgid "Operating System Updates"
+msgstr "Operációs rendszer frissítések"
+
+#: ../src/Core/Client.vala:95
+msgid "Updates to system components"
+msgstr "Rendszerkomponensek frissítése"
+
+#: ../src/Core/Client.vala:459
+msgid "Update Available"
+msgid_plural "Updates Available"
+msgstr[0] "Frissítés elérhető"
+msgstr[1] "Frissítések elérhetők"
+
+#: ../src/Core/Client.vala:460
+msgid "%u update is available for your system"
+msgid_plural "%u updates are available for your system"
+msgstr[0] "%u frissítés érhető el a rendszerhez"
+msgstr[1] "%u frissítés érhető el a rendszerhez"
+
+#: ../src/Core/Client.vala:489
+msgid "Restart Required"
+msgstr "Újraindítás szükséges"
+
+#: ../src/Core/Client.vala:490
+msgid "Please restart your system to finalize updates"
+msgstr "Indítsa újra a rendszert a frissítések befejezéséhez"
+
+#: ../src/Core/ChangeInformation.vala:54
+msgid "Starting"
+msgstr "Kezdés"
+
+#: ../src/Core/ChangeInformation.vala:56
+msgid "Waiting"
+msgstr "Várakozás"
+
+#: ../src/Core/ChangeInformation.vala:58
+msgid "Running"
+msgstr "Futás"
+
+#: ../src/Core/ChangeInformation.vala:60
+msgid "Querying"
+msgstr "Lekérdezés"
+
+#: ../src/Core/ChangeInformation.vala:62
+msgid "Getting information"
+msgstr "Információ beszerzése"
+
+#: ../src/Core/ChangeInformation.vala:64
+msgid "Removing packages"
+msgstr "Csomagok eltávolítása"
+
+#: ../src/Core/ChangeInformation.vala:66
+msgid "Downloading"
+msgstr "Letöltés"
+
+#: ../src/Core/ChangeInformation.vala:68
+msgid "Installing"
+msgstr "Telepítés"
+
+#: ../src/Core/ChangeInformation.vala:70
+msgid "Refreshing software list"
+msgstr "Szoftverlista frissítése"
+
+#: ../src/Core/ChangeInformation.vala:72
+msgid "Installing updates"
+msgstr "Frissítések telepítése"
+
+#: ../src/Core/ChangeInformation.vala:74
+msgid "Cleaning up packages"
+msgstr "Csomagok tisztítása"
+
+#: ../src/Core/ChangeInformation.vala:76
+msgid "Obsoleting packages"
+msgstr ""
+
+#: ../src/Core/ChangeInformation.vala:78
+msgid "Resolving dependencies"
+msgstr "Függőségek feloldása"
+
+#: ../src/Core/ChangeInformation.vala:80
+msgid "Checking signatures"
+msgstr ""
+
+#: ../src/Core/ChangeInformation.vala:82
+msgid "Testing changes"
+msgstr ""
+
+#: ../src/Core/ChangeInformation.vala:84
+msgid "Committing changes"
+msgstr ""
+
+#: ../src/Core/ChangeInformation.vala:86
+msgid "Requesting data"
+msgstr "Adatok kérése"
+
+#: ../src/Core/ChangeInformation.vala:88
+msgid "Finished"
+msgstr "Kész"
+
+#: ../src/Core/ChangeInformation.vala:90
+msgid "Cancelling"
+msgstr "Megszakítás"
+
+#: ../src/Core/ChangeInformation.vala:92
+msgid "Downloading repository information"
+msgstr "Tároló információ letöltése"
+
+#: ../src/Core/ChangeInformation.vala:94
+msgid "Downloading list of packages"
+msgstr "Csomaglista letöltése"
+
+#: ../src/Core/ChangeInformation.vala:96
+msgid "Downloading file lists"
+msgstr "Fájllisták letöltése"
+
+#: ../src/Core/ChangeInformation.vala:98
+msgid "Downloading lists of changes"
+msgstr "Változások listáinak letöltése"
+
+#: ../src/Core/ChangeInformation.vala:100
+msgid "Downloading groups"
+msgstr "Csoportok letöltése"
+
+#: ../src/Core/ChangeInformation.vala:102
+msgid "Downloading update information"
+msgstr "Frissítési információ letöltése"
+
+#: ../src/Core/ChangeInformation.vala:104
+msgid "Repackaging files"
+msgstr "Fájlok újracsomagolása"
+
+#: ../src/Core/ChangeInformation.vala:106
+msgid "Loading cache"
+msgstr "Gyorsítótár betöltése"
+
+#: ../src/Core/ChangeInformation.vala:108
+msgid "Scanning applications"
+msgstr "Alkalmazások ellenőrzése"
+
+#: ../src/Core/ChangeInformation.vala:110
+msgid "Generating package lists"
+msgstr "Csomaglisták létrehozása"
+
+#: ../src/Core/ChangeInformation.vala:112
+msgid "Waiting for package manager lock"
+msgstr "Várakozás a csomagkezelő zárolására"
+
+#: ../src/Core/ChangeInformation.vala:114
+msgid "Waiting for authentication"
+msgstr "Várakozás hitelesítésre"
+
+#: ../src/Core/ChangeInformation.vala:116
+msgid "Updating running applications"
+msgstr "Futó alkalmazások frissítése"
+
+#: ../src/Core/ChangeInformation.vala:118
+msgid "Checking applications in use"
+msgstr "Használatban lévő alkalmazások ellenőrzése"
+
+#: ../src/Core/ChangeInformation.vala:120
+msgid "Checking libraries in use"
+msgstr "Használatban lévő könyvtárak ellenőrzése"
+
+#: ../src/Core/ChangeInformation.vala:122
+msgid "Copying files"
+msgstr "Fájlok másolása"
+
+#: ../src/Core/ChangeInformation.vala:124
+msgid "Unknown state"
+msgstr "Ismeretlen állapot"
+
+#~ msgid "Install"
+#~ msgstr "Telepítés"
+
+#~ msgid "Remove"
+#~ msgstr "Eltávolítás"
+
+#~ msgid "Error page"
+#~ msgstr "Hiba oldal"
+
+#~ msgid "Apps View"
+#~ msgstr "Alkalmazások nézet"
+
+#~ msgid "Apps Info"
+#~ msgstr "Alkalmazások információi"
+
+#~ msgid "Software Sources"
+#~ msgstr "Szoftverforrások"
+
+#~ msgid "Recreates database files"
+#~ msgstr "Adatbázis fájlok létrehozása újra"
+
+#~ msgid "Quit"
+#~ msgstr "Bezárás"
+
+#~ msgid "Load a package from the given id"
+#~ msgstr "Csomag betöltése az adott azonosítóból"
+
+#~ msgid "Edit source software"
+#~ msgstr "Forrásszoftver szerkesztése"
+
+#~ msgid "Browser apps in categories"
+#~ msgstr "Alkalmazások böngészése kategóriánként"
+
+#~ msgid "Show available updates"
+#~ msgstr "Elérhető frissítések megjelenítése"
+
+#~ msgid "Updates View"
+#~ msgstr "Frissítés nézet"
+
+#~ msgid "Removing"
+#~ msgstr "Eltávolítás"
+
+#~ msgid "Categories View"
+#~ msgstr "Kategórianézet"
+
+#~ msgid "Updates"
+#~ msgstr "Frissítések"
+
+#~ msgid "Use debug quiet mode"
+#~ msgstr "Hibakeresési üzemmód használata"
+
+#~ msgid "application download center"
+#~ msgstr "alkalmazás letöltő központ"
+
+#~ msgid "Find and install apps"
+#~ msgstr "Keressen és telepítsen alkalmazásokat"

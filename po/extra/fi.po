@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-02 13:03-0700\n"
+"PO-Revision-Date: 2017-05-21 07:20+0000\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish "
+"<https://l10n.elementary.io/projects/appcenter/extra/fi/>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.14\n"
+"X-Launchpad-Export-Date: 2017-03-14 06:26+0000\n"
+
+msgid "AppCenter"
+msgstr "Sovelluskeskus"
+
+msgid "Browse and manage apps"
+msgstr "Selaa ja hallitse sovelluksia"
+
+msgid "install;uninstall;remove;catalogue;store;apps;updates;software;"
+msgstr ""
+"install;uninstall;remove;catalogue;store;apps;updates;software;asenna;poista;"
+"katalogi;kauppa;sovellukset;päivitykset;ohjelmistot;"
+
+msgid "About AppCenter"
+msgstr "Tietoja - Sovelluskeskus"
+
+msgid ""
+"An app store for indie and open source developers. Browse by categories or "
+"search and discover new apps. AppCenter is also used for updating your "
+"system to the latest and greatest version for new features and fixes."
+msgstr ""
+
+msgid "Bug fixes and improve perfomance."
+msgstr "Korjauksia ja suorituskykyparannuksia."
+
+msgid "Various bug fixes and performance improvements"
+msgstr "Useita korjauksia ja suorituskykyparannuksia"
+
+msgid "New translations"
+msgstr "Uusia kielikäännöksiä"
+
+msgid "Fix crash caused by entries with missing packages"
+msgstr ""
+
+msgid "Add capability to search by category and apply minor bug fixes."
+msgstr ""
+
+msgid "It is now possible to search apps inside a category"
+msgstr "Sovellusten etsiminen luokkien sisältä on nyt mahdollista"
+
+msgid "Prevent multiple authentication dialogs when resuming from suspend"
+msgstr ""
+
+msgid ""
+"Search perfomance has beeen improved, the category name is now shown on the "
+"headbar and minor bugs have been fixed."
+msgstr ""
+
+msgid "Fix Steam installation"
+msgstr "Korjattu Steam-asennus"
+
+msgid "Make search asynchronous"
+msgstr ""
+
+#, fuzzy
+#~ msgid "App Center"
+#~ msgstr "Sovelluskeskus"

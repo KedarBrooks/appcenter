@@ -1,0 +1,78 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-02 13:03-0700\n"
+"PO-Revision-Date: 2017-05-25 20:54+0000\n"
+"Last-Translator: Jörg Habekost <joebeam@t-online.de>\n"
+"Language-Team: German "
+"<https://l10n.elementary.io/projects/appcenter/extra/de/>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.14\n"
+"X-Launchpad-Export-Date: 2017-03-14 06:26+0000\n"
+
+msgid "AppCenter"
+msgstr "AppCenter"
+
+msgid "Browse and manage apps"
+msgstr "Anwendungen durchsuchen und verwalten"
+
+msgid "install;uninstall;remove;catalogue;store;apps;updates;software;"
+msgstr ""
+"installieren;deinstallieren;entfernen;auflisten;speichern;Apps;"
+"Aktualisierungen;Software;"
+
+msgid "About AppCenter"
+msgstr "Info zu AppCenter"
+
+msgid ""
+"An app store for indie and open source developers. Browse by categories or "
+"search and discover new apps. AppCenter is also used for updating your "
+"system to the latest and greatest version for new features and fixes."
+msgstr ""
+"Ein App Store für unabhängige und Open-Source-Entwickler. Durchsuche ihn "
+"nach Kategorien oder entdecke neue Anwendungen. AppCenter wird außerdem zum "
+"Aktualisieren des Systems auf die neueste und letzte Version und zum "
+"Hinzufügen von neuen Funktionen und Verbesserungen genutzt."
+
+msgid "Bug fixes and improve perfomance."
+msgstr "Fehlerbehebung und Performance Verbesserung."
+
+msgid "Various bug fixes and performance improvements"
+msgstr "Verschiedene Fehlerbehebungen und Geschwindigkeitssteigerungen"
+
+msgid "New translations"
+msgstr "Neue Übersetzungen"
+
+msgid "Fix crash caused by entries with missing packages"
+msgstr ""
+
+msgid "Add capability to search by category and apply minor bug fixes."
+msgstr ""
+
+msgid "It is now possible to search apps inside a category"
+msgstr "Jetzt ist es möglich, innerhalb einer Kategorie nach Apps zu suchen"
+
+msgid "Prevent multiple authentication dialogs when resuming from suspend"
+msgstr ""
+
+msgid ""
+"Search perfomance has beeen improved, the category name is now shown on the "
+"headbar and minor bugs have been fixed."
+msgstr ""
+"Die Suchgeschwindigkeit wurde verbessert, der Name der Kategorie wird nun in "
+"der Kopfzeile angezeigt und einige Fehler wurden behoben."
+
+msgid "Fix Steam installation"
+msgstr ""
+
+msgid "Make search asynchronous"
+msgstr ""
+
+#, fuzzy
+#~ msgid "App Center"
+#~ msgstr "AppCenter"

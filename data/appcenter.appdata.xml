@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>io.elementary.appcenter.desktop</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_group>elementary</project_group>
+    <project_license>GPL-3.0+</project_license>
+    <name>AppCenter</name>
+    <name xml:lang="ak">AppCenter</name>
+    <name xml:lang="ar">مركز البرامج</name>
+    <name xml:lang="ast">AppCenter</name>
+    <name xml:lang="az">ProqramMərkəzi</name>
+    <name xml:lang="bg">Център за приложения</name>
+    <name xml:lang="ca">Centre d'aplicacions</name>
+    <name xml:lang="ckb">ناوەندی نەرمەواڵەکان</name>
+    <name xml:lang="cs">AppCentrum</name>
+    <name xml:lang="de">AppCenter</name>
+    <name xml:lang="el">Κέντρο εφαρμογών</name>
+    <name xml:lang="en_CA">AppCentre</name>
+    <name xml:lang="en_GB">AppCentre</name>
+    <name xml:lang="es">AppCenter</name>
+    <name xml:lang="et">Tarkvarakeskus</name>
+    <name xml:lang="fi">Sovelluskeskus</name>
+    <name xml:lang="fr">Centre d'Applications</name>
+    <name xml:lang="he">מרכז היישומים</name>
+    <name xml:lang="hr">Centar aplikacija</name>
+    <name xml:lang="hu">Alkalmazásközpont</name>
+    <name xml:lang="it">Centro applicazioni</name>
+    <name xml:lang="ja">AppCenter</name>
+    <name xml:lang="ko">앱센터</name>
+    <name xml:lang="ku">Dikanê bername</name>
+    <name xml:lang="kv">AppCenter</name>
+    <name xml:lang="lt">Programų centras</name>
+    <name xml:lang="my">Appစင်တာ</name>
+    <name xml:lang="nb">AppCenter</name>
+    <name xml:lang="nl">Applicatie centrum</name>
+    <name xml:lang="nn">AppCenter</name>
+    <name xml:lang="pl">Centrum programów</name>
+    <name xml:lang="pt">AppCenter</name>
+    <name xml:lang="pt_BR">Central de aplicativos</name>
+    <name xml:lang="ro">AppCenter</name>
+    <name xml:lang="ru">AppCenter</name>
+    <name xml:lang="sk">AppCenter</name>
+    <name xml:lang="sl">Center za programsko opremo</name>
+    <name xml:lang="sr">Програмски центар</name>
+    <name xml:lang="sv">Programcentral</name>
+    <name xml:lang="th">ศูนย์รวมแอพ</name>
+    <name xml:lang="tl">AppCenter</name>
+    <name xml:lang="tr">Uygulama Merkezi</name>
+    <name xml:lang="ug">ئەپ مەركىزى</name>
+    <name xml:lang="uk">Центр програм</name>
+    <name xml:lang="ur">ایپ مرکز</name>
+    <name xml:lang="zh_CN">应用中心</name>
+    <name xml:lang="zh_TW">AppCenter</name>
+    <summary>Browse and manage apps</summary>
+    <summary xml:lang="ak">Hwehwɛ dwumadie a wopɛ.</summary>
+    <summary xml:lang="ar">ادارة التطبيقات</summary>
+    <summary xml:lang="ast">Esquizar y alministrar aplicaciones</summary>
+    <summary xml:lang="az">Proqramları gözdən keçir və idarə et</summary>
+    <summary xml:lang="bg">Разглеждане и управляване на програми</summary>
+    <summary xml:lang="ca">Navegueu i gestioneu les aplicacions</summary>
+    <summary xml:lang="ckb">گەڕان و بەڕێوەبردنی نەرمەواڵەکان</summary>
+    <summary xml:lang="cs">Prohlížet a spravovat aplikace</summary>
+    <summary xml:lang="de">Anwendungen durchsuchen und verwalten</summary>
+    <summary xml:lang="el">Περιήγηση και διαχείριση εφαρμογών</summary>
+    <summary xml:lang="en_CA">Browse and manage apps</summary>
+    <summary xml:lang="en_GB">Browse and manage apps</summary>
+    <summary xml:lang="es">Explore y gestione sus aplicaciones</summary>
+    <summary xml:lang="et">Rakenduste sirvimine ja haldamine</summary>
+    <summary xml:lang="fi">Selaa ja hallitse sovelluksia</summary>
+    <summary xml:lang="fr">Parcourir et gérer les applications</summary>
+    <summary xml:lang="he">עיון ביישומים וניהולם</summary>
+    <summary xml:lang="hr">Pregledavajte i upravljajte aplikacijama</summary>
+    <summary xml:lang="hu">Alkalmazások böngészése és kezelése</summary>
+    <summary xml:lang="it">Sfoglia e gestisci le applicazioni</summary>
+    <summary xml:lang="ja">アプリケーションの表示、管理をします</summary>
+    <summary xml:lang="ko">앱 검색과 관리</summary>
+    <summary xml:lang="ku">bername lê begerrîn û bi rê ve birin</summary>
+    <summary xml:lang="lt">Naršyti ir tvarkyti programas</summary>
+    <summary xml:lang="my">App များကို ရှာဖွေ စုစည်းရန်</summary>
+    <summary xml:lang="nb">Bla gjennom og administrere applikasjoner</summary>
+    <summary xml:lang="nl">Doorzoek en beheer applicaties</summary>
+    <summary xml:lang="nn">Bla gjennom og behandle appar</summary>
+    <summary xml:lang="pl">Przeglądaj i zarządzaj programami</summary>
+    <summary xml:lang="pt">Procurar e gerir apps</summary>
+    <summary xml:lang="pt_BR">Navegue e gerencie aplicativos</summary>
+    <summary xml:lang="ro">Navighează şi administrează aplicaţiile</summary>
+    <summary xml:lang="ru">Просмотр и управление приложениями</summary>
+    <summary xml:lang="sk">Prehľadávať aplikácie</summary>
+    <summary xml:lang="sl">Iskanje in upravljanje s programi</summary>
+    <summary xml:lang="sq">Shfleto dhe menaxho programet</summary>
+    <summary xml:lang="sr">Разгледајте и управљајте програмима</summary>
+    <summary xml:lang="sv">Bläddra och hantera program</summary>
+    <summary xml:lang="tl">Mag-browse at mag-manage ng mga app</summary>
+    <summary xml:lang="tr">Gözat ve uygulamaları yönet</summary>
+    <summary xml:lang="ug">ئەپلەرنى كۆرۈش ۋە باشقۇرۇش</summary>
+    <summary xml:lang="uk">Керування застосунками</summary>
+    <summary xml:lang="zh_CN">浏览和管理应用程序</summary>
+    <summary xml:lang="zh_TW">瀏覽和管理軟體</summary>
+    <description>
+        <p>An app store for indie and open source developers. Browse by categories or search and discover new apps. AppCenter is also used for updating your system to the latest and greatest version for new features and fixes.</p>
+        <p xml:lang="ar">تطبيق مفتوح المصدر للمطورين المستقلين..تصفح أو ابحث و أكتشف التطبيقات الجديدة..هذا التطبيق يستخدم لتحديث النظام والحصول على المميزات الجديدة.</p>
+        <p xml:lang="ast">Una tienda d'aplicaciones pa desarrolladores independientes y de códigu abiertu. Salee por categoríes o busque y afaye nueves aplicaciones. AppCenter tamién va poder actualizar el so sistema a la última versión pa cuntar coles nueves característiques y correcciones.</p>
+        <p xml:lang="bg">Магазин с приложения за независими разработчици и разработчици на програми с отворен код. Разглеждайте по категория или търсете за нови приложения. Програмата също така се използва и за обновяване на системата ви до най-новата версия.</p>
+        <p xml:lang="ca">Una botiga d'aplicacions per als desenvolupadors de codi independent i obert. Cerqueu per categories o busqueu i descobriu noves aplicacions. El Centre d'aplicacions també s'utilitza per actualitzar el sistema a la versió més recent i bona, per obtenir les noves característiques i correccions.</p>
+        <p xml:lang="cs">Obchod s aplikacemi pro nezávislé a open source vývojáře. Procházej podle kategorií, vyhledávej nebo objevuj nové aplikace. AppCentrum se také používá k aktualizaci vašeho systému na nejnovější a nejlepší verzi, s novými funkcemi a opravami chyb.</p>
+        <p xml:lang="de">Ein App Store für unabhängige und Open-Source-Entwickler. Durchsuche ihn nach Kategorien oder entdecke neue Anwendungen. AppCenter wird außerdem zum Aktualisieren des Systems auf die neueste und letzte Version und zum Hinzufügen von neuen Funktionen und Verbesserungen genutzt.</p>
+        <p xml:lang="el">Ένα app store για ανεξάρτητους προγραμματιστές και προγραμματιστές ανοικτού κώδικα. Περιηγηθείτε ανά κατηγορίες ή αναζητήστε και ανακαλύψτε νέες εφαρμογές. Το Κέντρο εφαρμογών χρησιμοποιείται επίσης για την ενημέρωση του συστήματός σας στην τελευταία και καλύτερη έκδοση προσφέροντας νέες λειτουργίες και διορθώσεις.</p>
+        <p xml:lang="en_CA">An app store for indie and open source developers. Browse by categories or search and discover new apps. AppCenter is also used for updating your system to the latest and greatest version for new features and fixes.</p>
+        <p xml:lang="en_GB">An app store for indie and open source developers. Browse by categories or search and discover new apps. AppCentre is also used for updating your system to the latest and greatest version for new features and fixes.</p>
+        <p xml:lang="es">Una tienda de aplicaciones para desarrolladores independientes y de código abierto. Explore las categorías o busque y descubra aplicaciones nuevas. AppCenter también se utiliza para actualizar su sistema a la versión más reciente y así obtener funcionalidades nuevas y correcciones.</p>
+        <p xml:lang="et">Tarkvarakeskus indie ja avatud allikaga tarkvarale. Sirvi kategooriate kaupa või kasuta otsingut uute rakenduste leidmiseks. Tarkvarakeskust kasutatakse ka süsteemi uuendamiseks veaparanduste ja uute funktsioonide lisamise jaoks.</p>
+        <p xml:lang="fr">Un magasin d'applications pour les développeurs open-source et indépendants. Parcourez par catégories ou recherchez et découvrez des nouvelles applications. Le Centre d'Applications est aussi utilisé pour mettre à jour le système et bénéficier d'une expérience inédites, sans problèmes.</p>
+        <p xml:lang="he">חנות יישומים למפתחים עצמאיים ומפתחים בקוד פתוח. גלו יישומים חדשים באמצעות חיפוש או עיון בקטגוריות. חנות היישומים משמשת גם לצורך עדכון המערכת לגרסה החדשה והטובה ביותר לטובת תכונות חדשות ותיקונים.</p>
+        <p xml:lang="hr">Centar aplikacija za indie i razvijatelje otvorenog kôda. Pregledavajte po kategorijama ili pretražujte ili otkrivajte nove aplikacije. Centar aplikacija isto tako se koristi i za nadopunjavanje sustava na najnovije inačice aplikacija u svrhu popravaka i novih značajki.</p>
+        <p xml:lang="hu">Egy alkalmazásbolt független és nyílt forráskódú fejlesztőknek. Böngésszen kategóriák szerint, vagy keressen és fedezzen fel új alkalmazásokat. Szintén az Alkalmazásközpontból frissítheti a rendszerét a legújabb funkciókért és javításokért.</p>
+        <p xml:lang="it">Un'app store per sviluppatori indipendenti e open source. Naviga per categorie, oppure cerca e scopri nuove applicazioni. Il Centro Applicazioni viene anche usato per aggiornare il tuo sistema alla versione più recente e migliore, contenente le ultime novità e correzioni.</p>
+        <p xml:lang="ja">独立会社やオープンソース開発者のためのアプリストアです。カテゴリー別で閲覧したり検索したりして新しいアプリを見つけてください。 AppCenter は新機能や修正のためにシステムを最新で最高のバージョンへアップデートする際にも使われます。</p>
+        <p xml:lang="ko">이곳은 인디 개발자와 오픈 소스 개발자를 위한 앱스토어입니다. 카테고리와 텍스트 검색으로 새 앱들을 둘러보세요. 앱센터는 운영체제의 모든 부분을 최신 버전으로 업데이트하고 새로운 기능과 수정본을 적용하는 데도 기여합니다.</p>
+        <p xml:lang="lt">Programų parduotuvė, skirta indie ir atviro kodo kūrėjams. Naršykite pagal kategorijas arba ieškokite ir atraskite naujas programas. Programų centras taip pat yra naudojamas jūsų sistemos atnaujinimui į naujausias ir šauniausias versijas su naujomis ypatybėmis ir pataisymais.</p>
+        <p xml:lang="my">သီးခြားနှင့် Open Source တီထွင်ဖန်တီးသူများအတွက် app အရောင်းဆိုင်တစ်ခု။ App အသစ်အဆန်းများကို ကဏ္ဌအလိုက်၊ အမျိုးအစားအလိုက် ရှာဖွေ စူးစမ်းနိုင်ပါသည်။ App စင်တာကို သင့်စနစ်အား နောက်ဆုံးအခြေအနေအထိ မြှင့်တင်ခြင်း၊ လုပ်ဆောင်ချက်အသစ်များ၏ အကောင်းဆုံး လုပ်ဆောင်ချက်များနှင့် ပြင်ဆင်ချက်များကို ရရှိမြှင့်တင်ရန်အတွက်လည်း အသုံးပြုနိုင်ပါသည်။</p>
+        <p xml:lang="nb">En program-butikk for freelance friprogutviklere. Utforsk etter kategori eller søk og finn nye programmer. AppCenter brukes også for oppdatering av systemet ditt til siste og beste versjon for nye funksjoner og feilrettinger.</p>
+        <p xml:lang="nn">Ein appbutikk for uavhengige og åpen kjeldekode-utviklarar. Bla gjennom kategoriar eller søk og oppdag nye appar. AppCenter blir og brukt for å oppdatera systemet ditt til den nyaste og beste versjonen, med nye funksjonar og rettingar.</p>
+        <p xml:lang="pl">Sklep z programami dla niezależnych i otwartoźródłowych programistów. Przeglądaj według kategorii lub wyszukuj i odkrywaj nowe programy. Centrum programów jest także używane do aktualizowania systemu do najnowszej wersji, celem uzyskiwania nowych wspaniałych funkcji i niezbędnych poprawek.</p>
+        <p xml:lang="pt">Uma loja de aplicações para programadores indie e open source. Navegue por categorias ou pesquise e descubra novas apps. O AppCenter também é usado para atualizar o seu sistema para as últimas versões que incluem novas funcionalidade e correções.</p>
+        <p xml:lang="pt_BR">Uma loja de aplicativos para desenvolvedores indies e de código aberto. Navegue por categorias ou busque e descobra novos aplicativos. O AppCenter também é utilizado para atualizar seu sistema para a grande e última versão para obter novos recursos e correções.</p>
+        <p xml:lang="ro">Un magazin de aplicaţii pentru indie si developerii open source. Navighează după categorii sau caută şi descoperă noi aplicaţii. AppCenter este de asemenea folosit pentru a actualiza sistemul la cele mai noi şi bune versiuni, pentru caracteristici noi sau remedieri.</p>
+        <p xml:lang="ru">Магазин приложений для инди-разработчиков и разработчиков приложений с открытым исходным кодом. Просматривайте категории или воспользуйтесь поиском и откройте для себя новые приложения. AppCenter также используется для обновления системы до последней и самой лучшей версии с новыми функциями и исправлениями.</p>
+        <p xml:lang="sk">Obchod s aplikáciami pre indie a open-source vývojárov. Vyhľadávajte podľa kategórií alebo objavujte nové aplikácie. Služba AppCenter je tiež využívaná na aktualizovanie Vášho systému, aby ste využívali nanovšie funkcie a úpravy systému.</p>
+        <p xml:lang="sl">Center za programe razvite s strani majhnih razvijalcev. Brskajte po kategorijah in iščite ter odkrivajte nove aplikacije. Center za programsko opremo tudi posodablja sistem in nameščene aplikacije na najnovejšo različico.</p>
+        <p xml:lang="sr">Продавница програма за независне и програмере отвореног кода. Разгледајте по категоријама или тражите и откријте нове програме. Програмски центар се такође користи за освежавање вашег система и инсталацију најновијих и најбољих издања нових могућности и исправки.</p>
+        <p xml:lang="tr">Açık kaynak kodu kullanan ve bağımsız geliştiriciler için uygulama mağazası.Kategorilere ayrılmış yepyeni uygulamalara göz atın.Uygulama Merkezi aynı zamanda sisteminizi en son ve en iyi versiyona güncelleyerek yeni özelliklere ve hatasız sürümlere ulaşmanızı da sağlar.</p>
+        <p xml:lang="ug">مۇستەقىل ۋە ئوچۇق كودلۇق ئەپ ئاچقۇچىلار ئۈچۈن مەخسۈس ئەپ مەركىزى، تۈرلەر بويىچە كۆرۈڭ ياكى ئىزدەش ئارقىلىق يىڭى ئەپلەرنى تىپىڭ. ئەپ مەركىزىدىن پايدىلىنىپ يەنە سىستېمىنى يىڭى نەشىرىگە يىڭىلىيالايسىز، يىڭى ئىقتىدارلارنى ئىشلىتەلەيسىز ۋە سىستېما خاتالىقلىرىنى تۈزىتەلەيسىز.</p>
+        <p xml:lang="uk">Магазин програм для Інді розробників та розробників з відкритим програмним кодом. Шукайте програми за категоріями або відкривайте для себе нові додатки. Центр програм також використовується для оновлення системи до останньої версії для використання нових функцій і виправлення помилок системи.</p>
+        <p xml:lang="ur">ایک ایپ سٹور جو آزاد، انڈی اور اوپن سورس ڈیولپرز کے لیے ہے۔ ضمروں میں پھرولیں یا تلاش کریں اور دریافت کریں نئی ایپس۔ ایپ مرکز کی مدد سے آپ کے سسٹم کو جدید ترین رکھا جاتا ہے اور اس پر اپڈیٹس نصب کی جاتی ہیں تاکہ اس میں جو خرابیاں خامیاں موجود ہیں، دور ہو جائیں۔</p>
+        <p xml:lang="zh_CN">独立和开源开发者专属应用商店，分类浏览、搜索和发现新应用，更新您的系统。</p>
+        <p xml:lang="zh_TW">獨立和開源開發者的軟體商店。可以瀏覽各分類來搜尋和探索新軟體。AppCenter 也能用來將系統更新成含有新功能和新修正的最嶄新、最強大的版本。</p>
+    </description>
+    <releases>
+        <release version="0.2.3" urgency="medium" date="2017-05-31">
+            <description>
+                <p>Bug fixes and improve perfomance.</p>
+                <p xml:lang="ar">تحسين الاداء والاستقرارية.</p>
+                <p xml:lang="ca">Correcció d'errors i millora del rendiment.</p>
+                <p xml:lang="cs">Opravy chyb a vylepšení výkonu.</p>
+                <p xml:lang="de">Fehlerbehebung und Performance Verbesserung.</p>
+                <p xml:lang="en_GB">Bug fixes and improve perfomance.</p>
+                <p xml:lang="es">Correcciones de errores y mejora de rendimiento.</p>
+                <p xml:lang="fi">Korjauksia ja suorituskykyparannuksia.</p>
+                <p xml:lang="fr">Correction de bugs et performances améliorées.</p>
+                <p xml:lang="he">תיקוני באגים ושיפור ביצועים.</p>
+                <p xml:lang="hr">Popravci grešaka i poboljšanje performansi.</p>
+                <p xml:lang="hu">Hibajavítások és teljesítmény növelése.</p>
+                <p xml:lang="it">Correzione di problemi e miglioramento delle prestazioni.</p>
+                <p xml:lang="ja">バグ修正とパフォーマンスの向上。</p>
+                <p xml:lang="ko">버그 수정 및 기능 향상.</p>
+                <p xml:lang="lt">Klaidų pataisymai ir našumo patobulinimai.</p>
+                <p xml:lang="nb">Feilrettinger øker ytelsen.</p>
+                <p xml:lang="nl">Fouten opgelost en performantie verbeterd.</p>
+                <p xml:lang="nn">Rettingar og forbetra ytelse.</p>
+                <p xml:lang="pl">Poprawki błędów i ulepszenie funkcjonowania.</p>
+                <p xml:lang="pt">Resolução de problemas e melhorias de desempenho.</p>
+                <p xml:lang="pt_BR">Correções de bugs e aprimoramento de performance.</p>
+                <p xml:lang="ro">Remedieri şi performanţă îmbunătăţită.</p>
+                <p xml:lang="ru">Исправления ошибок и улучшения производительности.</p>
+                <p xml:lang="tr">Bug düzeltmeleri ve performans iyileştirmeleri.</p>
+                <p xml:lang="uk">Виправлення помилок і поліпшення продуктивності.</p>
+                <p xml:lang="zh_CN">问题修复和性能改进</p>
+                <ul>
+                    <li>Various bug fixes and performance improvements</li>
+                    <li xml:lang="ar">إصلاح العلل وتحسينات في الاداء</li>
+                    <li xml:lang="ca">Diverses correccions d'errors i millores de rendiment</li>
+                    <li xml:lang="cs">Různé opravy chyb a vylepšení výkonu</li>
+                    <li xml:lang="de">Verschiedene Fehlerbehebungen und Geschwindigkeitssteigerungen</li>
+                    <li xml:lang="en_GB">Various bug fixes and performance improvements</li>
+                    <li xml:lang="es">Varios arreglos de bugs y mejoras de rendimiento</li>
+                    <li xml:lang="fi">Useita korjauksia ja suorituskykyparannuksia</li>
+                    <li xml:lang="fr">Multiples corrections de bugs et amélioration des performances</li>
+                    <li xml:lang="he">מגוון תיקוני באגים ושיפורי ביצועים</li>
+                    <li xml:lang="hr">Razni popravci grešaka i poboljšanje performansi</li>
+                    <li xml:lang="hu">Különböző hibajavítások és teljesítmény fejlesztések</li>
+                    <li xml:lang="it">Varie sistemazioni di problemi e miglioramenti</li>
+                    <li xml:lang="ja">様々なバグ修正とパフォーマンスの向上</li>
+                    <li xml:lang="ko">여러 가지 버그 해결 및 성능 향상</li>
+                    <li xml:lang="lt">Įvairūs klaidų pataisymai ir našumo patobulinimai</li>
+                    <li xml:lang="nb">Forskjellige feilrettinger og ytelsesforbedringer</li>
+                    <li xml:lang="nl">Verschillende fouten opgelost en prestaties verbeterd</li>
+                    <li xml:lang="nn">Ulike rettingar og ytelsesforbetringar</li>
+                    <li xml:lang="pl">Poprawki różnych błędów i ulepszenie działania</li>
+                    <li xml:lang="pt">Várias resoluções de problemas e melhorias de desempenho</li>
+                    <li xml:lang="pt_BR">Várias correções de bugs e aprimoramentos de performance</li>
+                    <li xml:lang="ro">Diverse erori corectate şi performanţă îmbunătăţită.</li>
+                    <li xml:lang="ru">Различные исправления ошибок и улучшения производительности</li>
+                    <li xml:lang="sl">Raznovrstni popravki in izboljšanje odzivnosti</li>
+                    <li xml:lang="tr">Çeşitli bug düzeltmeleri ve performans iyileştirmeleri</li>
+                    <li xml:lang="uk">Різні виправлення помилок і поліпшення продуктивності</li>
+                    <li xml:lang="zh_CN">多处 Bug 修复及性能改进</li>
+                    <li>New translations</li>
+                    <li xml:lang="ar">ترجمة جديدة</li>
+                    <li xml:lang="ca">Traduccions noves</li>
+                    <li xml:lang="cs">Nové překlady</li>
+                    <li xml:lang="de">Neue Übersetzungen</li>
+                    <li xml:lang="en_GB">New translations</li>
+                    <li xml:lang="es">Nuevas traducciones</li>
+                    <li xml:lang="fi">Uusia kielikäännöksiä</li>
+                    <li xml:lang="fr">Nouvelles traductions</li>
+                    <li xml:lang="he">תרגומים חדשים</li>
+                    <li xml:lang="hr">Novi prijevodi</li>
+                    <li xml:lang="hu">Új fordítások</li>
+                    <li xml:lang="it">Nuove traduzioni</li>
+                    <li xml:lang="ja">新しい翻訳</li>
+                    <li xml:lang="ko">새 번역</li>
+                    <li xml:lang="lt">Nauji vertimai</li>
+                    <li xml:lang="nb">Nye oversettelser</li>
+                    <li xml:lang="nl">Nieuwe vertalingen</li>
+                    <li xml:lang="nn">Nye oversettelsar</li>
+                    <li xml:lang="pl">Nowe tłumaczenia</li>
+                    <li xml:lang="pt">Novas traduções</li>
+                    <li xml:lang="pt_BR">Novas traduções</li>
+                    <li xml:lang="ro">Traduceri noi</li>
+                    <li xml:lang="ru">Новые переводы</li>
+                    <li xml:lang="sl">Novi prevodi</li>
+                    <li xml:lang="tr">Yeni çeviriler</li>
+                    <li xml:lang="uk">Нові переклади</li>
+                </ul>
+            </description>
+        </release>
+        <release version="0.2.2" urgency="medium" date="2017-05-21">
+            <description>
+                <p>Bug fixes and improve perfomance.</p>
+                <p xml:lang="ar">تحسين الاداء والاستقرارية.</p>
+                <p xml:lang="ca">Correcció d'errors i millora del rendiment.</p>
+                <p xml:lang="cs">Opravy chyb a vylepšení výkonu.</p>
+                <p xml:lang="de">Fehlerbehebung und Performance Verbesserung.</p>
+                <p xml:lang="en_GB">Bug fixes and improve perfomance.</p>
+                <p xml:lang="es">Correcciones de errores y mejora de rendimiento.</p>
+                <p xml:lang="fi">Korjauksia ja suorituskykyparannuksia.</p>
+                <p xml:lang="fr">Correction de bugs et performances améliorées.</p>
+                <p xml:lang="he">תיקוני באגים ושיפור ביצועים.</p>
+                <p xml:lang="hr">Popravci grešaka i poboljšanje performansi.</p>
+                <p xml:lang="hu">Hibajavítások és teljesítmény növelése.</p>
+                <p xml:lang="it">Correzione di problemi e miglioramento delle prestazioni.</p>
+                <p xml:lang="ja">バグ修正とパフォーマンスの向上。</p>
+                <p xml:lang="ko">버그 수정 및 기능 향상.</p>
+                <p xml:lang="lt">Klaidų pataisymai ir našumo patobulinimai.</p>
+                <p xml:lang="nb">Feilrettinger øker ytelsen.</p>
+                <p xml:lang="nl">Fouten opgelost en performantie verbeterd.</p>
+                <p xml:lang="nn">Rettingar og forbetra ytelse.</p>
+                <p xml:lang="pl">Poprawki błędów i ulepszenie funkcjonowania.</p>
+                <p xml:lang="pt">Resolução de problemas e melhorias de desempenho.</p>
+                <p xml:lang="pt_BR">Correções de bugs e aprimoramento de performance.</p>
+                <p xml:lang="ro">Remedieri şi performanţă îmbunătăţită.</p>
+                <p xml:lang="ru">Исправления ошибок и улучшения производительности.</p>
+                <p xml:lang="tr">Bug düzeltmeleri ve performans iyileştirmeleri.</p>
+                <p xml:lang="uk">Виправлення помилок і поліпшення продуктивності.</p>
+                <p xml:lang="zh_CN">问题修复和性能改进</p>
+                <ul>
+                    <li>Various bug fixes and performance improvements</li>
+                    <li xml:lang="ar">إصلاح العلل وتحسينات في الاداء</li>
+                    <li xml:lang="ca">Diverses correccions d'errors i millores de rendiment</li>
+                    <li xml:lang="cs">Různé opravy chyb a vylepšení výkonu</li>
+                    <li xml:lang="de">Verschiedene Fehlerbehebungen und Geschwindigkeitssteigerungen</li>
+                    <li xml:lang="en_GB">Various bug fixes and performance improvements</li>
+                    <li xml:lang="es">Varios arreglos de bugs y mejoras de rendimiento</li>
+                    <li xml:lang="fi">Useita korjauksia ja suorituskykyparannuksia</li>
+                    <li xml:lang="fr">Multiples corrections de bugs et amélioration des performances</li>
+                    <li xml:lang="he">מגוון תיקוני באגים ושיפורי ביצועים</li>
+                    <li xml:lang="hr">Razni popravci grešaka i poboljšanje performansi</li>
+                    <li xml:lang="hu">Különböző hibajavítások és teljesítmény fejlesztések</li>
+                    <li xml:lang="it">Varie sistemazioni di problemi e miglioramenti</li>
+                    <li xml:lang="ja">様々なバグ修正とパフォーマンスの向上</li>
+                    <li xml:lang="ko">여러 가지 버그 해결 및 성능 향상</li>
+                    <li xml:lang="lt">Įvairūs klaidų pataisymai ir našumo patobulinimai</li>
+                    <li xml:lang="nb">Forskjellige feilrettinger og ytelsesforbedringer</li>
+                    <li xml:lang="nl">Verschillende fouten opgelost en prestaties verbeterd</li>
+                    <li xml:lang="nn">Ulike rettingar og ytelsesforbetringar</li>
+                    <li xml:lang="pl">Poprawki różnych błędów i ulepszenie działania</li>
+                    <li xml:lang="pt">Várias resoluções de problemas e melhorias de desempenho</li>
+                    <li xml:lang="pt_BR">Várias correções de bugs e aprimoramentos de performance</li>
+                    <li xml:lang="ro">Diverse erori corectate şi performanţă îmbunătăţită.</li>
+                    <li xml:lang="ru">Различные исправления ошибок и улучшения производительности</li>
+                    <li xml:lang="sl">Raznovrstni popravki in izboljšanje odzivnosti</li>
+                    <li xml:lang="tr">Çeşitli bug düzeltmeleri ve performans iyileştirmeleri</li>
+                    <li xml:lang="uk">Різні виправлення помилок і поліпшення продуктивності</li>
+                    <li xml:lang="zh_CN">多处 Bug 修复及性能改进</li>
+                    <li>New translations</li>
+                    <li xml:lang="ar">ترجمة جديدة</li>
+                    <li xml:lang="ca">Traduccions noves</li>
+                    <li xml:lang="cs">Nové překlady</li>
+                    <li xml:lang="de">Neue Übersetzungen</li>
+                    <li xml:lang="en_GB">New translations</li>
+                    <li xml:lang="es">Nuevas traducciones</li>
+                    <li xml:lang="fi">Uusia kielikäännöksiä</li>
+                    <li xml:lang="fr">Nouvelles traductions</li>
+                    <li xml:lang="he">תרגומים חדשים</li>
+                    <li xml:lang="hr">Novi prijevodi</li>
+                    <li xml:lang="hu">Új fordítások</li>
+                    <li xml:lang="it">Nuove traduzioni</li>
+                    <li xml:lang="ja">新しい翻訳</li>
+                    <li xml:lang="ko">새 번역</li>
+                    <li xml:lang="lt">Nauji vertimai</li>
+                    <li xml:lang="nb">Nye oversettelser</li>
+                    <li xml:lang="nl">Nieuwe vertalingen</li>
+                    <li xml:lang="nn">Nye oversettelsar</li>
+                    <li xml:lang="pl">Nowe tłumaczenia</li>
+                    <li xml:lang="pt">Novas traduções</li>
+                    <li xml:lang="pt_BR">Novas traduções</li>
+                    <li xml:lang="ro">Traduceri noi</li>
+                    <li xml:lang="ru">Новые переводы</li>
+                    <li xml:lang="sl">Novi prevodi</li>
+                    <li xml:lang="tr">Yeni çeviriler</li>
+                    <li xml:lang="uk">Нові переклади</li>
+                </ul>
+            </description>
+        </release>
+        <release version="0.2.1" urgency="medium" date="2017-05-19">
+            <description>
+                <p>Bug fixes and improve perfomance.</p>
+                <p xml:lang="ar">تحسين الاداء والاستقرارية.</p>
+                <p xml:lang="ca">Correcció d'errors i millora del rendiment.</p>
+                <p xml:lang="cs">Opravy chyb a vylepšení výkonu.</p>
+                <p xml:lang="de">Fehlerbehebung und Performance Verbesserung.</p>
+                <p xml:lang="en_GB">Bug fixes and improve perfomance.</p>
+                <p xml:lang="es">Correcciones de errores y mejora de rendimiento.</p>
+                <p xml:lang="fi">Korjauksia ja suorituskykyparannuksia.</p>
+                <p xml:lang="fr">Correction de bugs et performances améliorées.</p>
+                <p xml:lang="he">תיקוני באגים ושיפור ביצועים.</p>
+                <p xml:lang="hr">Popravci grešaka i poboljšanje performansi.</p>
+                <p xml:lang="hu">Hibajavítások és teljesítmény növelése.</p>
+                <p xml:lang="it">Correzione di problemi e miglioramento delle prestazioni.</p>
+                <p xml:lang="ja">バグ修正とパフォーマンスの向上。</p>
+                <p xml:lang="ko">버그 수정 및 기능 향상.</p>
+                <p xml:lang="lt">Klaidų pataisymai ir našumo patobulinimai.</p>
+                <p xml:lang="nb">Feilrettinger øker ytelsen.</p>
+                <p xml:lang="nl">Fouten opgelost en performantie verbeterd.</p>
+                <p xml:lang="nn">Rettingar og forbetra ytelse.</p>
+                <p xml:lang="pl">Poprawki błędów i ulepszenie funkcjonowania.</p>
+                <p xml:lang="pt">Resolução de problemas e melhorias de desempenho.</p>
+                <p xml:lang="pt_BR">Correções de bugs e aprimoramento de performance.</p>
+                <p xml:lang="ro">Remedieri şi performanţă îmbunătăţită.</p>
+                <p xml:lang="ru">Исправления ошибок и улучшения производительности.</p>
+                <p xml:lang="tr">Bug düzeltmeleri ve performans iyileştirmeleri.</p>
+                <p xml:lang="uk">Виправлення помилок і поліпшення продуктивності.</p>
+                <p xml:lang="zh_CN">问题修复和性能改进</p>
+                <ul>
+                    <li>Various bug fixes and performance improvements</li>
+                    <li xml:lang="ar">إصلاح العلل وتحسينات في الاداء</li>
+                    <li xml:lang="ca">Diverses correccions d'errors i millores de rendiment</li>
+                    <li xml:lang="cs">Různé opravy chyb a vylepšení výkonu</li>
+                    <li xml:lang="de">Verschiedene Fehlerbehebungen und Geschwindigkeitssteigerungen</li>
+                    <li xml:lang="en_GB">Various bug fixes and performance improvements</li>
+                    <li xml:lang="es">Varios arreglos de bugs y mejoras de rendimiento</li>
+                    <li xml:lang="fi">Useita korjauksia ja suorituskykyparannuksia</li>
+                    <li xml:lang="fr">Multiples corrections de bugs et amélioration des performances</li>
+                    <li xml:lang="he">מגוון תיקוני באגים ושיפורי ביצועים</li>
+                    <li xml:lang="hr">Razni popravci grešaka i poboljšanje performansi</li>
+                    <li xml:lang="hu">Különböző hibajavítások és teljesítmény fejlesztések</li>
+                    <li xml:lang="it">Varie sistemazioni di problemi e miglioramenti</li>
+                    <li xml:lang="ja">様々なバグ修正とパフォーマンスの向上</li>
+                    <li xml:lang="ko">여러 가지 버그 해결 및 성능 향상</li>
+                    <li xml:lang="lt">Įvairūs klaidų pataisymai ir našumo patobulinimai</li>
+                    <li xml:lang="nb">Forskjellige feilrettinger og ytelsesforbedringer</li>
+                    <li xml:lang="nl">Verschillende fouten opgelost en prestaties verbeterd</li>
+                    <li xml:lang="nn">Ulike rettingar og ytelsesforbetringar</li>
+                    <li xml:lang="pl">Poprawki różnych błędów i ulepszenie działania</li>
+                    <li xml:lang="pt">Várias resoluções de problemas e melhorias de desempenho</li>
+                    <li xml:lang="pt_BR">Várias correções de bugs e aprimoramentos de performance</li>
+                    <li xml:lang="ro">Diverse erori corectate şi performanţă îmbunătăţită.</li>
+                    <li xml:lang="ru">Различные исправления ошибок и улучшения производительности</li>
+                    <li xml:lang="sl">Raznovrstni popravki in izboljšanje odzivnosti</li>
+                    <li xml:lang="tr">Çeşitli bug düzeltmeleri ve performans iyileştirmeleri</li>
+                    <li xml:lang="uk">Різні виправлення помилок і поліпшення продуктивності</li>
+                    <li xml:lang="zh_CN">多处 Bug 修复及性能改进</li>
+                    <li>New translations</li>
+                    <li xml:lang="ar">ترجمة جديدة</li>
+                    <li xml:lang="ca">Traduccions noves</li>
+                    <li xml:lang="cs">Nové překlady</li>
+                    <li xml:lang="de">Neue Übersetzungen</li>
+                    <li xml:lang="en_GB">New translations</li>
+                    <li xml:lang="es">Nuevas traducciones</li>
+                    <li xml:lang="fi">Uusia kielikäännöksiä</li>
+                    <li xml:lang="fr">Nouvelles traductions</li>
+                    <li xml:lang="he">תרגומים חדשים</li>
+                    <li xml:lang="hr">Novi prijevodi</li>
+                    <li xml:lang="hu">Új fordítások</li>
+                    <li xml:lang="it">Nuove traduzioni</li>
+                    <li xml:lang="ja">新しい翻訳</li>
+                    <li xml:lang="ko">새 번역</li>
+                    <li xml:lang="lt">Nauji vertimai</li>
+                    <li xml:lang="nb">Nye oversettelser</li>
+                    <li xml:lang="nl">Nieuwe vertalingen</li>
+                    <li xml:lang="nn">Nye oversettelsar</li>
+                    <li xml:lang="pl">Nowe tłumaczenia</li>
+                    <li xml:lang="pt">Novas traduções</li>
+                    <li xml:lang="pt_BR">Novas traduções</li>
+                    <li xml:lang="ro">Traduceri noi</li>
+                    <li xml:lang="ru">Новые переводы</li>
+                    <li xml:lang="sl">Novi prevodi</li>
+                    <li xml:lang="tr">Yeni çeviriler</li>
+                    <li xml:lang="uk">Нові переклади</li>
+                </ul>
+            </description>
+        </release>
+        <release version="0.2" urgency="medium" date="2017-05-17">
+            <description>
+                <p>Bug fixes and improve perfomance.</p>
+                <p xml:lang="ar">تحسين الاداء والاستقرارية.</p>
+                <p xml:lang="ca">Correcció d'errors i millora del rendiment.</p>
+                <p xml:lang="cs">Opravy chyb a vylepšení výkonu.</p>
+                <p xml:lang="de">Fehlerbehebung und Performance Verbesserung.</p>
+                <p xml:lang="en_GB">Bug fixes and improve perfomance.</p>
+                <p xml:lang="es">Correcciones de errores y mejora de rendimiento.</p>
+                <p xml:lang="fi">Korjauksia ja suorituskykyparannuksia.</p>
+                <p xml:lang="fr">Correction de bugs et performances améliorées.</p>
+                <p xml:lang="he">תיקוני באגים ושיפור ביצועים.</p>
+                <p xml:lang="hr">Popravci grešaka i poboljšanje performansi.</p>
+                <p xml:lang="hu">Hibajavítások és teljesítmény növelése.</p>
+                <p xml:lang="it">Correzione di problemi e miglioramento delle prestazioni.</p>
+                <p xml:lang="ja">バグ修正とパフォーマンスの向上。</p>
+                <p xml:lang="ko">버그 수정 및 기능 향상.</p>
+                <p xml:lang="lt">Klaidų pataisymai ir našumo patobulinimai.</p>
+                <p xml:lang="nb">Feilrettinger øker ytelsen.</p>
+                <p xml:lang="nl">Fouten opgelost en performantie verbeterd.</p>
+                <p xml:lang="nn">Rettingar og forbetra ytelse.</p>
+                <p xml:lang="pl">Poprawki błędów i ulepszenie funkcjonowania.</p>
+                <p xml:lang="pt">Resolução de problemas e melhorias de desempenho.</p>
+                <p xml:lang="pt_BR">Correções de bugs e aprimoramento de performance.</p>
+                <p xml:lang="ro">Remedieri şi performanţă îmbunătăţită.</p>
+                <p xml:lang="ru">Исправления ошибок и улучшения производительности.</p>
+                <p xml:lang="tr">Bug düzeltmeleri ve performans iyileştirmeleri.</p>
+                <p xml:lang="uk">Виправлення помилок і поліпшення продуктивності.</p>
+                <p xml:lang="zh_CN">问题修复和性能改进</p>
+                <ul>
+                    <li>Various bug fixes and performance improvements</li>
+                    <li xml:lang="ar">إصلاح العلل وتحسينات في الاداء</li>
+                    <li xml:lang="ca">Diverses correccions d'errors i millores de rendiment</li>
+                    <li xml:lang="cs">Různé opravy chyb a vylepšení výkonu</li>
+                    <li xml:lang="de">Verschiedene Fehlerbehebungen und Geschwindigkeitssteigerungen</li>
+                    <li xml:lang="en_GB">Various bug fixes and performance improvements</li>
+                    <li xml:lang="es">Varios arreglos de bugs y mejoras de rendimiento</li>
+                    <li xml:lang="fi">Useita korjauksia ja suorituskykyparannuksia</li>
+                    <li xml:lang="fr">Multiples corrections de bugs et amélioration des performances</li>
+                    <li xml:lang="he">מגוון תיקוני באגים ושיפורי ביצועים</li>
+                    <li xml:lang="hr">Razni popravci grešaka i poboljšanje performansi</li>
+                    <li xml:lang="hu">Különböző hibajavítások és teljesítmény fejlesztések</li>
+                    <li xml:lang="it">Varie sistemazioni di problemi e miglioramenti</li>
+                    <li xml:lang="ja">様々なバグ修正とパフォーマンスの向上</li>
+                    <li xml:lang="ko">여러 가지 버그 해결 및 성능 향상</li>
+                    <li xml:lang="lt">Įvairūs klaidų pataisymai ir našumo patobulinimai</li>
+                    <li xml:lang="nb">Forskjellige feilrettinger og ytelsesforbedringer</li>
+                    <li xml:lang="nl">Verschillende fouten opgelost en prestaties verbeterd</li>
+                    <li xml:lang="nn">Ulike rettingar og ytelsesforbetringar</li>
+                    <li xml:lang="pl">Poprawki różnych błędów i ulepszenie działania</li>
+                    <li xml:lang="pt">Várias resoluções de problemas e melhorias de desempenho</li>
+                    <li xml:lang="pt_BR">Várias correções de bugs e aprimoramentos de performance</li>
+                    <li xml:lang="ro">Diverse erori corectate şi performanţă îmbunătăţită.</li>
+                    <li xml:lang="ru">Различные исправления ошибок и улучшения производительности</li>
+                    <li xml:lang="sl">Raznovrstni popravki in izboljšanje odzivnosti</li>
+                    <li xml:lang="tr">Çeşitli bug düzeltmeleri ve performans iyileştirmeleri</li>
+                    <li xml:lang="uk">Різні виправлення помилок і поліпшення продуктивності</li>
+                    <li xml:lang="zh_CN">多处 Bug 修复及性能改进</li>
+                    <li>New translations</li>
+                    <li xml:lang="ar">ترجمة جديدة</li>
+                    <li xml:lang="ca">Traduccions noves</li>
+                    <li xml:lang="cs">Nové překlady</li>
+                    <li xml:lang="de">Neue Übersetzungen</li>
+                    <li xml:lang="en_GB">New translations</li>
+                    <li xml:lang="es">Nuevas traducciones</li>
+                    <li xml:lang="fi">Uusia kielikäännöksiä</li>
+                    <li xml:lang="fr">Nouvelles traductions</li>
+                    <li xml:lang="he">תרגומים חדשים</li>
+                    <li xml:lang="hr">Novi prijevodi</li>
+                    <li xml:lang="hu">Új fordítások</li>
+                    <li xml:lang="it">Nuove traduzioni</li>
+                    <li xml:lang="ja">新しい翻訳</li>
+                    <li xml:lang="ko">새 번역</li>
+                    <li xml:lang="lt">Nauji vertimai</li>
+                    <li xml:lang="nb">Nye oversettelser</li>
+                    <li xml:lang="nl">Nieuwe vertalingen</li>
+                    <li xml:lang="nn">Nye oversettelsar</li>
+                    <li xml:lang="pl">Nowe tłumaczenia</li>
+                    <li xml:lang="pt">Novas traduções</li>
+                    <li xml:lang="pt_BR">Novas traduções</li>
+                    <li xml:lang="ro">Traduceri noi</li>
+                    <li xml:lang="ru">Новые переводы</li>
+                    <li xml:lang="sl">Novi prevodi</li>
+                    <li xml:lang="tr">Yeni çeviriler</li>
+                    <li xml:lang="uk">Нові переклади</li>
+                </ul>
+            </description>
+        </release>
+        <release version="0.1.4" urgency="medium" date="2017-03-16">
+            <description>
+                <p>Bug fixes and improve perfomance.</p>
+                <p xml:lang="ar">تحسين الاداء والاستقرارية.</p>
+                <p xml:lang="ca">Correcció d'errors i millora del rendiment.</p>
+                <p xml:lang="cs">Opravy chyb a vylepšení výkonu.</p>
+                <p xml:lang="de">Fehlerbehebung und Performance Verbesserung.</p>
+                <p xml:lang="en_GB">Bug fixes and improve perfomance.</p>
+                <p xml:lang="es">Correcciones de errores y mejora de rendimiento.</p>
+                <p xml:lang="fi">Korjauksia ja suorituskykyparannuksia.</p>
+                <p xml:lang="fr">Correction de bugs et performances améliorées.</p>
+                <p xml:lang="he">תיקוני באגים ושיפור ביצועים.</p>
+                <p xml:lang="hr">Popravci grešaka i poboljšanje performansi.</p>
+                <p xml:lang="hu">Hibajavítások és teljesítmény növelése.</p>
+                <p xml:lang="it">Correzione di problemi e miglioramento delle prestazioni.</p>
+                <p xml:lang="ja">バグ修正とパフォーマンスの向上。</p>
+                <p xml:lang="ko">버그 수정 및 기능 향상.</p>
+                <p xml:lang="lt">Klaidų pataisymai ir našumo patobulinimai.</p>
+                <p xml:lang="nb">Feilrettinger øker ytelsen.</p>
+                <p xml:lang="nl">Fouten opgelost en performantie verbeterd.</p>
+                <p xml:lang="nn">Rettingar og forbetra ytelse.</p>
+                <p xml:lang="pl">Poprawki błędów i ulepszenie funkcjonowania.</p>
+                <p xml:lang="pt">Resolução de problemas e melhorias de desempenho.</p>
+                <p xml:lang="pt_BR">Correções de bugs e aprimoramento de performance.</p>
+                <p xml:lang="ro">Remedieri şi performanţă îmbunătăţită.</p>
+                <p xml:lang="ru">Исправления ошибок и улучшения производительности.</p>
+                <p xml:lang="tr">Bug düzeltmeleri ve performans iyileştirmeleri.</p>
+                <p xml:lang="uk">Виправлення помилок і поліпшення продуктивності.</p>
+                <p xml:lang="zh_CN">问题修复和性能改进</p>
+                <ul>
+                    <li>Various bug fixes and performance improvements</li>
+                    <li xml:lang="ar">إصلاح العلل وتحسينات في الاداء</li>
+                    <li xml:lang="ca">Diverses correccions d'errors i millores de rendiment</li>
+                    <li xml:lang="cs">Různé opravy chyb a vylepšení výkonu</li>
+                    <li xml:lang="de">Verschiedene Fehlerbehebungen und Geschwindigkeitssteigerungen</li>
+                    <li xml:lang="en_GB">Various bug fixes and performance improvements</li>
+                    <li xml:lang="es">Varios arreglos de bugs y mejoras de rendimiento</li>
+                    <li xml:lang="fi">Useita korjauksia ja suorituskykyparannuksia</li>
+                    <li xml:lang="fr">Multiples corrections de bugs et amélioration des performances</li>
+                    <li xml:lang="he">מגוון תיקוני באגים ושיפורי ביצועים</li>
+                    <li xml:lang="hr">Razni popravci grešaka i poboljšanje performansi</li>
+                    <li xml:lang="hu">Különböző hibajavítások és teljesítmény fejlesztések</li>
+                    <li xml:lang="it">Varie sistemazioni di problemi e miglioramenti</li>
+                    <li xml:lang="ja">様々なバグ修正とパフォーマンスの向上</li>
+                    <li xml:lang="ko">여러 가지 버그 해결 및 성능 향상</li>
+                    <li xml:lang="lt">Įvairūs klaidų pataisymai ir našumo patobulinimai</li>
+                    <li xml:lang="nb">Forskjellige feilrettinger og ytelsesforbedringer</li>
+                    <li xml:lang="nl">Verschillende fouten opgelost en prestaties verbeterd</li>
+                    <li xml:lang="nn">Ulike rettingar og ytelsesforbetringar</li>
+                    <li xml:lang="pl">Poprawki różnych błędów i ulepszenie działania</li>
+                    <li xml:lang="pt">Várias resoluções de problemas e melhorias de desempenho</li>
+                    <li xml:lang="pt_BR">Várias correções de bugs e aprimoramentos de performance</li>
+                    <li xml:lang="ro">Diverse erori corectate şi performanţă îmbunătăţită.</li>
+                    <li xml:lang="ru">Различные исправления ошибок и улучшения производительности</li>
+                    <li xml:lang="sl">Raznovrstni popravki in izboljšanje odzivnosti</li>
+                    <li xml:lang="tr">Çeşitli bug düzeltmeleri ve performans iyileştirmeleri</li>
+                    <li xml:lang="uk">Різні виправлення помилок і поліпшення продуктивності</li>
+                    <li xml:lang="zh_CN">多处 Bug 修复及性能改进</li>
+                    <li>New translations</li>
+                    <li xml:lang="ar">ترجمة جديدة</li>
+                    <li xml:lang="ca">Traduccions noves</li>
+                    <li xml:lang="cs">Nové překlady</li>
+                    <li xml:lang="de">Neue Übersetzungen</li>
+                    <li xml:lang="en_GB">New translations</li>
+                    <li xml:lang="es">Nuevas traducciones</li>
+                    <li xml:lang="fi">Uusia kielikäännöksiä</li>
+                    <li xml:lang="fr">Nouvelles traductions</li>
+                    <li xml:lang="he">תרגומים חדשים</li>
+                    <li xml:lang="hr">Novi prijevodi</li>
+                    <li xml:lang="hu">Új fordítások</li>
+                    <li xml:lang="it">Nuove traduzioni</li>
+                    <li xml:lang="ja">新しい翻訳</li>
+                    <li xml:lang="ko">새 번역</li>
+                    <li xml:lang="lt">Nauji vertimai</li>
+                    <li xml:lang="nb">Nye oversettelser</li>
+                    <li xml:lang="nl">Nieuwe vertalingen</li>
+                    <li xml:lang="nn">Nye oversettelsar</li>
+                    <li xml:lang="pl">Nowe tłumaczenia</li>
+                    <li xml:lang="pt">Novas traduções</li>
+                    <li xml:lang="pt_BR">Novas traduções</li>
+                    <li xml:lang="ro">Traduceri noi</li>
+                    <li xml:lang="ru">Новые переводы</li>
+                    <li xml:lang="sl">Novi prevodi</li>
+                    <li xml:lang="tr">Yeni çeviriler</li>
+                    <li xml:lang="uk">Нові переклади</li>
+                </ul>
+            </description>
+        </release>
+        <release version="0.1.3" urgency="medium" date="2016-12-05">
+            <description>
+                <p>Bug fixes and improve perfomance.</p>
+                <p xml:lang="ar">تحسين الاداء والاستقرارية.</p>
+                <p xml:lang="ca">Correcció d'errors i millora del rendiment.</p>
+                <p xml:lang="cs">Opravy chyb a vylepšení výkonu.</p>
+                <p xml:lang="de">Fehlerbehebung und Performance Verbesserung.</p>
+                <p xml:lang="en_GB">Bug fixes and improve perfomance.</p>
+                <p xml:lang="es">Correcciones de errores y mejora de rendimiento.</p>
+                <p xml:lang="fi">Korjauksia ja suorituskykyparannuksia.</p>
+                <p xml:lang="fr">Correction de bugs et performances améliorées.</p>
+                <p xml:lang="he">תיקוני באגים ושיפור ביצועים.</p>
+                <p xml:lang="hr">Popravci grešaka i poboljšanje performansi.</p>
+                <p xml:lang="hu">Hibajavítások és teljesítmény növelése.</p>
+                <p xml:lang="it">Correzione di problemi e miglioramento delle prestazioni.</p>
+                <p xml:lang="ja">バグ修正とパフォーマンスの向上。</p>
+                <p xml:lang="ko">버그 수정 및 기능 향상.</p>
+                <p xml:lang="lt">Klaidų pataisymai ir našumo patobulinimai.</p>
+                <p xml:lang="nb">Feilrettinger øker ytelsen.</p>
+                <p xml:lang="nl">Fouten opgelost en performantie verbeterd.</p>
+                <p xml:lang="nn">Rettingar og forbetra ytelse.</p>
+                <p xml:lang="pl">Poprawki błędów i ulepszenie funkcjonowania.</p>
+                <p xml:lang="pt">Resolução de problemas e melhorias de desempenho.</p>
+                <p xml:lang="pt_BR">Correções de bugs e aprimoramento de performance.</p>
+                <p xml:lang="ro">Remedieri şi performanţă îmbunătăţită.</p>
+                <p xml:lang="ru">Исправления ошибок и улучшения производительности.</p>
+                <p xml:lang="tr">Bug düzeltmeleri ve performans iyileştirmeleri.</p>
+                <p xml:lang="uk">Виправлення помилок і поліпшення продуктивності.</p>
+                <p xml:lang="zh_CN">问题修复和性能改进</p>
+                <ul>
+                    <li>Fix crash caused by entries with missing packages</li>
+                    <li xml:lang="ca">Correcció de la fallada causada per entrades amb mancances de paquets</li>
+                    <li xml:lang="cs">Opravit padání způsobené položkami s chybějícími balíčky</li>
+                    <li xml:lang="en_GB">Fix crash caused by entries with missing packages</li>
+                    <li xml:lang="es">Solucionado error de sistema debido a entradas con paquetes faltantes</li>
+                    <li xml:lang="fr">Correction de crash causés par des pacquages manquants</li>
+                    <li xml:lang="he">תיקון קריסה שנוצרה על ידי רשומות עם חבילות חסרות</li>
+                    <li xml:lang="hr">Popravljeno rušenje uzrokovano s nedostajućim paketima</li>
+                    <li xml:lang="hu">Hiányzó csomagokat tartalmazó bejegyzések miatti összeomlás javítása</li>
+                    <li xml:lang="it">Risolto un problema per cui il programma si chiudeva inaspettatamente in presenza di voci con pacchetti mancanti</li>
+                    <li xml:lang="ja">不足しているパッケージの登録によるクラッシュを修正</li>
+                    <li xml:lang="ko">빠진 패키지가 있는 목록에 의한 비정상 종료 수정</li>
+                    <li xml:lang="lt">Ištaisyti strigtį, kurią sukelia įrašai su trūkstamais paketais</li>
+                    <li xml:lang="nb">Fiks kræsj forårsaket av oppføringer med manglende pakker</li>
+                    <li xml:lang="nl">Crash opgelost veroorzaakt door missende pakketen</li>
+                    <li xml:lang="nn">Fiksa krasjar som oppstod av oppføringar med manglande pakkar</li>
+                    <li xml:lang="pl">Naprawiono awarię spowodowaną wpisami z brakującymi pakietami</li>
+                    <li xml:lang="pt">Corrigido o problema de crash quando eram encontrados pacotes em falta</li>
+                    <li xml:lang="pt_BR">Corrigida falha causada por entradas com pacotes não existentes</li>
+                    <li xml:lang="ru">Исправление ошибки, вызванной записями с отсутствующими пакетами</li>
+                    <li xml:lang="sl">Popravi sesutje do katerega je prišlo zaradi vnosov z manjkajočimi paketi</li>
+                    <li xml:lang="tr">Eksik paketlerden kaynaklanan çökmeler düzeltildi</li>
+                    <li xml:lang="uk">Усунути аварію, викликану записами з відсутніми пакетами</li>
+                    <li xml:lang="zh_CN">修复包缺失造成的崩溃问题</li>
+                    <li>New translations</li>
+                    <li xml:lang="ar">ترجمة جديدة</li>
+                    <li xml:lang="ca">Traduccions noves</li>
+                    <li xml:lang="cs">Nové překlady</li>
+                    <li xml:lang="de">Neue Übersetzungen</li>
+                    <li xml:lang="en_GB">New translations</li>
+                    <li xml:lang="es">Nuevas traducciones</li>
+                    <li xml:lang="fi">Uusia kielikäännöksiä</li>
+                    <li xml:lang="fr">Nouvelles traductions</li>
+                    <li xml:lang="he">תרגומים חדשים</li>
+                    <li xml:lang="hr">Novi prijevodi</li>
+                    <li xml:lang="hu">Új fordítások</li>
+                    <li xml:lang="it">Nuove traduzioni</li>
+                    <li xml:lang="ja">新しい翻訳</li>
+                    <li xml:lang="ko">새 번역</li>
+                    <li xml:lang="lt">Nauji vertimai</li>
+                    <li xml:lang="nb">Nye oversettelser</li>
+                    <li xml:lang="nl">Nieuwe vertalingen</li>
+                    <li xml:lang="nn">Nye oversettelsar</li>
+                    <li xml:lang="pl">Nowe tłumaczenia</li>
+                    <li xml:lang="pt">Novas traduções</li>
+                    <li xml:lang="pt_BR">Novas traduções</li>
+                    <li xml:lang="ro">Traduceri noi</li>
+                    <li xml:lang="ru">Новые переводы</li>
+                    <li xml:lang="sl">Novi prevodi</li>
+                    <li xml:lang="tr">Yeni çeviriler</li>
+                    <li xml:lang="uk">Нові переклади</li>
+                </ul>
+            </description>
+        </release>
+        <release version="0.1.2" urgency="medium" date="2016-10-29">
+            <description>
+                <p>Add capability to search by category and apply minor bug fixes.</p>
+                <p xml:lang="ar">اضافة القابلية للبحث عبر التصنيفات..</p>
+                <p xml:lang="ca">Addició de la capacitat de cercar per categories i aplicació de correccions d'errors menors.</p>
+                <p xml:lang="cs">Přidat schopnost hledání pomocí kategorie a opravit menší chyby.</p>
+                <p xml:lang="en_GB">Add capability to search by category and apply minor bug fixes.</p>
+                <p xml:lang="es">Se añadió la capacidad de buscar por categoría y se corrigieron errores menores.</p>
+                <p xml:lang="fr">Ajout de la recherche par catégorie, correction de bugs mineurs.</p>
+                <p xml:lang="he">הוספת תכונה לחיפוש לפי קטגוריה והחלת תיקוני באגים קטנים.</p>
+                <p xml:lang="hr">Dodana mogućnost pretrage po kategorijama i manji popravci grešaka.</p>
+                <p xml:lang="hu">Lehetőség kategória szerinti keresésre, és kisebb hibajavítások.</p>
+                <p xml:lang="it">Aggiunta la capacità di cercare per categoria e correzione di problemi minori.</p>
+                <p xml:lang="ja">カテゴリー別で検索できるようにし、マイナーなバグ修正を適用。</p>
+                <p xml:lang="ko">카테고리 내 검색 추가와 자잘한 버그 수정.</p>
+                <p xml:lang="lt">Pridėti galimybę ieškoti pagal kategorijas ir taikyti smulkių klaidų pataisymus.</p>
+                <p xml:lang="nb">Tillegg av mulighet for søking etter kategori og ikrafttredelse av mindre feilrettinger.</p>
+                <p xml:lang="nl">Mogelijkheid toegevoegd tot zoeken per categorie en kleine bugfixes toegepast.</p>
+                <p xml:lang="nn">Legg til evne for å søka etter kategori og legga til mindre feilrettingar.</p>
+                <p xml:lang="pl">Dodana możliwość wyszukiwania poprzez kategorie oraz zastosowanie drobnych poprawek błędów.</p>
+                <p xml:lang="pt">Aplicadas correções de problemas pequenas e adicionada a possibilidade de pesquisar por categoria.</p>
+                <p xml:lang="pt_BR">Adicionada capacidade de buscar por categoria e aplicadas pequenas correções de bugs.</p>
+                <p xml:lang="ru">Добавлена возможность поиска по категориям и применены мелкие исправления ошибок.</p>
+                <p xml:lang="tr">Kategoriye göre arama yapma ve küçük hata düzeltmeleri uygulandı.</p>
+                <p xml:lang="uk">Додано можливість здійснювати пошук за категоріями та незначні виправлення помилок.</p>
+                <p xml:lang="zh_CN">增加分类搜索和少量问题修复</p>
+                <ul>
+                    <li>It is now possible to search apps inside a category</li>
+                    <li xml:lang="ar">الآن من الممكن البحث عن أي برنامج عبر التصنيفات</li>
+                    <li xml:lang="ca">Ara és possible cercar aplicacions dins d'una categoria</li>
+                    <li xml:lang="cs">Nyní lze vyhledávat aplikace uvnitř konkrétní kategorie</li>
+                    <li xml:lang="de">Jetzt ist es möglich, innerhalb einer Kategorie nach Apps zu suchen</li>
+                    <li xml:lang="en_GB">It is now possible to search apps inside a category</li>
+                    <li xml:lang="es">Ahora es posible buscar aplicaciones que estén dentro de una categoría</li>
+                    <li xml:lang="fi">Sovellusten etsiminen luokkien sisältä on nyt mahdollista</li>
+                    <li xml:lang="fr">Il est maintenant possible de rechercher des applications dans les catégories</li>
+                    <li xml:lang="he">מעתה ניתן לחפש יישומים בתוך קטגוריה</li>
+                    <li xml:lang="hr">Sada je moguće pretraživanje aplikacija unutar kategorija</li>
+                    <li xml:lang="hu">Mostantól lehetséges kategórián belül alkalmazásokat keresni</li>
+                    <li xml:lang="it">Adesso è possibile cercare le applicazioni all'interno di una categoria</li>
+                    <li xml:lang="ja">今やカテゴリー内でアプリを検索することができます</li>
+                    <li xml:lang="ko">이젠 카테고리 안에서 앱을 검색할 수 있게 되었습니다</li>
+                    <li xml:lang="lt">Dabar įmanoma ieškoti programas kategorijose</li>
+                    <li xml:lang="nb">Det er nå mulig å søke etter programmer inne i en kategori</li>
+                    <li xml:lang="nl">Het is nu mogelijk om de toepassingen te doorzoeken binnen een categorie</li>
+                    <li xml:lang="nn">Det er no mogleg å søka etter appar innanfor ein kategori</li>
+                    <li xml:lang="pl">Istnieje teraz możliwość wyszukiwania programu wewnątrz kategorii</li>
+                    <li xml:lang="pt">Agora é possível pesquisar por aplicações dentro de categorias</li>
+                    <li xml:lang="pt_BR">Agora é possível buscar aplicativos dentro de uma categoria</li>
+                    <li xml:lang="ru">Теперь можно искать приложения внутри категории</li>
+                    <li xml:lang="sl">Aplikacije je sedaj mogoče iskati znotraj kategorij</li>
+                    <li xml:lang="tr">Artık bir kategori içindeki uygulamaları aramak mümkün</li>
+                    <li xml:lang="uk">Тепер можна шукати додатки в категорії</li>
+                    <li xml:lang="zh_CN">现在可以在分类中进行搜索了</li>
+                    <li>Prevent multiple authentication dialogs when resuming from suspend</li>
+                    <li xml:lang="ca">Evita diàlegs d'autenticació múltiples quan es torni d'una suspensió o aturada temporal</li>
+                    <li xml:lang="cs">Zamezit vytvoření více ověřovacích dialogů při probuzení z režimu spánku</li>
+                    <li xml:lang="en_GB">Prevent multiple authentication dialogues when resuming from suspend</li>
+                    <li xml:lang="es">Ya no aparecerán múltiples diálogos de autenticado al rearrancar el equipo de la suspensión</li>
+                    <li xml:lang="fr">Empêcher à de multiples boîtes d'authentification d'apparaître après la sortie de la veille</li>
+                    <li xml:lang="he">חסימת מספר תיבות דו־שיח לאימות בעת יציאה ממצב השהיה</li>
+                    <li xml:lang="hr">Spriječeno je pojavljivanje više dijaloga ovjere pri vraćanju iz suspenzije</li>
+                    <li xml:lang="hu">Több hitelesítési ablak megelőzése felfüggesztés és folytatás után</li>
+                    <li xml:lang="it">Previene la comparsa di molteplici finestre di autenticazione quando si ritorna dallo stato di sospensione</li>
+                    <li xml:lang="ja">サスペンドからの復帰時に複数の認証ダイアログが出るのを防止</li>
+                    <li xml:lang="ko">대기 모드에서 돌아올 때 인증 창이 여러 번 뜨지 않도록 했습니다</li>
+                    <li xml:lang="lt">Tęsiant po pristabdymo, neleisti kelių tapatybės nustatymo dialogų</li>
+                    <li xml:lang="nb">Forhindre flerfoldige identitetsbekreftelsesdialogvindu når det fortsettes fra hvilemodus</li>
+                    <li xml:lang="nn">Forhindre fleire autentiseringsdialogar etter oppstart frå dvale</li>
+                    <li xml:lang="pl">Zapobieżenie wielokrotnym oknom dialogowym uwierzytelniania przy wychodzeniu ze stanu uśpienia</li>
+                    <li xml:lang="pt">Prevenidos múltiplas janelas de diálgo quando sai do estado suspenso</li>
+                    <li xml:lang="pt_BR">Evita mútiplas janelas de autenticação quando volta do modo suspensão</li>
+                    <li xml:lang="ru">Предотвращено появление множества диалогов аутентификации при выходе из сна</li>
+                    <li xml:lang="sl">Prepreči prikaz večih dialogov za preverjanje pristnosti ob vrnitvi iz suspenza</li>
+                    <li xml:lang="tr">Askıya aldıktan sonra birden çok kimlik doğrulama kutusunu engelleme</li>
+                    <li xml:lang="uk">Виправлена проблема кількох діалогів аутентифікації при відновленні з режиму очікування</li>
+                    <li xml:lang="zh_CN">阻止从挂起状态唤醒设备时弹出的多个验证对话框</li>
+                    <li>New translations</li>
+                    <li xml:lang="ar">ترجمة جديدة</li>
+                    <li xml:lang="ca">Traduccions noves</li>
+                    <li xml:lang="cs">Nové překlady</li>
+                    <li xml:lang="de">Neue Übersetzungen</li>
+                    <li xml:lang="en_GB">New translations</li>
+                    <li xml:lang="es">Nuevas traducciones</li>
+                    <li xml:lang="fi">Uusia kielikäännöksiä</li>
+                    <li xml:lang="fr">Nouvelles traductions</li>
+                    <li xml:lang="he">תרגומים חדשים</li>
+                    <li xml:lang="hr">Novi prijevodi</li>
+                    <li xml:lang="hu">Új fordítások</li>
+                    <li xml:lang="it">Nuove traduzioni</li>
+                    <li xml:lang="ja">新しい翻訳</li>
+                    <li xml:lang="ko">새 번역</li>
+                    <li xml:lang="lt">Nauji vertimai</li>
+                    <li xml:lang="nb">Nye oversettelser</li>
+                    <li xml:lang="nl">Nieuwe vertalingen</li>
+                    <li xml:lang="nn">Nye oversettelsar</li>
+                    <li xml:lang="pl">Nowe tłumaczenia</li>
+                    <li xml:lang="pt">Novas traduções</li>
+                    <li xml:lang="pt_BR">Novas traduções</li>
+                    <li xml:lang="ro">Traduceri noi</li>
+                    <li xml:lang="ru">Новые переводы</li>
+                    <li xml:lang="sl">Novi prevodi</li>
+                    <li xml:lang="tr">Yeni çeviriler</li>
+                    <li xml:lang="uk">Нові переклади</li>
+                </ul>
+            </description>
+        </release>
+        <release version="0.1.1" urgency="medium" date="2016-09-26">
+            <description>
+                <p>Search perfomance has beeen improved, the category name is now shown on the headbar and minor bugs have been fixed.</p>
+                <p xml:lang="ar">تم تحسين خاصية البحث، تحديثات اخرى واداء أفضل لمركز البرامج.</p>
+                <p xml:lang="ca">S'ha millorat el rendiment de la cerca. Ara el nom de la categoria es mostra a la capçalera. També s'han corregit errors menors.</p>
+                <p xml:lang="cs">Byla vylepšena rychlost hledání, název kategorie se nyní zobrazuje v headerbaru a byli opraveny menší chyby.</p>
+                <p xml:lang="de">Die Suchgeschwindigkeit wurde verbessert, der Name der Kategorie wird nun in der Kopfzeile angezeigt und einige Fehler wurden behoben.</p>
+                <p xml:lang="en_GB">Search perfomance has beeen improved, the category name is now shown on the headbar and minor bugs have been fixed.</p>
+                <p xml:lang="es">Se mejoró la velocidad de búsqueda, el nombre de la categoría ahora es mostrado en la barra superior y se corrigieron errores menores.</p>
+                <p xml:lang="fr">Amélioration des performances de recherche, le nom de catégorie est maintenant affichée dans la barre de titre, correction d'anomalies mineures.</p>
+                <p xml:lang="he">ביצועי החיפוש השתפרו, שם הקטגוריה מופיע בכותרת ומספר באגים קטנים תוקנו.</p>
+                <p xml:lang="hr">Performanse pretrage su poboljšane, naziv kategorije je sada prikazan u zaglavlju i manje greške su popravljene.</p>
+                <p xml:lang="hu">A keresés teljesítménye fejlesztve lett, a kategória neve látszik a fejlécen, és kisebb hibák javításra kerültek.</p>
+                <p xml:lang="it">Le prestazioni durante la ricerca sono state migliorate e il nome della categoria viene ora mostrato sulla barra del titolo, altri problemi minori sono stati risolti.</p>
+                <p xml:lang="ja">検索能力が向上し、カテゴリーの名前がヘッドバーに表示されます。また、マイナーなバグも修正しました。</p>
+                <p xml:lang="ko">검색 기능이 향상되었고 카테고리 이름이 제목에 표시되며 자잘한 버그들이 수정되었습니다.</p>
+                <p xml:lang="lt">Buvo patobulintas paieškos greitis, kategorijos pavadinimas dabar yra rodomas antraštės juostoje, be to, buvo ištaisytos smulkios klaidos.</p>
+                <p xml:lang="nb">Søkeytelsen har blitt forbedret, kategorinavnet vises nå i hodelinjen og småfeil har blitt rettet.</p>
+                <p xml:lang="nn">Ytelsen i søk har blitt forbetra, kategorinamnet blir no vist i topplinja og mindre feilrettingar har blitt fiksa.</p>
+                <p xml:lang="pl">Poprawiono skuteczność wyszukiwania, nazwa kategorii jest teraz widoczna na pasku oraz poprawiono drobne błędy.</p>
+                <p xml:lang="pt">Desempenho de pesquisa melhorado, nome da categoria agora aparece na barra de cabeçalho e resolvidos pequenos problemas.</p>
+                <p xml:lang="pt_BR">Performance da busca melhorada, o nome da categoria agora é exibido na barra superior e pequenos erros foram corrigidos.</p>
+                <p xml:lang="ru">Улучшена эффективность поиска, название категории теперь отображается в заголовке, исправлены мелкие ошибки.</p>
+                <p xml:lang="uk">Продуктивність пошуку була поліпшена, назва категорії тепер відображається на заголовку вікна та виправлення незначних помилок.</p>
+                <p xml:lang="zh_CN">修复少量问题、改进搜索性能，顶栏显示分类名称。</p>
+                <ul>
+                    <li>Fix Steam installation</li>
+                    <li xml:lang="ar">تحسين خاصية التثبيت</li>
+                    <li xml:lang="ca">S'ha corregit la instal·lació de l'Steam</li>
+                    <li xml:lang="cs">Opravit instalaci Steam</li>
+                    <li xml:lang="en_GB">Fix Steam installation</li>
+                    <li xml:lang="es">Solucionado problema de instalación de Steam</li>
+                    <li xml:lang="fi">Korjattu Steam-asennus</li>
+                    <li xml:lang="fr">Correction de l'installation de Steam</li>
+                    <li xml:lang="he">תיקון התקנת Steam</li>
+                    <li xml:lang="hr">Popravljena je Steam instalacija</li>
+                    <li xml:lang="hu">Steam telepítés javítása</li>
+                    <li xml:lang="it">Risolto un problema con l'installazione di Steam</li>
+                    <li xml:lang="ja">Steam のインストールを修正</li>
+                    <li xml:lang="ko">스팀 설치 문제 해결</li>
+                    <li xml:lang="lt">Ištaisyti Steam diegimą</li>
+                    <li xml:lang="nb">Fiks Steam-installasjon</li>
+                    <li xml:lang="nn">Fiks installasjonen av Steam</li>
+                    <li xml:lang="pl">Poprawiono instalację Steam</li>
+                    <li xml:lang="pt">Corrigida instalação da Steam</li>
+                    <li xml:lang="pt_BR">Corrigida a instalação do Steam</li>
+                    <li xml:lang="ru">Исправлена проблема с установкой Steam</li>
+                    <li xml:lang="sl">Popravi namestitev Steama</li>
+                    <li xml:lang="tr">Steam kurulumu düzeltildi</li>
+                    <li xml:lang="uk">Виправлено встановлення Steam</li>
+                    <li xml:lang="zh_CN">修复 Steam 安装问题</li>
+                    <li>Make search asynchronous</li>
+                    <li xml:lang="ca">Fer la cerca asíncrona</li>
+                    <li xml:lang="cs">Udělat vyhledání asynchroní</li>
+                    <li xml:lang="en_GB">Make search asynchronous</li>
+                    <li xml:lang="es">Ahora la búsqueda es asíncrona</li>
+                    <li xml:lang="fr">La recherche est maintenant asynchrone</li>
+                    <li xml:lang="he">הפיכת החיפוש לאסינכרוני</li>
+                    <li xml:lang="hr">Pretraživanje je asinkrono</li>
+                    <li xml:lang="hu">Keresés aszinkronná tétele</li>
+                    <li xml:lang="it">Rende la ricerca asincrona</li>
+                    <li xml:lang="ko">비동기 검색 생성</li>
+                    <li xml:lang="lt">Padaryti paiešką asinchroninę</li>
+                    <li xml:lang="nb">Gjør søk asynkront</li>
+                    <li xml:lang="nn">Gjer søket asynkront</li>
+                    <li xml:lang="pl">Dodano wyszukiwanie asynchroniczne</li>
+                    <li xml:lang="pt">Aplicada pesquisa assíncrona</li>
+                    <li xml:lang="pt_BR">Torna a busca assíncrona</li>
+                    <li xml:lang="ru">Реализован асинхронный поиск</li>
+                    <li xml:lang="tr">Eş zamanlı olmayan arama yapmak</li>
+                    <li xml:lang="uk">Відтепер пошук працює асинхронно</li>
+                    <li xml:lang="zh_CN">实现异步搜索</li>
+                    <li>New translations</li>
+                    <li xml:lang="ar">ترجمة جديدة</li>
+                    <li xml:lang="ca">Traduccions noves</li>
+                    <li xml:lang="cs">Nové překlady</li>
+                    <li xml:lang="de">Neue Übersetzungen</li>
+                    <li xml:lang="en_GB">New translations</li>
+                    <li xml:lang="es">Nuevas traducciones</li>
+                    <li xml:lang="fi">Uusia kielikäännöksiä</li>
+                    <li xml:lang="fr">Nouvelles traductions</li>
+                    <li xml:lang="he">תרגומים חדשים</li>
+                    <li xml:lang="hr">Novi prijevodi</li>
+                    <li xml:lang="hu">Új fordítások</li>
+                    <li xml:lang="it">Nuove traduzioni</li>
+                    <li xml:lang="ja">新しい翻訳</li>
+                    <li xml:lang="ko">새 번역</li>
+                    <li xml:lang="lt">Nauji vertimai</li>
+                    <li xml:lang="nb">Nye oversettelser</li>
+                    <li xml:lang="nl">Nieuwe vertalingen</li>
+                    <li xml:lang="nn">Nye oversettelsar</li>
+                    <li xml:lang="pl">Nowe tłumaczenia</li>
+                    <li xml:lang="pt">Novas traduções</li>
+                    <li xml:lang="pt_BR">Novas traduções</li>
+                    <li xml:lang="ro">Traduceri noi</li>
+                    <li xml:lang="ru">Новые переводы</li>
+                    <li xml:lang="sl">Novi prevodi</li>
+                    <li xml:lang="tr">Yeni çeviriler</li>
+                    <li xml:lang="uk">Нові переклади</li>
+                </ul>
+            </description>
+        </release>
+        <release version="0.1.0" date="2016-08-15"/>
+    </releases>
+    <provides>
+        <binary>appcenter</binary>
+        <binary>appcenter-daemon</binary>
+        <dbus type="user">io.elementary.AppCenter</dbus>
+    </provides>
+    <developer_name>elementary LLC.</developer_name>
+    <url type="homepage">http://elementary.io/</url>
+    <url type="bugtracker">https://bugs.launchpad.net/appcenter</url>
+    <url type="donation">https://elementary.io/get-involved#funding</url>
+    <url type="help">https://elementaryos.stackexchange.com/questions/tagged/appcenter</url>
+    <url type="translate">https://l10n.elementary.io/projects/desktop/appcenter</url>
+    <update_contact>contact_at_elementary.io</update_contact>
+    
+    <custom>
+        <value key="x-appcenter-color-primary">#665888</value>
+    </custom>
+</component>

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=
+Comment=Browse and manage apps
+Exec=appcenter -s
+Icon=system-software-install
+Terminal=false
+Type=Application
+NoDisplay=true
+X-GNOME-AutoRestart=true
+X-GNOME-Autostart-Phase=Applications
