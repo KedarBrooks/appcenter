@@ -46,7 +46,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     private Gtk.Label secondary_error_label;
 
     public string cryptLoc = ""; 
-    public string decyptLoc = "";
 
     public int amount { get; construct set; }
     public string app_name { get; construct set; }
@@ -579,11 +578,51 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
     private static void cardDataEncrypt(string cNum, string cvc, string cExpDate) {
         // Data Encryption & Storage here
-        string StrongA = ""; 
-        string StrongB = "";
+        var attributes = new GLib.HashTable<string,string> (); 
+        attributes["size"] = "64"; 
+        attributes["type"] = "user"; 
+        var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
+                                            "size", Secret.SchemaAttributeType.INTEGER,
+                                            "type", Secret.SchemaAttributeType.STRING);
+        
+        string Strongkey = null; 
+
+        // Search for key 
+        Secret.password_lookupv.begin (appCenterS, attributes, null, (obj, async_res) => {
+            Stringkey = Secret.password_lookup.end (async_res);
+            /* DEBUG ONLY !!! */
+            stdout.printf ("[key] " + Strongkey); 
+        });
+
+        if (Strongkey = null) { 
+        // Conditional Create
+         Secret.secret_collection_create(SecretService.null, 'appcenter','aac','acc');
+         /*Keygen starts*/
+        var builder = new StringBuilder (); 
+        char store(string charset = null);
+        char char_random(string charset = "ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz"); 
+
+        int rand_index = Random.int_range(0,charset.length) 
+        int length = 63; 
+        int i = 0; 
+        
+        while(i<=length) { 
+             builder.append( (string) chars[rand_index]); 
+        }
+        Strongkey = builder.str;
+
+        /* DEBUG ONLY !!! */
+            stdout.printf ("[generated key] " + newKey); 
+         /*Keygen ends */
+        }
+
+        Secret.password_storev.begin (appCenterS,attributes,Secret.aac, "Label",Strongkey,null,(obj,async_res) => {
+            bool res = Secret.password_store.end(async_res); 
+            /*Password Stored - complete additional processes */
+            });
 
         // Create cc.xml  
-        File file = File.new_for_path ("cc.xml");
+        File file = File.new_for_path (cryptLoc + "/cc.xml");
 	    try {
 		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
             os.write ("<cards>\n".data);
@@ -598,11 +637,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 		    stdout.printf ("Error: %s\n", e.message);
 	        }
 
-	    return 0;
-            }
-
-        system(cryptLoc + " " + StrongA + cvc + StrongB);
-        // card_number_entry.text, expiration_dateyear[0:2], year,
+            system("aescrypt -e -p " + Strongkey + " " + cryptLoc + "cc.xml");
+            stdout.printf("[crypt complete]"); 
+        }
     }
-}
+
 
