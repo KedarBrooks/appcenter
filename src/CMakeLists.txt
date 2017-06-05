@@ -42,6 +42,8 @@ PACKAGES
     libsoup-2.4 
     json-glib-1.0
     libxml-2.0
+    xmlbird
+    libsecret-1
     ${UNITY_PACKAGES}
 OPTIONS
   --vapidir=${CMAKE_SOURCE_DIR}/vapi

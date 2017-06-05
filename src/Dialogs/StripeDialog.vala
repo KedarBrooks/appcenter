@@ -17,8 +17,9 @@
 * Boston, MA 02110-1301 USA
 */
 
-public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
-    using B; 
+using B;
+
+public class AppCenter.Widgets.StripeDialog : Gtk.Dialog { 
 
     public signal void download_requested ();
 
@@ -38,7 +39,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     private Gtk.Stack layouts;
 
     private Gtk.Entry email_entry;
-    private Gtk.Entry card_number_entry;
+    //private Gtk.ComboBox  card_number_entry;
+    private Gtk.Entry  card_number_entry;
     private Gtk.Entry card_expiration_entry;
     private Gtk.Entry card_cvc_entry;
     private Gtk.Button pay_button;
@@ -47,9 +49,22 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
     private Gtk.Label secondary_error_label;
 
+    private Gtk.ListStore list_store; 
+    private Gtk.TreeIter iter; 
+
+       struct PaymentCard {
+        // Card Definition 
+        int cNum;
+        int cvc;  
+        string expo; 
+    }
+
+    private PaymentCard userCard;
+
     public string cryptLoc = "";
-    public const unowned string COLLECTION_APPCC = "acc";
-    public var meta_list;   
+    public const string COLLECTION_APPCC = "acc";
+    public List meta_list;   
+    public int index =0;  
 
 
     public int amount { get; construct set; }
@@ -89,7 +104,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
            validate (0, email_entry.text);
         });
 
-        card_number_entry = new Gtk.Entry ();
+        loadMetaData();
+        card_number_entry = new Gtk.Entry(); 
+        //card_number_entry = new Gtk.ComboBox.with_model (list_store);
         card_number_entry.hexpand = true;
         card_number_entry.input_purpose = Gtk.InputPurpose.DIGITS;
         card_number_entry.max_length = 20;
@@ -173,7 +190,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
         cancel_button = (Gtk.Button) add_button (_("Cancel"), Gtk.ResponseType.CLOSE);
 
-        save_button = (Gtk.Button) add_button (_("Save Card").printf ("Saving Card Data ..."), Gtk.ResponseType.APPLY);
+        save_button = (Gtk.Button) add_button (_("Save Card").printf ("Saving Card Data ..."), Gtk.ResponseType.ACCEPT);
         //save_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION); 
 
         pay_button = (Gtk.Button) add_button (_("Pay $%d.00").printf (amount), Gtk.ResponseType.APPLY);
@@ -380,6 +397,26 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
                 destroy ();
                 break;
+            case Gtk.ResponseType.ACCEPT: 
+                // Card Save action here
+                string cardNumber = card_number_entry.text; 
+                string cardCvc = card_cvc_entry.text; 
+                string cardExpo = card_expiration_entry.text; 
+
+                if (cardNumber == "") { 
+                    // Prompt to enter card info 
+                }
+                
+                 if (cardNumber != "") { 
+                    // Run Process
+                    cardDataEncrypt(cardNumber, cardCvc, cardExpo);
+                    stdout.printf("[Data saved]");                     
+                }
+                // remove data from memory
+                cardNumber = Null; 
+                cardCvc = Null; 
+                cardExpo = Null; 
+                break;  
         }
     }
 
@@ -590,7 +627,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         int a = 0;
 
         while(a < size-4) {
-        // fill black space
+        // fill blank space
             builder.append("*");
             a++;  
         }
@@ -603,7 +640,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
         final_cNum = builder.str;  
  
-        File file = File.new_for_path (cryptLoc + "/meta-cc.xml");
+        File file = File.new_for_path (cryptLoc + "/home/*/AppCenter/meta-cc.xml");
 	    try {
 		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
             os.write ("<cards>\n".data);
@@ -619,16 +656,20 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
             stdout.printf("[metadata file built]"); 
         }
-    }
+    
 
-    private static void loadMetaData () {
+    private static void loadMetaData() {
+
+         list_store = new Gtk.ListStore (1, typeof (string));
+	 
+
         string builder = new StringBuilder(); 
         string cNum = null; 
         Tag root; 
         XmlParser parser;
         string xml; 
 
-        var file = File.new_for_path ("/meta-cc.xml"); 
+        var file = File.new_for_path ("/home/*/AppCenter/meta-cc.xml"); 
 
         if(!file.query_exists ()) { 
             stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
@@ -661,7 +702,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     meta_list= new List<string>();
     foreach (Attribute Attribute in attributes) {
         if(Attribute.get_name() == "cNum") { 
-            meta_list.append(Attribute.get_content ()); 
+            list_store.append (out iter);
+            list_store.set(Attribute.get_content ()); 
             stdout.printf ("[meta objects] " + i);
         }
     }  
@@ -670,7 +712,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         
     private static void cardDataEncrypt(string cNum, string cvc, string cExpDate) {
         // Data Encryption & Storage here
-        var attributes = new GLib.HashTable<string,string> (); 
+        var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
         attributes["size"] = "64"; 
         attributes["type"] = "user"; 
         var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
@@ -686,43 +728,19 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             stdout.printf ("[key] " + strongkey); 
         });
 
-        if (strongkey = null) {  
-        // Conditional Create
-        stdout.printf ("[appcenter] unable to find key, generating a new key"); 
-         Secret.secret_collection_create(SecretService.null, 'appcenter','aac','acc');
-         /*Keygen starts*/
-        var builder = new StringBuilder (); 
-        char store(string charset = null);
-        char char_random(string charset = "ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789"); 
-
-        int rand_index = Random.int_range(0,charset.length) 
-        int length = 63; 
-        int i = 0; 
-        
-        while(i<=length) { 
-             builder.append((string) chars[rand_index]); 
-        }
-        strongkey = builder.str;
-
-        /* DEBUG ONLY !!! */
-            stdout.printf ("[generated key] " + strongkey); 
-         /*Keygen ends */
+        if (strongkey = null) { 
+        strongkey = keyGen(); 
         }
 
-        Secret.password_storev.begin (appCenterS,attributes,COLLECTION_APPCC, "acc",strongkey,null,(obj,async_res) => {
-            bool res = Secret.password_store.end(async_res); 
-            /*Password Stored - complete additional processes */
-            stdout.printf ("[password stored]"); 
-            });
-
+        /* TODO: Add appending option for multi-card support */
         // Create cc.xml  
-        File file = File.new_for_path (cryptLoc + "/cc.xml");
+        File file = File.new_for_path ( + "/*/AppCenter/cc.xml");
 	    try {
 		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
             os.write ("<cards>\n".data);
             os.write (" <card>\n".data);
             os.write ("     <cNum>"+ cNum +"</cNum>\n".data);
-            os.write ("     <expo>"+ cExpoDate +"</expo>\n".data);
+            os.write ("     <expo>"+ cExpDate +"</expo>\n".data);
             os.write ("     <cvc>"+  cvc + "</cvc>\n".data); 
             os.write (" </card>\n".data);
             os.write ("</cards>\n".data);
@@ -732,16 +750,58 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 		    stdout.printf ("Error: %s\n", e.message);
 	        }
 
-            system("aescrypt -e -p " + strongkey + " " + cryptLoc + "cc.xml");
+            Posix.system("aescrypt -e -p " + strongkey + " " + cryptLoc + "cc.xml");
 
             var file = File.new_for_path ("/cc.xml"); 
             if(!file.query_exists ()) { 
             stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
             return 1;
             }   
-            system("shred -n 3 -u -z /cc.xml"); 
-            stdout.printf("[crypt complete]"); 
+            Posix.system("shred -n 3 -u -z /cc.xml");
+            stdout.printf("[Unencrypted file] Purged");  
+            stdout.printf("[Encrypt complete]"); 
         }
+
+    private static string keyGen() {  
+        string strongkey  = null; 
+        var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
+        attributes["size"] = "64"; 
+        attributes["type"] = "user"; 
+        var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
+                                            "size", Secret.SchemaAttributeType.INTEGER,
+                                            "type", Secret.SchemaAttributeType.STRING);
+
+        stdout.printf ("[appcenter] unable to find key, generating a new key"); 
+         Secret.Collection.create(null, "appcenter","aac",Secret.CollectionFlags.SECRET_COLLECTION_NONE);
+         /*Keygen starts*/
+         /* 
+        var builder = new StringBuilder(); 
+        char char_random(string charset = "ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789"); 
+
+        int rand_index = Random.int_range(0,charset.length);  
+        int length = 63; 
+        int i = 0; 
+        
+        while(i<=length) { 
+             builder.append((string) char_random[rand_index]); 
+        }
+        strongkey = builder.str;
+        */
+
+         strongkey =  "ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789"[Random.int_range (0,62)];
+
+        /* DEBUG ONLY !!! */
+            stdout.printf ("[generated key] " + strongkey); 
+         /*Keygen ends */
+        
+        Secret.password_storev.begin (appCenterS,attributes,COLLECTION_APPCC, "acc",strongkey,null,(obj,async_res) => {
+            bool res = Secret.password_store.end(async_res); 
+            /*Password Stored - complete additional processes */
+            stdout.printf ("[password stored]"); 
+        });
+
+        return strongkey; 
+    } 
 
     private static string cardDataDecrypt() { 
         string strongkey = null; 
@@ -751,8 +811,65 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             stdout.printf ("[key] " + strongkey); 
         });
 
-        system("aescrypt -d -p " + strongkey + " " + cryptLoc + "/cc.xml");
-    } 
+        Posix.system("aescrypt -d -p " + strongkey + " " + cryptLoc + "/cc.xml.aes");
+    }
+
+    private static void getCardInfo(int index) {
+        string builder = new StringBuilder(); 
+        var payment_list = new List<string>();
+        Tag root; 
+        XmlParser parser;
+        string xml;
+
+        cardDataDecrypt(); 
+
+        var file = File.new_for_path ("/cc.xml"); 
+        if(!file.query_exists ()) { 
+            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
+        return 1;
+        }   
+    
+        try {
+        var dis = new DataInputStream (file.read ()); 
+        string line; 
+
+        while ((line = dis.read_line (null)) !=null) {
+            builder.append("%s\n", line); 
+        }
+        
+        } catch (Error e) {
+        error ("%s", e.message); 
+        }
+
+        xml = builder.str;
+        parser = new XmlParser(xml); 
+
+        if (!parser.validate ()) {
+            warning ("Invalid XML"); 
+            return 1; 
+        } 
+
+        root = parser.get_root_tag(); 
+
+        int i = 0; 
+        Attributes attributes = tag.get_attributes();
+        meta_list= new List<string>();
+        foreach (Attribute Attribute in attributes) {
+            if(Attribute.get_name() == "cNum") { 
+                payment_list.append(Attribute.get_content ()); 
+            }
+            if(Attribute.get_name() == "cvc") {
+                payment_list.append(Attribute.get_content ()); 
+            }
+            if(Attribute.get_name() == "expo") {
+                payment_list.append(Attribute.get_content ());
+            }
+            stdout.printf ("[meta objects] " + i);
+            i++; 
+        }
+
+        userCard = {payment_list[index], payment_list[index+1], payment_list[index+2]}; 
+    }
 }
 
 
