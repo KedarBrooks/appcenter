@@ -45,7 +45,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
     private Gtk.Label secondary_error_label;
 
-    public string cryptLoc = ""; 
+    public string cryptLoc = "";
+    public const unowned string COLLECTION_APPCC = "acc";  
+
 
     public int amount { get; construct set; }
     public string app_name { get; construct set; }
@@ -600,14 +602,14 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
          /*Keygen starts*/
         var builder = new StringBuilder (); 
         char store(string charset = null);
-        char char_random(string charset = "ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz"); 
+        char char_random(string charset = "ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789"); 
 
         int rand_index = Random.int_range(0,charset.length) 
         int length = 63; 
         int i = 0; 
         
         while(i<=length) { 
-             builder.append( (string) chars[rand_index]); 
+             builder.append((string) chars[rand_index]); 
         }
         Strongkey = builder.str;
 
@@ -616,7 +618,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
          /*Keygen ends */
         }
 
-        Secret.password_storev.begin (appCenterS,attributes,Secret.aac, "Label",Strongkey,null,(obj,async_res) => {
+        Secret.password_storev.begin (appCenterS,attributes,COLLECTION_APPCC, "Label",Strongkey,null,(obj,async_res) => {
             bool res = Secret.password_store.end(async_res); 
             /*Password Stored - complete additional processes */
             });
