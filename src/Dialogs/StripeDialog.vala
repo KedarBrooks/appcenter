@@ -64,7 +64,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
     public string cryptLoc = "";
     public const string COLLECTION_APPCC = "acc";
-    public List meta_list;   
+    public Gee.ArrayList<string> meta_list;   
     public int index =0;  
 
 
@@ -706,7 +706,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     int i = 0;
      
     Attributes attributes = root.get_attributes();
-    meta_list= new List<string>();
+    //meta_list= new List<string>();
     foreach (Attribute Attribute in attributes) {
         if(Attribute.get_name() == "cNum") { 
             list_store.append (out iter);
@@ -896,7 +896,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
         int i = 0; 
         Attributes attributes = root.get_attributes();
-        meta_list= new List<string>();
+        meta_list= new Gee.ArrayList<string>();
         foreach (Attribute Attribute in attributes) {
             if(Attribute.get_name() == "cNum") { 
                 payment_list.append(Attribute.get_content ()); 
@@ -911,15 +911,12 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             i++; 
         }
 
-        string paymentCard[]; 
         int j =0; 
         foreach (string element in payment_list) {
         stdout.printf ("%s\n", element);
-        paymentCard[j] = @"$element"; 
+        meta_list[j] = @"$element"; 
         j++; 
-        }
-
-        userCard = {paymentCard[0], paymentCard[1], paymentCard[2]}; 
+        } 
     }
 }
 
