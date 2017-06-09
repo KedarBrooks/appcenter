@@ -52,6 +52,9 @@ OPTIONS
   ${UNITY_OPTIONS}
 )
 
+include_directories(/usr/include/libsecret-1/libsecret/)
+set(SOURCES /usr/include/libsecret-1/libsecret/secret.h)
+
 include (GResource)
 glib_compile_resources (GLIB_RESOURCES_CATEGORIES SOURCE ../data/icons/categories.gresource.xml)
 
