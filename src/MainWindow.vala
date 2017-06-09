@@ -31,6 +31,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     private Gee.Deque<string> return_button_history;
     private Granite.Widgets.AlertView network_alert_view;
     private Gtk.Grid network_view;
+    public string userN; 
 
     public static Views.InstalledView installed_view { get; private set; }
 
@@ -58,6 +59,8 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
             default:
                 break;
         }
+        
+        file_check(); 
 
         view_mode.selected = 0;
         search_entry.grab_focus_without_selecting ();
@@ -368,4 +371,105 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         button_stack.sensitive = connection_available;
         search_entry.sensitive = connection_available && !search_view.viewing_package && !homepage.viewing_package;
     }
-}
+
+    private void file_check () {
+        user();         
+        var file = File.new_for_path ("/tmp/user.txt");
+        var dis = new DataInputStream (file.read ());
+        string line;
+        // Read lines until end of file (null) is reached
+        try {
+        while ((line = dis.read_line (null)) != null) {
+            userN = line; 
+            stdout.printf ("%s\n", line);
+        }
+    } catch (Error e) {
+        error ("%s", e.message);
+    }
+
+        file = File.new_for_path (@"/home/$userN/appcenter/meta_cc.xml");
+        if(!file.query_exists ()) { 
+            stderr.printf ("File '%s' doesn't exist. Attempting to recreate..\n", file.get_path ());
+        // Error Correction Here
+            create_directory("appcenter");  
+	    try {
+		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
+            os.write ("<cards>\n".data);
+            os.write (" <card>\n".data);
+            os.write (@"     <cNum></cNum>\n".data);
+            os.write (@"     <expo></expo>\n".data);
+            os.write (@"     <cvc></cvc>\n".data); 
+            os.write (" </card>\n".data);
+            os.write ("</cards>\n".data);
+            stdout.printf ("cc.xml [Created]\n");
+	        } 
+        catch (Error e) {
+		    stdout.printf ("Error: %s\n", e.message);
+	        }
+        }
+
+        var file2 = File.new_for_path (@"/home/$userN/appcenter/meta_cc.xml");
+        if(!file2.query_exists()) { 
+            stderr.printf ("File '%s' doesnt't exist. Attempting to recreate. \n", file2.get_path ()); 
+            // Error Correction Here 
+            //create_directory(dir); 
+        try {
+            FileOutputStream os = file2.create  (FileCreateFlags.PRIVATE); 
+            os.write ("<cards>\n".data);
+            os.write (" <card>\n".data);
+            os.write (@"     <cNum></cNum>\n".data);
+            os.write (" </card>\n".data);
+            os.write ("</cards>\n".data);
+            stdout.printf ("meta_cc.xml [Created]\n");
+	        } 
+        catch (Error e) {
+		    stdout.printf ("Error: %s\n", e.message);
+	        }
+            stdout.printf("[File Check Complete] \n"); 
+        }
+    }
+
+    private void create_directory(string dir) {
+        try { 
+            string[] spawn_args = {"mkdir",@"/home/$userN/$dir"};
+            string[] spawn_env = Environ.get ();
+		    string ls_stdout;
+		    string ls_stderr;
+		    int ls_status;
+            Process.spawn_sync("/",
+            spawn_args,
+            spawn_env,
+            SpawnFlags.SEARCH_PATH,
+			null,
+			out ls_stdout,
+			out ls_stderr,
+			out ls_status);
+        } catch (SpawnError e) {
+		    stdout.printf ("Error: %s\n", e.message);
+            }
+            stdout.printf("[Base directory created] \n"); 
+        }
+
+    private void user() {
+         try { 
+            string[] spawn_args = {"touch","/tmp/user.txt;","echo","id", "-u", "-n", ">user.txt"};
+            string[] spawn_env = Environ.get ();
+            string ls_stdout; 
+		    string ls_stderr;
+		    int ls_status;
+            Process.spawn_sync("/",
+            spawn_args,
+            spawn_env,
+            SpawnFlags.SEARCH_PATH,
+			null,
+			out ls_stdout,
+			out ls_stderr,
+			out ls_status);
+            //stdout.printf(@"user: $ls_stdout"); 
+        } catch (SpawnError e) {
+		    stdout.printf ("Error: %s\n", e.message);
+            }
+        
+        }
+    }
+
