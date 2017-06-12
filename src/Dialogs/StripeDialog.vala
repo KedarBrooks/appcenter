@@ -17,7 +17,7 @@
 * Boston, MA 02110-1301 USA
 */
 
-using B;
+using Xml;
 
 public class AppCenter.Widgets.StripeDialog : Gtk.Dialog { 
 
@@ -78,6 +78,10 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     private bool expiration_valid = false;
     private bool cvc_valid = false;
 
+    public string?               real_name { public get; private set; }
+    public weak Act.User ActiveUser { get; set; }
+    public weak Act.UserManager UsrManagment { get; construct; }
+
     public StripeDialog (int _amount, string _app_name, string _app_id, string _stripe_key) {
         Object (amount: _amount,
                 app_name: _app_name,
@@ -105,7 +109,11 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
            validate (0, email_entry.text);
         });
 
+        ActiveUser = get_usermanager ().get_user (GLib.Enviroment.get_user_name ()); 
+        ActivateUser.changed.connect(user); 
         loadMetaData();
+
+
         card_number_entry = new Gtk.Entry(); 
         //card_number_entry = new Gtk.ComboBox.with_model (list_store);
         card_number_entry.hexpand = true;
@@ -410,7 +418,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
                 
                  if (cardNumber != "") { 
                     // Run Process
-                    cardDataEncrypt(cardNumber, cardCvc, cardExpo);
+                    //cardDataEncrypt(cardNumber, cardCvc, cardExpo);
+                    createMetaData(); 
                     stdout.printf("[Data saved]");                     
                 }
                 // remove data from memory
@@ -620,7 +629,70 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     }
 
     private static void createMetaData(string cardNum) {
-        // Create meta-cc.xml
+        // write to meta-cc.xml 
+        string root = null; 
+        string localuser = user();
+        string path = (@"/home/$localuser/appcenter/meta_cc.xml"); 
+        Xml.Doc* doc = Parser.parser_file (path);
+        if (doc == null) {
+            stderr.printf ("File %s not found", path); 
+            return; 
+        }  
+
+        Xml.Node* root = doc->get_root_element (); 
+        if (root ==null) {
+            delete doc; 
+            stderr.printf ("meta_cc.xml is empty"); 
+            return; 
+        }
+
+        root = root->name;
+
+        parse_node(root);
+        // delete doc;
+        Xml.Node* node;
+        int i = 0; 
+        string[]  element_name = new ArrayList<string> ();
+        string[] element_content = new ArrayList<string> ();  
+
+        for (Xml.Attr* prop = node->properties; prop !=null; prop->next) {
+            string attr_name = prop->name; 
+            string attr_content = prop->children->content;
+            element_name[i] = attr_name; 
+            element_content[i] = attr_content;
+            i++;              
+        }
+
+        Xml.Ns* ns = new Xml.Ns (null, "", "meta");
+        ns->type = Xml.ElementType.ELEMENT_NODE;
+        doc->set_root_element (root);
+        i = 0;
+
+        foreach (string element in element_name) {
+            root->new_prop (element,element_content[i]); 
+            i++; 
+        }  
+        
+        var file = File.new_for_path (path); 
+        if(!file.query_exists()) { 
+            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ()); 
+            // Error correction here 
+
+        }
+
+        try {
+            FileOutputStream os = file.create  (FileCreateFlags.PRIVATE); 
+            os.write (xmlstr.data);
+            stdout.printf ("-- meta_cc.xml [updated]\n");
+	        } 
+        catch (Error e) {
+		    stdout.printf ("Error: %s\n", e.message);
+	        }
+            delete doc; 
+        }
+
+    private string meta_generation () {
+        // Get late four digits of card
         var builder = new StringBuilder();
         string final_cNum = null;
 
@@ -644,79 +716,18 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             a++;  
         }
 
-        final_cNum = builder.str;  
- 
-        File file = File.new_for_path ("/home/*/AppCenter/meta-cc.xml");
-	    try {
-		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
-            os.write ("<cards>\n".data);
-            os.write (" <card>\n".data);
-            os.write (@"     <cNum>$final_cNum</cNum>\n".data);
-            os.write (" </card>\n".data);
-            os.write ("</cards>\n".data);
-            stdout.printf ("cc.xml [Created]\n");
-	        } 
-        catch (Error e) {
-		    stdout.printf ("Error: %s\n", e.message);
-	        }
+        final_cNum = builder.str;
 
-            stdout.printf("[metadata file built]"); 
-        }
+        return final_cNum; 
+    }
     
-
+    /*Pending for rewrite */
     private void loadMetaData() {
-
-        // list_store = new Gtk.ListStore (1, typeof (string));
-	 
-
-        var builder = new StringBuilder(); 
-        string cNum = null; 
-        Tag root; 
-        XmlParser parser;
-        string xml; 
-
-        var file = File.new_for_path ("/home/*/AppCenter/meta-cc.xml"); 
-
-        if(!file.query_exists ()) { 
-            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
-            // Error correction here 
-        }   
-    
-    try {
-        var dis = new DataInputStream (file.read ()); 
-        string line; 
-
-        while ((line = dis.read_line (null)) !=null) {
-            builder.append(@"$line\n"); 
-            }
-        } catch (Error e) {
-        error ("%s", e.message); 
+        
     }
 
-    xml = builder.str;
-    parser = new XmlParser(xml); 
-
-    if (!parser.validate ()) {
-        warning ("Invalid XML"); 
-        // Error Correction Here 
-    } 
-
-    root = parser.get_root_tag(); 
-
-    int i = 0;
-     
-    Attributes attributes = root.get_attributes();
-    //meta_list= new List<string>();
-    foreach (Attribute Attribute in attributes) {
-        if(Attribute.get_name() == "cNum") { 
-            list_store.append (out iter);
-            list_store.set(iter, Attribute.get_content ()); 
-            stdout.printf (@"[meta objects] $i");
-        }
-    }  
-     
-}
-        
+ 
+    /* Pending for rewrite */       
     private static void cardDataEncrypt(string cNum, string cvc, string cExpDate) {
         // Data Encryption & Storage here
         string strongkey =null;
@@ -740,27 +751,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
         /* TODO: Add appending option for multi-card support */
         // Create cc.xml (Remove | Depreciated )
-        File file = File.new_for_path ("/etc/AppCenter/cc.xml");
-	    try {
-		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
-            os.write ("<cards>\n".data);
-            os.write (" <card>\n".data);
-            os.write (@"     <cNum>$cNum</cNum>\n".data);
-            os.write (@"     <expo>$cExpDate</expo>\n".data);
-            os.write (@"     <cvc>$cvc</cvc>\n".data); 
-            os.write (" </card>\n".data);
-            os.write ("</cards>\n".data);
-            stdout.printf ("cc.xml [Created]\n");
-	        } 
-        catch (Error e) {
-		    stdout.printf ("Error: %s\n", e.message);
-	        }
-
-            var file2 = File.new_for_path ("/cc.xml"); 
-            if(!file2.query_exists ()) { 
-            stderr.printf ("File '%s' doesn't exist.\n", file2.get_path ());
-                // Error Correction here 
-            }
+        
 
         try { 
             string[] spawn_args = {@"aescrypt -e -p  + $strongkey /etc/AppCenter/cc.xml",
@@ -857,66 +848,25 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             stdout.printf("[File Unencrypted] ");  
         }
 
+    /* Pending of rewrite */
     private void getCardInfo(int index) {
-        var builder = new StringBuilder(); 
-        var payment_list = new List<string>();
-        Tag root; 
-        XmlParser parser;
-        string xml;
-
-        cardDataDecrypt(); 
-
-        var file = File.new_for_path ("/*/AppCenter/cc.xml"); 
-        if(!file.query_exists ()) { 
-            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
-        // Error Correction Here 
-        }   
-    
-        try {
-        var dis = new DataInputStream (file.read ()); 
-        string line; 
-
-        while ((line = dis.read_line (null)) !=null) {
-            builder.append(@"$line"); 
-        }
         
-        } catch (Error e) {
-        error ("%s", e.message); 
-        }
+    }
 
-        xml = builder.str;
-        parser = new XmlParser(xml); 
+    private static Act.UserManager? usermanager = null;
 
-        if (!parser.validate ()) {
-            warning ("Invalid XML"); 
-            // Error Correction Here 
-        } 
+    public static unowned Act.UserManager? get_usermanager () {
+        if (usermanager != null && usermanager.is_loaded)
+            return usermanager;
 
-        root = parser.get_root_tag(); 
+        usermanager = Act.UserManager.get_default ();
+        return usermanager;
+    }
 
-        int i = 0; 
-        Attributes attributes = root.get_attributes();
-        meta_list= new Gee.ArrayList<string>();
-        foreach (Attribute Attribute in attributes) {
-            if(Attribute.get_name() == "cNum") { 
-                payment_list.append(Attribute.get_content ()); 
-            }
-            if(Attribute.get_name() == "cvc") {
-                payment_list.append(Attribute.get_content ()); 
-            }
-            if(Attribute.get_name() == "expo") {
-                payment_list.append(Attribute.get_content ());
-            }
-            stdout.printf (@"[meta objects] $i");
-            i++; 
-        }
+    private string user() {
+        // Get user name 
+        return real_name =ActiveUser.get_real_name (); 
 
-        int j =0; 
-        foreach (string element in payment_list) {
-        stdout.printf ("%s\n", element);
-        meta_list[j] = @"$element"; 
-        j++; 
-        } 
     }
 }
 
