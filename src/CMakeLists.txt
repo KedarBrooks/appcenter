@@ -44,6 +44,7 @@ PACKAGES
     libxml-2.0
     xmlbird
     libsecret-1
+    AccountsService-1.0
     ${UNITY_PACKAGES}
 OPTIONS
   --vapidir=${CMAKE_SOURCE_DIR}/vapi
