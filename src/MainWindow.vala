@@ -33,6 +33,11 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     private Gtk.Grid network_view;
 
     public static Views.InstalledView installed_view { get; private set; }
+    
+    public string?               real_name { public get; private set; }
+    public weak Act.User ActiveUser { get; set; }
+    public weak Act.UserManager UsrManagment { get; construct; }
+    public string userN; 
 
     public signal void homepage_loaded ();
 
@@ -58,6 +63,8 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
             default:
                 break;
         }
+        
+        
 
         view_mode.selected = 0;
         search_entry.grab_focus_without_selecting ();
@@ -109,6 +116,9 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         set_size_request (910, 640);
         title = _("AppCenter");
         window_position = Gtk.WindowPosition.CENTER;
+
+        ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ());
+        ActiveUser.changed.connect(file_check); 
 
         return_button = new Gtk.Button ();
         return_button.no_show_all = true;
@@ -368,4 +378,100 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         button_stack.sensitive = connection_available;
         search_entry.sensitive = connection_available && !search_view.viewing_package && !homepage.viewing_package;
     }
-}
+
+    private void file_check () {
+        userN = user();          
+
+        var file = File.new_for_path (@"/home/$userN/appcenter/cc.xml");
+        if(!file.query_exists ()) { 
+            stderr.printf ("File '%s' doesn't exist. Attempting to recreate..\n", file.get_path ());
+           
+            cc_create(file); 
+        }
+
+        var file2 = File.new_for_path (@"/home/$userN/appcenter/meta_cc.xml");
+        if(!file2.query_exists()) { 
+            stderr.printf ("File '%s' doesnt't exist. Attempting to recreate. \n", file2.get_path ()); 
+            
+            meta_create(file2); 
+        }
+        stdout.printf("[File Check Complete] \n");
+    }
+
+    private void cc_create (File file) {
+        // Creates xml templete for cc.xml
+            create_directory("appcenter");  
+	    try {
+		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
+            os.write ("<cards>\n".data);
+            os.write (" <card>\n".data);
+            os.write (@"     <cNum></cNum>\n".data);
+            os.write (@"     <expo></expo>\n".data);
+            os.write (@"     <cvc></cvc>\n".data); 
+            os.write (" </card>\n".data);
+            os.write ("</cards>\n".data);
+            stdout.printf ("-- cc.xml [Created]\n");
+	        } 
+        catch (Error e) {
+		    stdout.printf ("Error: %s\n", e.message);
+	        }
+        }
+
+    private void meta_create (File file) {
+        // Creates xml templete for meta_cc.xml 
+        try {
+            FileOutputStream os = file.create  (FileCreateFlags.PRIVATE); 
+            os.write ("<cards>\n".data);
+            os.write (" <card>\n".data);
+            os.write (@"     <cNum></cNum>\n".data);
+            os.write (" </card>\n".data);
+            os.write ("</cards>\n".data);
+            stdout.printf ("-- meta_cc.xml [Created]\n");
+	        } 
+        catch (Error e) {
+		    stdout.printf ("Error: %s\n", e.message);
+	        }
+        }
+
+    private void create_directory(string dir) {
+        // Creates base directory for appcenter files in user home
+        try { 
+            string[] spawn_args = {"mkdir",@"/home/$userN/$dir"};
+            string[] spawn_env = Environ.get ();
+		    string ls_stdout;
+		    string ls_stderr;
+		    int ls_status;
+            Process.spawn_sync("/",
+            spawn_args,
+            spawn_env,
+            SpawnFlags.SEARCH_PATH,
+			null,
+			out ls_stdout,
+			out ls_stderr,
+			out ls_status);
+        } catch (SpawnError e) {
+		    stdout.printf ("Error: %s\n", e.message);
+            }
+            stdout.printf("[Base directory created] \n"); 
+        }
+
+    private static Act.UserManager? usermanager = null;
+
+    public static unowned Act.UserManager? get_usermanager () {
+        if (usermanager != null && usermanager.is_loaded)
+            return usermanager;
+
+        usermanager = Act.UserManager.get_default ();
+        return usermanager;
+    }
+
+    private string user() {
+         // Get user name
+         real_name = ActiveUser.get_real_name ();
+         //stdout.printf("%s\n",real_name); 
+         //stdout.printf("%s\n",ActiveUser.get_user_name ()); 
+         string u = ActiveUser.get_user_name (); 
+         return u; 
+    }
+} 
+

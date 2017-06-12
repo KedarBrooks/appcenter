@@ -739,8 +739,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         }
 
         /* TODO: Add appending option for multi-card support */
-        // Create cc.xml  
-        File file = File.new_for_path ("/home/*/AppCenter/cc.xml");
+        // Create cc.xml (Remove | Depreciated )
+        File file = File.new_for_path ("/etc/AppCenter/cc.xml");
 	    try {
 		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
             os.write ("<cards>\n".data);
@@ -763,7 +763,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             }
 
         try { 
-            string[] spawn_args = {@"aescrypt -e -p  + $strongkey /home/*/AppCenter/cc.xml",
+            string[] spawn_args = {@"aescrypt -e -p  + $strongkey /etc/AppCenter/cc.xml",
             "shred -n 3 -u -z /cc.xml"};
             string[] spawn_env = Environ.get ();
 		    string ls_stdout;
