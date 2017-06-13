@@ -18,6 +18,7 @@
 */
 
 using Xml;
+using Gee;
 
 public class AppCenter.Widgets.StripeDialog : Gtk.Dialog { 
 
@@ -50,7 +51,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     private Gtk.Label secondary_error_label;
     private GLib.Cancellable cancellable;
     public Gtk.ListStore list_store; 
-    public Gtk.TreeIter iter; 
+    public Gtk.TreeIter iter;
 
        struct PaymentCard {
         // Card Definition 
@@ -350,7 +351,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
                     cvc_valid = regex.match (new_text);
                     break;
             }
-        } catch (Error e) {
+        } catch (GLib.Error e) {
             warning (e.message);
         }
 
@@ -460,7 +461,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
                 } else {
                     error = _(DEFAULT_ERROR_MESSAGE);
                 }
-            } catch (Error e) {
+            } catch (GLib.Error e) {
                 error = _(DEFAULT_ERROR_MESSAGE);
                 debug (e.message);
             }
@@ -628,17 +629,18 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         }
     }
 
-    private static void createMetaData(string cardNum) {
+    private void createMetaData(string cardNum) {
         // write to meta-cc.xml 
-        string root = null; 
+        string parent = null; 
         string localuser = user();
         string path = (@"/home/$localuser/appcenter/meta_cc.xml"); 
-        Xml.Doc* doc = Parser.parser_file (path);
+        Xml.Doc* doc = Xml.Parser.parse_file (path);
         if (doc == null) {
             stderr.printf ("File %s not found", path); 
             return; 
         }  
 
+        int i =0; 
         Xml.Node* root = doc->get_root_element (); 
         if (root ==null) {
             delete doc; 
@@ -646,26 +648,37 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             return; 
         }
 
-        root = root->name;
+        parent = root->name;
 
-        parse_node(root);
+        // parse_node(root);
+        var node_name = new ArrayList<string> (); 
+        var node_content = new ArrayList<string> ();
+        var  element_name = new ArrayList<string> ();
+        var element_content = new ArrayList<string> (); 
+
+        for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
+            // Spaces between tags are also nodes, discard them
+            if (iter->type != ElementType.ELEMENT_NODE) {
+                continue;
+            }
+            node_name[i] = iter->name;
+            node_content[i] = iter->get_content ();
+            
+         // Now parse the node's properties (attributes)
         // delete doc;
-        Xml.Node* node;
-        int i = 0; 
-        string[]  element_name = new ArrayList<string> ();
-        string[] element_content = new ArrayList<string> ();  
-
-        for (Xml.Attr* prop = node->properties; prop !=null; prop->next) {
+        i = 0;   
+        for (Xml.Attr* prop = iter->properties; prop !=null; prop->next) {
             string attr_name = prop->name; 
             string attr_content = prop->children->content;
             element_name[i] = attr_name; 
             element_content[i] = attr_content;
             i++;              
         }
+        }
 
         Xml.Ns* ns = new Xml.Ns (null, "", "meta");
         ns->type = Xml.ElementType.ELEMENT_NODE;
-        doc->set_root_element (root);
+        doc->set_root_element (parent);
         i = 0;
 
         foreach (string element in element_name) {
@@ -680,12 +693,15 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
         }
 
+         string xmlstr;
+        doc->dump_memory (out xmlstr);
+
         try {
             FileOutputStream os = file.create  (FileCreateFlags.PRIVATE); 
             os.write (xmlstr.data);
             stdout.printf ("-- meta_cc.xml [updated]\n");
 	        } 
-        catch (Error e) {
+        catch (GLib.Error e) {
 		    stdout.printf ("Error: %s\n", e.message);
 	        }
             delete doc; 
