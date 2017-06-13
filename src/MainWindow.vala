@@ -118,7 +118,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         window_position = Gtk.WindowPosition.CENTER;
 
         ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ());
-        ActiveUser.changed.connect(); 
+        ActiveUser.changed.connect(file_check); 
 
         return_button = new Gtk.Button ();
         return_button.no_show_all = true;

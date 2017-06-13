@@ -37,14 +37,13 @@ PACKAGES
     appstream
     gtk+-3.0>=3.12
     gee-0.8
+    libxml-2.0
     granite
     packagekit-glib2
     libsoup-2.4 
     json-glib-1.0
-    libxml-2.0
-    xmlbird
     libsecret-1
-    accountsservice
+    AccountsService-1.0
     ${UNITY_PACKAGES}
 OPTIONS
   --vapidir=${CMAKE_SOURCE_DIR}/vapi

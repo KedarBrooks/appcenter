@@ -17,7 +17,6 @@
 * Boston, MA 02110-1301 USA
 */
 
-using Xml;
 using Gee;
 
 public class AppCenter.Widgets.StripeDialog : Gtk.Dialog { 
@@ -40,7 +39,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     private Gtk.Stack layouts;
 
     private Gtk.Entry email_entry;
-    //private Gtk.ComboBox  card_number_entry;
     private Gtk.Entry  card_number_entry;
     private Gtk.Entry card_expiration_entry;
     private Gtk.Entry card_cvc_entry;
@@ -52,6 +50,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     private GLib.Cancellable cancellable;
     public Gtk.ListStore list_store; 
     public Gtk.TreeIter iter;
+
+    public Gtk.Widget *widget;
+    public Gtk.InfoBar *bar;
 
        struct PaymentCard {
         // Card Definition 
@@ -65,8 +66,10 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
     public string cryptLoc = "";
     public const string COLLECTION_APPCC = "acc";
-    public Gee.ArrayList<string> meta_list;   
+    // public Gee.ArrayList<string> meta_list;   
     public int index =0;  
+
+    public AppCenter.Services.XmlParser internal_xml; 
 
 
     public int amount { get; construct set; }
@@ -110,8 +113,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
            validate (0, email_entry.text);
         });
 
-        ActiveUser = get_usermanager ().get_user (GLib.Enviroment.get_user_name ()); 
-        ActivateUser.changed.connect(user); 
+        internal_xml = new AppCenter.Services.XmlParser ();
+        ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ()); 
+        ActiveUser.changed.connect(init_user); 
         loadMetaData();
 
 
@@ -198,9 +202,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         action_area.add (privacy_policy_link);
         action_area.set_child_secondary (privacy_policy_link, true);
 
-        cancel_button = (Gtk.Button) add_button (_("Cancel"), Gtk.ResponseType.CLOSE);
+        save_button = (Gtk.Button) add_button (_("Manage Cards"), Gtk.ResponseType.ACCEPT);
 
-        save_button = (Gtk.Button) add_button (_("Save Card").printf ("Saving Card Data ..."), Gtk.ResponseType.ACCEPT);
+        cancel_button = (Gtk.Button) add_button (_("Cancel"), Gtk.ResponseType.CLOSE); 
         //save_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION); 
 
         pay_button = (Gtk.Button) add_button (_("Pay $%d.00").printf (amount), Gtk.ResponseType.APPLY);
@@ -414,14 +418,11 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
                 string cardExpo = card_expiration_entry.text; 
 
                 if (cardNumber == "") { 
-                    // Prompt to enter card info 
+                    cardNotify();  
                 }
                 
                  if (cardNumber != "") { 
-                    // Run Process
-                    //cardDataEncrypt(cardNumber, cardCvc, cardExpo);
-                    createMetaData(); 
-                    stdout.printf("[Data saved]");                     
+                    cardNotify();           
                 }
                 // remove data from memory
                 cardNumber = null; 
@@ -636,7 +637,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         string path = (@"/home/$localuser/appcenter/meta_cc.xml"); 
         Xml.Doc* doc = Xml.Parser.parse_file (path);
         if (doc == null) {
-            stderr.printf ("File %s not found", path); 
+            stderr.printf ("File %s not found\n", path); 
             return; 
         }  
 
@@ -658,7 +659,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
         for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
             // Spaces between tags are also nodes, discard them
-            if (iter->type != ElementType.ELEMENT_NODE) {
+            if (iter->type != Xml.ElementType.ELEMENT_NODE) {
                 continue;
             }
             node_name[i] = iter->name;
@@ -675,16 +676,19 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             i++;              
         }
         }
-
+        
         Xml.Ns* ns = new Xml.Ns (null, "", "meta");
         ns->type = Xml.ElementType.ELEMENT_NODE;
         doc->set_root_element (parent);
         i = 0;
 
+        element_name.insert(i+1,"cNum"); 
+        element_content.insert(i+1, meta_generation(cardNum));   
+
         foreach (string element in element_name) {
             root->new_prop (element,element_content[i]); 
             i++; 
-        }  
+        }
         
         var file = File.new_for_path (path); 
         if(!file.query_exists()) { 
@@ -707,7 +711,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             delete doc; 
         }
 
-    private string meta_generation () {
+    private string meta_generation (string cardNum) {
         // Get late four digits of card
         var builder = new StringBuilder();
         string final_cNum = null;
@@ -738,8 +742,45 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     }
     
     /*Pending for rewrite */
-    private void loadMetaData() {
+    private void loadMetaData() { 
+        AppCenter.Services.XmlParser internal_xml = new AppCenter.Services.XmlParser (); 
+        stdout.printf("[Loading cc meta-data]\n"); 
+        string parent = null; 
+        string localuser = user();
+        string path = (@"/home/$localuser/appcenter/meta_cc.xml");
+        internal_xml.xml_parse_filepath(path);
+        stdout.printf("[cc meta-data loaded]\n");
         
+        
+        /* 
+        int i = 0; 
+        foreach (string node in internal_xml.xml_data.node) {
+            stdout.printf@("$node\n"); 
+        }
+
+        foreach (string element_name)
+        */ 
+          
+                 
+    }
+
+    private void cardNotify() { 
+		GLib.Menu menu = new GLib.Menu ();
+        Gtk.Label lb = new Gtk.Label ("<b>Your Saved Cards</b>"); 
+        
+        lb.set_use_markup (true);
+		lb.set_line_wrap (true);
+
+        foreach (string element in internal_xml.element_content_list.values) {
+		menu.append ("Use card ending in", element);
+        }
+
+        
+		
+		Gtk.Popover pop = new Gtk.Popover (save_button);
+        pop.add (lb); 
+		pop.bind_model (menu, "app");
+        pop.set_visible (true);
     }
 
  
@@ -879,9 +920,12 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         return usermanager;
     }
 
+    private void init_user() {
+        user(); 
+    }
     private string user() {
         // Get user name 
-        return real_name =ActiveUser.get_real_name (); 
+        return real_name =ActiveUser.get_user_name (); 
 
     }
 }
