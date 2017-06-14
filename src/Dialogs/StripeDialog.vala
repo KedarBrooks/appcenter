@@ -765,21 +765,29 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     }
 
     private void cardNotify() { 
+        loadMetaData(); 
 		GLib.Menu menu = new GLib.Menu ();
-        Gtk.Label lb = new Gtk.Label ("<b>Your Saved Cards</b>"); 
+        Gtk.Label lb = new Gtk.Label ("Your Saved Cards"); 
         
         lb.set_use_markup (true);
 		lb.set_line_wrap (true);
+        lb.get_style_context ().add_class ("primary");
+        lb.max_width_chars = 35;
+        lb.xalign = 0;
 
+        /*
         foreach (string element in internal_xml.element_content_list.values) {
-		menu.append ("Use card ending in", element);
+		menu.append (@"Use card ending in $element", null);
         }
+        */
+
+        menu.append ("Your Saved Cards", "save");
 
         
 		
 		Gtk.Popover pop = new Gtk.Popover (save_button);
+        pop.bind_model (menu, "app");
         pop.add (lb); 
-		pop.bind_model (menu, "app");
         pop.set_visible (true);
     }
 
@@ -929,5 +937,4 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
 
     }
 }
-
 
