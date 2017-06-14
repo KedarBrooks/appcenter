@@ -18,8 +18,9 @@
 */
 
 using Gee;
+using GLib; 
 
-public class AppCenter.Widgets.StripeDialog : Gtk.Dialog { 
+public class AppCenter.Widgets.StripeDialog : Gtk.Dialog  { 
 
     public signal void download_requested ();
 
@@ -39,7 +40,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     private Gtk.Stack layouts;
 
     private Gtk.Entry email_entry;
-    private Gtk.Entry  card_number_entry;
+    public static Gtk.Entry  card_number_entry;
     private Gtk.Entry card_expiration_entry;
     private Gtk.Entry card_cvc_entry;
     private Gtk.Button pay_button;
@@ -69,7 +70,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
     // public Gee.ArrayList<string> meta_list;   
     public int index =0;  
 
-    public AppCenter.Services.XmlParser internal_xml; 
+    public static AppCenter.Services.XmlParser internal_xml; 
+    public AppCenter.App appcenter_internal; 
 
 
     public int amount { get; construct set; }
@@ -116,7 +118,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         internal_xml = new AppCenter.Services.XmlParser ();
         ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ()); 
         ActiveUser.changed.connect(init_user); 
-        loadMetaData();
+    
 
 
         card_number_entry = new Gtk.Entry(); 
@@ -741,7 +743,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         return final_cNum; 
     }
     
-    /*Pending for rewrite */
     private void loadMetaData() { 
         AppCenter.Services.XmlParser internal_xml = new AppCenter.Services.XmlParser (); 
         stdout.printf("[Loading cc meta-data]\n"); 
@@ -750,45 +751,54 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
         string path = (@"/home/$localuser/appcenter/meta_cc.xml");
         internal_xml.xml_parse_filepath(path);
         stdout.printf("[cc meta-data loaded]\n");
-        
-        
-        /* 
-        int i = 0; 
-        foreach (string node in internal_xml.xml_data.node) {
-            stdout.printf@("$node\n"); 
-        }
 
-        foreach (string element_name)
-        */ 
-          
-                 
+    } 
+
+    /* 
+    public void load_card_entry (int item) {
+        loadMetaData(); 
+        var nodes = new Gee.ArrayList<string> (); 
+        nodes = internal_xml.node_content_list; 
+        string node = nodes[item];
+        card_number_entry.text = (@"XXX-XXX-XXX-$node");
+        stdout.printf(@"XXX-XXX-XXX-$node"); 
     }
 
-    private void cardNotify() { 
-        loadMetaData(); 
+    * */
+          
+            
+    private void cardNotify () { 
+
+        Gtk.Box box;
+        box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0); 
 		GLib.Menu menu = new GLib.Menu ();
-        Gtk.Label lb = new Gtk.Label ("Your Saved Cards"); 
+        loadMetaData(); 
+        var nodes = new Gee.ArrayList<string> (); 
+        nodes = internal_xml.node_content_list;
+        menu.append ("Your Saved Cards", "label");
+        int i = 0; 
+
+        foreach (string element in nodes) {
+            if (element.length > 3){
+                menu.append (@"Use card ending in $element", null);
+                i++; 
+            }
         
-        lb.set_use_markup (true);
-		lb.set_line_wrap (true);
-        lb.get_style_context ().add_class ("primary");
-        lb.max_width_chars = 35;
-        lb.xalign = 0;
+            else {
+                menu.append ("No cards have been saved", null);
+             }
 
-        /*
-        foreach (string element in internal_xml.element_content_list.values) {
-		menu.append (@"Use card ending in $element", null);
-        }
-        */
-
-        menu.append ("Your Saved Cards", "save");
+        }  
 
         
-		
+         
 		Gtk.Popover pop = new Gtk.Popover (save_button);
         pop.bind_model (menu, "app");
-        pop.add (lb); 
+        //box.pack_start(lb, expand);
+        //box.pack_start (new Gtk.Label ("1"), false, false, 0);
+       // pop.add (bar); 
         pop.set_visible (true);
+        
     }
 
  
@@ -841,39 +851,40 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog {
             stdout.printf("[Encrypt complete]"); 
         }
 
-    private static string keyGen() {  
-        char keybuild; 
+    public static string keyGen() {  
+        var keybuild = new StringBuilder(); 
         string strongkey;
         var builder = new StringBuilder();
         var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
         attributes["size"] = "64"; 
         attributes["type"] = "user"; 
         Cancellable cancellable = new Cancellable ();
+        /* 
         var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
                                             "size", Secret.SchemaAttributeType.INTEGER,
                                             "type", Secret.SchemaAttributeType.STRING);
         
         stdout.printf ("[appcenter] unable to find key, generating a new key");
          Secret.Collection.create(null, "appcenter","aac", Secret.CollectionCreateFlags.COLLECTION_CREATE_NONE, cancellable);
-        
+         */
          /*Keygen starts*/
 
         int i =0;
-        while(i < 31) {
+        while(i < 12) {
         // Generates a 32 char passkey 
-         keybuild =  "ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789"[Random.int_range (0,62)];
-         builder.append((string)keybuild); 
+         keybuild.append_unichar("ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789@#$%!"[Random.int_range (0,67)]);
+         builder.append( (string) keybuild.str); 
+         i ++; 
         }
         strongkey = builder.str; 
-        /* DEBUG ONLY !!! */
-            stdout.printf (@"[generated key] $strongkey"); 
          /*Keygen ends */
-        
+        /*
         Secret.password_storev.begin (appCenterS,attributes,COLLECTION_APPCC, "acc",strongkey,null,(obj,async_res) => {
             bool res = Secret.password_store.end(async_res); 
             /*Password Stored - complete additional processes */
-            stdout.printf ("[password stored]"); 
-        });
+            stdout.printf ("[password stored]\n"); 
+    
+        //});
 
         return strongkey; 
     } 

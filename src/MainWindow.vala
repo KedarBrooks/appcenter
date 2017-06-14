@@ -35,9 +35,12 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     public static Views.InstalledView installed_view { get; private set; }
     
     public string?               real_name { public get; private set; }
+
     public weak Act.User ActiveUser { get; set; }
     public weak Act.UserManager UsrManagment { get; construct; }
-    public string userN; 
+    
+    public string userN;
+    AppCenter.Services.XmlParser internal_xml; 
 
     public signal void homepage_loaded ();
 
@@ -73,6 +76,8 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         go_back.activate.connect (view_return);
         add_action (go_back);
         app.set_accels_for_action ("win.go-back", {"<Alt>Left"});
+        
+        
 
         search_entry.search_changed.connect (() => trigger_search ());
 
@@ -116,9 +121,10 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         set_size_request (910, 640);
         title = _("AppCenter");
         window_position = Gtk.WindowPosition.CENTER;
-
         ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ());
-        ActiveUser.changed.connect(file_check); 
+        ActiveUser.changed.connect(init_user);
+        file_check(); 
+
 
         return_button = new Gtk.Button ();
         return_button.no_show_all = true;
@@ -377,6 +383,16 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
 
         button_stack.sensitive = connection_available;
         search_entry.sensitive = connection_available && !search_view.viewing_package && !homepage.viewing_package;
+    }   
+
+    private void init_user() {
+        user(); 
+    }
+
+ 
+
+    public void set (GLib.SimpleAction load) {
+        add_action(load);
     }
 
     private void file_check () {
@@ -396,6 +412,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
             meta_create(file2); 
         }
         stdout.printf("[File Check Complete] \n");
+        
     }
 
     private void cc_create (File file) {
@@ -465,13 +482,11 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         return usermanager;
     }
 
-    private string user() {
-         // Get user name
-         real_name = ActiveUser.get_real_name ();
-         //stdout.printf("%s\n",real_name); 
-         //stdout.printf("%s\n",ActiveUser.get_user_name ()); 
-         string u = ActiveUser.get_user_name (); 
-         return u; 
+   private string user() {
+        // Get user name 
+        return real_name =ActiveUser.get_user_name (); 
     }
+
+    
 } 
 

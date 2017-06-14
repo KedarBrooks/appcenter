@@ -19,10 +19,12 @@
 
 public class AppCenter.Services.XmlParser {
 
-    public Gee.HashMap<int,string> node_name_list; 
-    public Gee.HashMap<int,string> node_content_list;
-    public Gee.HashMap<int,string> element_name_list;
-    public Gee.HashMap<int,string> element_content_list; 
+    public static Gee.ArrayList<string> node_name_list; 
+    public static Gee.ArrayList<string> node_content_list;
+    public static Gee.ArrayList<string> element_name_list;
+    public static Gee.ArrayList<string> element_content_list;
+
+    public static string content; 
  
     private int indent = 0;
 
@@ -34,7 +36,13 @@ public class AppCenter.Services.XmlParser {
     public string xml_parse_filepath (string path) {
         // Parse the xml document from path
         Xml.Parser.init ();
-          
+        // array.append_val ("1456"); 
+        stdout.printf(@"path: $path"); 
+        this.node_name_list = new Gee.ArrayList<string> (); 
+        this.node_content_list = new Gee.ArrayList<string> (); 
+        this.element_name_list = new Gee.ArrayList<string> (); 
+        this.element_content_list = new Gee.ArrayList<string> ();  
+
         Xml.Doc* doc = Xml.Parser.parse_file (path); 
         if (doc == null) {
             stderr.printf ("File %s not found", path); 
@@ -58,7 +66,17 @@ public class AppCenter.Services.XmlParser {
         return xmlstr;
         //Clean up  
         delete doc;
-        Xml.Parser.cleanup ();  
+        Xml.Parser.cleanup (); 
+    }
+
+    public string content_data () {
+        stdout.printf("data: %s\n",this.content); 
+        return this.content; 
+    }
+
+    public Gee.ArrayList<string> elements () {
+        stdout.printf("list data: %s\n", this.element_content_list[0]); 
+        return this.element_content_list; 
     }
 
     private void parse_node (Xml.Node* node) {
@@ -71,9 +89,34 @@ public class AppCenter.Services.XmlParser {
                 }
                 string node_name = iter->name; 
                 string node_content = iter->get_content ();
+               
+                debug_print_xml(node_name,node_content); 
 
-                node_name_list.set(i,node_name);
-                node_content_list.set(i,node_content);
+                parse_properties(iter);
+
+                parse_children (iter);
+                i++; 
+            }
+        } catch (GLib.Error e) {
+            stderr.printf("[xml read error] %s",e.message); 
+            }
+
+        this.indent--; 
+    }
+
+    private void parse_children (Xml.Node* node) {
+        this.indent++; 
+        try { 
+            int i = 0; 
+            for (Xml.Node* iter = node->children; iter !=null; iter = iter->next) {
+                if (iter->type != Xml.ElementType.ELEMENT_NODE) {
+                    continue;
+                }
+                string node_name = iter->name; 
+                string node_content = iter->get_content ();
+                this.content = node_content; 
+                this.node_name_list.add(node_name);
+                this.node_content_list.add(@"$node_content");
                 debug_print_xml(node_name,node_content); 
 
                 parse_properties(iter);
@@ -88,15 +131,17 @@ public class AppCenter.Services.XmlParser {
         this.indent--; 
     }
 
-    private void parse_properties (Xml.Node* node) {
+    
+
+    private  void parse_properties (Xml.Node* node) {
         int i = 0; 
-        for (Xml.Attr* prop =node->properties; prop != null; prop = prop->next) {
+        for (Xml.Attr* prop = node->properties; prop != null; prop = prop->next) {
             string attr_name = prop->name; 
 
             string attr_content = prop->children->content;
 
-            element_name_list.set(i,attr_name);
-            element_content_list.set(i,attr_content);
+            this.element_name_list.add(attr_name);
+            this.element_content_list.add(@"$attr_content");
             debug_print_xml(attr_name, attr_content, '|');
             i++;
 
