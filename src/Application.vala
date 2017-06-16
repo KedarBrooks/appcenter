@@ -69,6 +69,7 @@ public class AppCenter.App : Granite.Application {
         show_updates_action.activate.connect(() => {
             silent = false;
             show_updates = true;
+            stdout.printf("activated");
             activate ();
         });
 
@@ -243,8 +244,10 @@ public class AppCenter.App : Granite.Application {
             default:
                 break;
         }
-    }    
+    }
+   
 }
+
 
 public static int main (string[] args) {
     var application = new AppCenter.App ();

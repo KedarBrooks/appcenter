@@ -18,9 +18,10 @@
 */
 
 using Gee;
-using GLib; 
+using GLib;
 
-public class AppCenter.Widgets.StripeDialog : Gtk.Dialog  { 
+
+public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    { 
 
     public signal void download_requested ();
 
@@ -88,6 +89,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog  {
     public weak Act.User ActiveUser { get; set; }
     public weak Act.UserManager UsrManagment { get; construct; }
 
+
     public StripeDialog (int _amount, string _app_name, string _app_id, string _stripe_key) {
         Object (amount: _amount,
                 app_name: _app_name,
@@ -97,11 +99,16 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog  {
                 stripe_key: _stripe_key);
     }
 
+// : Gtk.ApplicationWindow 
+
     construct {
+
         var primary_label = new Gtk.Label ("AppCenter Dev");
         primary_label.get_style_context ().add_class ("primary");
 
         var secondary_label = new Gtk.Label (app_name);
+
+       
 
         email_entry = new Gtk.Entry ();
         email_entry.hexpand = true;
@@ -765,38 +772,44 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog  {
     }
 
     * */
+
           
             
     private void cardNotify () { 
-
-        Gtk.Box box;
-        box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0); 
-		GLib.Menu menu = new GLib.Menu ();
+        GLib.Menu menu = new GLib.Menu ();  
         loadMetaData(); 
         var nodes = new Gee.ArrayList<string> (); 
         nodes = internal_xml.node_content_list;
         menu.append ("Your Saved Cards", "label");
         int i = 0; 
-
         foreach (string element in nodes) {
             if (element.length > 3){
-                menu.append (@"Use card ending in $element", null);
+
+                menu.append (@"Use card ending in $element", "show-updates");
                 i++; 
             }
         
             else {
                 menu.append ("No cards have been saved", null);
              }
+        } 
 
-        }  
+        Gtk.Grid search_grid = new Gtk.Grid ();
+search_grid.set_column_spacing (10);
+search_grid.set_margin_top (10);
+search_grid.set_margin_end (10);
+search_grid.set_margin_bottom (10);
+search_grid.set_margin_start (10);
 
-        
-         
+Gtk.Label search_label = new Gtk.Label ("Im Internet suchen");
+search_grid.attach (search_label, 0, 0, 1, 1);
+
+
 		Gtk.Popover pop = new Gtk.Popover (save_button);
-        pop.bind_model (menu, "app");
+        pop.bind_model (menu, null);
         //box.pack_start(lb, expand);
         //box.pack_start (new Gtk.Label ("1"), false, false, 0);
-       // pop.add (bar); 
+        //pop.show_all (); 
         pop.set_visible (true);
         
     }

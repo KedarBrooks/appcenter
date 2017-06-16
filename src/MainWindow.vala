@@ -31,6 +31,8 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     private Gee.Deque<string> return_button_history;
     private Granite.Widgets.AlertView network_alert_view;
     private Gtk.Grid network_view;
+    
+    public GLib.Menu menu; 
 
     public static Views.InstalledView installed_view { get; private set; }
     
@@ -39,7 +41,6 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     public weak Act.User ActiveUser { get; set; }
     public weak Act.UserManager UsrManagment { get; construct; }
     
-    public string userN;
     AppCenter.Services.XmlParser internal_xml; 
 
     public signal void homepage_loaded ();
@@ -66,6 +67,8 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
             default:
                 break;
         }
+        
+        
         
         
 
@@ -122,8 +125,10 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         title = _("AppCenter");
         window_position = Gtk.WindowPosition.CENTER;
         ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ());
-        ActiveUser.changed.connect(init_user);
-        file_check(); 
+        internal_xml = new AppCenter.Services.XmlParser (); 
+        ActiveUser.changed.connect(menu_add); 
+       // ActiveUser.changed.connect(file_check);
+        // file_check();
 
 
         return_button = new Gtk.Button ();
@@ -396,13 +401,13 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     }
 
     private void file_check () {
-        userN = user();          
+        string userN = user();          
 
         var file = File.new_for_path (@"/home/$userN/appcenter/cc.xml");
         if(!file.query_exists ()) { 
             stderr.printf ("File '%s' doesn't exist. Attempting to recreate..\n", file.get_path ());
            
-            cc_create(file); 
+            cc_create(file,userN); 
         }
 
         var file2 = File.new_for_path (@"/home/$userN/appcenter/meta_cc.xml");
@@ -412,12 +417,13 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
             meta_create(file2); 
         }
         stdout.printf("[File Check Complete] \n");
+        menu_add(); 
         
     }
 
-    private void cc_create (File file) {
+    private void cc_create (File file, string userN) {
         // Creates xml templete for cc.xml
-            create_directory("appcenter");  
+            create_directory("appcenter", userN);  
 	    try {
 		    FileOutputStream os = file.create (FileCreateFlags.PRIVATE);
             os.write ("<cards>\n".data);
@@ -450,7 +456,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
 	        }
         }
 
-    private void create_directory(string dir) {
+    private void create_directory(string dir, string userN) {
         // Creates base directory for appcenter files in user home
         try { 
             string[] spawn_args = {"mkdir",@"/home/$userN/$dir"};
@@ -486,6 +492,46 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         // Get user name 
         return real_name =ActiveUser.get_user_name (); 
     }
+
+     private void loadMetaData() {   
+        stdout.printf(@"$real_name"); 
+        stdout.printf("[Loading cc meta-data]\n"); 
+        string parent = null; 
+        // string localuser = user();
+        stdout.printf(@"$real_name"); 
+        string path = (@"/home/$real_name/appcenter/meta_cc.xml");
+        internal_xml.xml_parse_filepath(path);
+        stdout.printf("[cc meta-data loaded]\n");
+
+    } 
+
+    public void menu_add () {
+        real_name = user(); 
+        loadMetaData(); 
+        var nodes = new Gee.ArrayList<string> (); 
+        nodes = internal_xml.node_content_list;
+        int i = 0; 
+
+        foreach (string element in nodes) {
+            if (element.length > 3){
+
+             var Add_Card = new SimpleAction (@"menu_item_1", null);
+                Add_Card.activate.connect(() => {
+                stdout.printf(@"testworks"); 
+                activate ();
+            });
+             add_action(Add_Card); 
+                i++; 
+            }
+            else {
+                
+             }
+        } 
+    }
+
+
+
+    
 
     
 } 
