@@ -124,10 +124,11 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         set_size_request (910, 640);
         title = _("AppCenter");
         window_position = Gtk.WindowPosition.CENTER;
-        ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ());
+
+        ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ()); 
+        // ActiveUser.changed.connect(menu_add); 
+        ActiveUser.changed.connect(file_check);
         internal_xml = new AppCenter.Services.XmlParser (); 
-        ActiveUser.changed.connect(menu_add); 
-       // ActiveUser.changed.connect(file_check);
         // file_check();
 
 
@@ -417,7 +418,6 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
             meta_create(file2); 
         }
         stdout.printf("[File Check Complete] \n");
-        menu_add(); 
         
     }
 
