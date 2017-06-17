@@ -28,7 +28,6 @@ You'll need the following dependencies:
 * libxml2-dev
 * libxml2-utils
 * libsecret-1-dev (new)
-* libxmlbird-dev (new)
 * aescrypt (new) -> https://www.aescrypt.com/download/ 
 * valac (>= 0.26)
 
