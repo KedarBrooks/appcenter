@@ -80,6 +80,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     public string app_id { get; construct set; }
     public string stripe_key { get; construct set; }
 
+    public bool trigered;
+
     private bool email_valid = false;
     private bool card_valid = false;
     private bool expiration_valid = false;
@@ -103,6 +105,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
     construct {
 
+        trigered = false; 
+
         var primary_label = new Gtk.Label ("AppCenter Dev");
         primary_label.get_style_context ().add_class ("primary");
 
@@ -125,6 +129,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         internal_xml = new AppCenter.Services.XmlParser ();
         ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ()); 
         ActiveUser.changed.connect(init_user); 
+        
     
 
 
@@ -210,6 +215,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         action_area.margin_top = 14;
         action_area.add (privacy_policy_link);
         action_area.set_child_secondary (privacy_policy_link, true);
+
 
         save_button = (Gtk.Button) add_button (_("Manage Cards"), Gtk.ResponseType.ACCEPT);
 
@@ -778,14 +784,17 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     private void cardNotify () { 
         GLib.Menu menu = new GLib.Menu ();  
         loadMetaData(); 
-        var nodes = new Gee.ArrayList<string> (); 
+        var nodes = new Gee.ArrayList<string> ();
+        var numbers  = new Gee.ArrayList<string> ();  
         nodes = internal_xml.node_content_list;
         menu.append ("Your Saved Cards", "label");
+        Gtk.Popover pop = new Gtk.Popover (save_button); 
         int i = 0; 
         foreach (string element in nodes) {
             if (element.length > 3){
 
-                menu.append (@"Use card ending in $element", "show-updates");
+                
+                numbers.add(@"$element"); 
                 i++; 
             }
         
@@ -793,24 +802,71 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                 menu.append ("No cards have been saved", null);
              }
         } 
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0); 
 
-        Gtk.Grid search_grid = new Gtk.Grid ();
-search_grid.set_column_spacing (10);
-search_grid.set_margin_top (10);
-search_grid.set_margin_end (10);
-search_grid.set_margin_bottom (10);
-search_grid.set_margin_start (10);
+        box.margin_right = 10; 
+        box.margin_left = 10; 
+        box.margin_top = 5; 
+        box.margin_bottom = 5; 
+        box.set_spacing(5); 
+        
 
-Gtk.Label search_label = new Gtk.Label ("Im Internet suchen");
-search_grid.attach (search_label, 0, 0, 1, 1);
+        Gtk.Label label = new Gtk.Label( "Your saved cards");
+        box.pack_start (label, false, false, 0);  
 
+        // The buttons:
+        if (nodes[0].length > 3) { 
+		Gtk.RadioButton button1 = new Gtk.RadioButton.with_label_from_widget (null,"");
 
-		Gtk.Popover pop = new Gtk.Popover (save_button);
+        Gtk.RadioButton button;  
+       
+        foreach (string element in nodes) {
+
+		button = new Gtk.RadioButton.with_label_from_widget (button1, @"Use card ending in $element");
+		box.pack_start (button, false, false, 0);
+		button.toggled.connect (() => { 
+            stdout.printf("button trigered\n");
+            //button.set_active (true);  
+            card_number_entry.text = @"xxxx-xxxx-$element";
+            trigered = true;  
+             
+        }); 
+
+        ; 
+        
+    }
+        }
+
+         else {
+        
+        //pop.add(box); 
         pop.bind_model (menu, null);
         //box.pack_start(lb, expand);
         //box.pack_start (new Gtk.Label ("1"), false, false, 0);
-        //pop.show_all (); 
-        pop.set_visible (true);
+        pop.show_all (); 
+        pop.set_visible (true); 
+    } 
+
+        
+		// button1.set_active (true);
+        // button.set_active (false); 
+          
+        //grid.attach(button1, 0, 0, 7, 1);
+        //grid.attach(button2, 0, 4, 7, 1);
+        //grid.attach(button3, 0, 8, 7, 1);
+         
+        pop.add(box); 
+        // pop.bind_model (menu, null);
+        //box.pack_start(lb, expand);
+        //box.pack_start (new Gtk.Label ("1"), false, false, 0);
+        pop.show_all (); 
+        pop.set_visible (true); 
+     
+    
+   
+        
+
+		
         
     }
 
