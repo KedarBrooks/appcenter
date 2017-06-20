@@ -67,7 +67,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     private PaymentCard userCard;
 
     public string cryptLoc = "";
-    public const string COLLECTION_APPCC = "acc";
+    public const string COLLECTION_APPCC = "default";
     // public Gee.ArrayList<string> meta_list;   
     public int index =0;  
 
@@ -79,6 +79,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     public string app_name { get; construct set; }
     public string app_id { get; construct set; }
     public string stripe_key { get; construct set; }
+
+    public static string localuser; 
+    public static Secret.Service service; 
 
     public bool trigered;
 
@@ -760,27 +763,23 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         AppCenter.Services.XmlParser internal_xml = new AppCenter.Services.XmlParser (); 
         stdout.printf("[Loading cc meta-data]\n"); 
         string parent = null; 
-        string localuser = user();
+        localuser = user();
         string path = (@"/home/$localuser/appcenter/meta_cc.xml");
         internal_xml.xml_parse_filepath(path);
         stdout.printf("[cc meta-data loaded]\n");
+         
 
     } 
 
-    /* 
-    public void load_card_entry (int item) {
-        loadMetaData(); 
-        var nodes = new Gee.ArrayList<string> (); 
-        nodes = internal_xml.node_content_list; 
-        string node = nodes[item];
-        card_number_entry.text = (@"XXX-XXX-XXX-$node");
-        stdout.printf(@"XXX-XXX-XXX-$node"); 
+    private void loadccData() {
+        stdout.printf("[Loading cc data]\n");
+        cardDataDecrypt ();  
+        string path = (@"/home/$localuser/appcenter/cc.xml");
+        internal_xml.xml_parse_filepath(path); 
+        stdout.printf("[cc data loaded]\n");
     }
 
-    * */
-
-          
-            
+        
     private void cardNotify () { 
         GLib.Menu menu = new GLib.Menu ();  
         loadMetaData(); 
@@ -809,35 +808,31 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         box.margin_top = 5; 
         box.margin_bottom = 5; 
         box.set_spacing(5); 
-        
-
+ 
         Gtk.Label label = new Gtk.Label( "Your saved cards");
         box.pack_start (label, false, false, 0);  
 
         // The buttons:
         if (nodes[0].length > 3) { 
-		Gtk.RadioButton button1 = new Gtk.RadioButton.with_label_from_widget (null,"");
+		    Gtk.RadioButton button1 = new Gtk.RadioButton.with_label_from_widget (null,"");
 
-        Gtk.RadioButton button;  
+            Gtk.RadioButton button;  
        
-        foreach (string element in nodes) {
+            foreach (string element in nodes) {
 
-		button = new Gtk.RadioButton.with_label_from_widget (button1, @"Use card ending in $element");
-		box.pack_start (button, false, false, 0);
-		button.toggled.connect (() => { 
+		    button = new Gtk.RadioButton.with_label_from_widget (button1, @"Use card ending in $element");
+		    box.pack_start (button, false, false, 0);
+		    button.toggled.connect (() => { 
             stdout.printf("button trigered\n");
             //button.set_active (true);  
             card_number_entry.text = @"xxxx-xxxx-$element";
             trigered = true;  
              
         }); 
-
-        ; 
-        
-    }
         }
 
-         else {
+    } 
+        else {
         
         //pop.add(box); 
         pop.bind_model (menu, null);
@@ -845,7 +840,32 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         //box.pack_start (new Gtk.Label ("1"), false, false, 0);
         pop.show_all (); 
         pop.set_visible (true); 
-    } 
+    }
+
+      Gtk.Grid grid = new Gtk.Grid (); 
+      grid.column_spacing = 24;
+
+       Gtk.Button apply_button = new Gtk.Button.with_label ("Use"); 
+        apply_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+        apply_button.clicked.connect (() => { 
+            // cardDataDecrypt ();
+             pop.hide (); 
+        });
+
+      Gtk.Button delete_button = new Gtk.Button.with_label ("Delete"); 
+        delete_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+        delete_button.clicked.connect (() => {
+            // action function
+            // Debug 
+             //cardDataEncrypt ();  
+             pop.hide (); 
+        });
+
+        box.pack_start(grid, false,false,0);  
+
+        grid.attach(delete_button, 0,0,4,3);
+        grid.attach(apply_button,12,0,4,3); 
+
 
         
 		// button1.set_active (true);
@@ -855,7 +875,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         //grid.attach(button2, 0, 4, 7, 1);
         //grid.attach(button3, 0, 8, 7, 1);
          
-        pop.add(box); 
+        pop.add(box);  
         // pop.bind_model (menu, null);
         //box.pack_start(lb, expand);
         //box.pack_start (new Gtk.Label ("1"), false, false, 0);
@@ -872,9 +892,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
  
     /* Pending for rewrite */       
-    private static void cardDataEncrypt(string cNum, string cvc, string cExpDate) {
-        // Data Encryption & Storage here
-        string strongkey =null;
+    private void cardDataEncrypt() {
+        // Data Encryption & Storage here 
+        string strongkey ="";
         var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
         attributes["size"] = "64"; 
         attributes["type"] = "user"; 
@@ -884,28 +904,43 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
          
         // Search for key 
         Secret.password_lookupv.begin (appCenterS, attributes, null, (obj, async_res) => {
-            strongkey = Secret.password_lookup.end (async_res);
+             strongkey = Secret.password_lookup.end (async_res);
             /* DEBUG ONLY !!! */
-            stdout.printf ("[key] " + strongkey); 
+             
         });
 
-        if (strongkey == "") { 
-        strongkey = keyGen(); 
-        }
+      //  if (strongkey == "") { 
+       /// strongkey = keyGen(); 
+       // }
 
         /* TODO: Add appending option for multi-card support */
         // Create cc.xml (Remove | Depreciated )
-        
+        // strongkey = (string) keyGen();
+
+        if (strongkey.length < 3 ) {
+            strongkey = (string) keyGen(); 
+        }  
+
+        stdout.printf ("[key] " + strongkey +"\n"); 
+        stdout.printf ("[key] " + localuser +"\n");
 
         try { 
-            string[] spawn_args = {@"aescrypt -e -p  + $strongkey /etc/AppCenter/cc.xml",
-            "shred -n 3 -u -z /cc.xml"};
+            string[] spawn_args = {"aescrypt", "-e", "-p",  @"$strongkey", "cc.xml"};
+            string[] spawn_args2 = {"shred", "-n", "3", "-u", "-z", "cc.xml"}; 
             string[] spawn_env = Environ.get ();
 		    string ls_stdout;
 		    string ls_stderr;
 		    int ls_status;
-            Process.spawn_sync("/",
+            Process.spawn_sync(@"/home/$localuser/appcenter/",
             spawn_args,
+            spawn_env,
+            SpawnFlags.SEARCH_PATH,
+			null,
+			out ls_stdout,
+			out ls_stderr,
+			out ls_status);
+            Process.spawn_sync(@"/home/$localuser/appcenter/",
+            spawn_args2,
             spawn_env,
             SpawnFlags.SEARCH_PATH,
 			null,
@@ -915,12 +950,14 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         } catch (SpawnError e) {
 		    stdout.printf ("Error: %s\n", e.message);
             }
-
+            
             stdout.printf("[Unencrypted file] Purged");  
             stdout.printf("[Encrypt complete]"); 
         }
 
-    public static string keyGen() {  
+    public string keyGen() {  
+        
+        // service = new Secret.Service (); 
         var keybuild = new StringBuilder(); 
         string strongkey;
         var builder = new StringBuilder();
@@ -928,18 +965,19 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         attributes["size"] = "64"; 
         attributes["type"] = "user"; 
         Cancellable cancellable = new Cancellable ();
-        /* 
+        
         var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
                                             "size", Secret.SchemaAttributeType.INTEGER,
                                             "type", Secret.SchemaAttributeType.STRING);
         
-        stdout.printf ("[appcenter] unable to find key, generating a new key");
-         Secret.Collection.create(null, "appcenter","aac", Secret.CollectionCreateFlags.COLLECTION_CREATE_NONE, cancellable);
-         */
+        stdout.printf ("[appcenter] unable to find key, generating a new key\n");
+        // Secret.Collection.create(service, "appcenter","aac", Secret.CollectionCreateFlags.COLLECTION_CREATE_NONE, cancellable);
+        // Secret.Collection.load_items(service); 
+         
          /*Keygen starts*/
 
         int i =0;
-        while(i < 12) {
+        while(i < 12) { //12 
         // Generates a 32 char passkey 
          keybuild.append_unichar("ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789@#$%!"[Random.int_range (0,67)]);
          builder.append( (string) keybuild.str); 
@@ -947,18 +985,17 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         }
         strongkey = builder.str; 
          /*Keygen ends */
-        /*
-        Secret.password_storev.begin (appCenterS,attributes,COLLECTION_APPCC, "acc",strongkey,null,(obj,async_res) => {
+        
+        Secret.password_storev.begin (appCenterS,attributes,Secret.COLLECTION_DEFAULT,"acc",strongkey,null,(obj,async_res) => {
             bool res = Secret.password_store.end(async_res); 
             /*Password Stored - complete additional processes */
             stdout.printf ("[password stored]\n"); 
-    
-        //});
+            }); 
 
         return strongkey; 
     } 
 
-    private static void cardDataDecrypt() {
+    private void cardDataDecrypt() {
         var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
         attributes["size"] = "64"; 
         attributes["type"] = "user"; 
@@ -966,19 +1003,23 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                                             "size", Secret.SchemaAttributeType.INTEGER,
                                             "type", Secret.SchemaAttributeType.STRING); 
         string strongkey = null; 
-        Secret.password_lookupv.begin (appCenterS, attributes, null, (obj, async_res) => {
-            strongkey = Secret.password_lookup.end (async_res);
+         Secret.password_lookupv.begin (appCenterS, attributes, null, (obj, async_res) => {
+             strongkey = Secret.password_lookup.end (async_res);
             /* DEBUG ONLY !!! */
-            stdout.printf ("[key] " + strongkey); 
-        });
+             
+        }); 
+
+         
+
+        stdout.printf ("[key] " + strongkey); 
 
          try { 
-            string[] spawn_args = {@"aescrypt -d -p $strongkey /home/*/AppCenter/cc.xml.aes"};
+            string[] spawn_args = {"aescrypt", "-d", "-p", @"$strongkey", "cc.xml.aes"};
             string[] spawn_env = Environ.get ();
 		    string ls_stdout;
 		    string ls_stderr;
 		    int ls_status;
-            Process.spawn_sync("/",
+            Process.spawn_sync(@"/home/$localuser/appcenter/",
             spawn_args,
             spawn_env,
             SpawnFlags.SEARCH_PATH,
