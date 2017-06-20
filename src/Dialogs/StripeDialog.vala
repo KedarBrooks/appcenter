@@ -848,7 +848,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
        Gtk.Button apply_button = new Gtk.Button.with_label ("Use"); 
         apply_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
         apply_button.clicked.connect (() => { 
-            // cardDataDecrypt ();
+             cardDataDecrypt ();
              pop.hide (); 
         });
 
@@ -857,7 +857,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         delete_button.clicked.connect (() => {
             // action function
             // Debug 
-             //cardDataEncrypt ();  
+             cardDataEncrypt ();  
              pop.hide (); 
         });
 
@@ -1002,19 +1002,14 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
                                             "size", Secret.SchemaAttributeType.INTEGER,
                                             "type", Secret.SchemaAttributeType.STRING); 
-        string strongkey = null; 
-         Secret.password_lookupv.begin (appCenterS, attributes, null, (obj, async_res) => {
-             strongkey = Secret.password_lookup.end (async_res);
-            /* DEBUG ONLY !!! */
-             
-        }); 
+        string strongkey ="";  
+         Secret.password_lookupv.begin(appCenterS,attributes,null,(obj,async_res) => {
+         string token = Secret.password_lookup.end(async_res);
+         //stdout.printf(@"[read] $token\n");
+         // strongkey = token; 
 
-         
-
-        stdout.printf ("[key] " + strongkey); 
-
-         try { 
-            string[] spawn_args = {"aescrypt", "-d", "-p", @"$strongkey", "cc.xml.aes"};
+          try { 
+            string[] spawn_args = {"aescrypt", "-d", "-p", @"$token", "cc.xml.aes"};
             string[] spawn_env = Environ.get ();
 		    string ls_stdout;
 		    string ls_stderr;
@@ -1032,6 +1027,11 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             }
 
             stdout.printf("[File Unencrypted] ");  
+        
+    });
+
+
+        
         }
 
     /* Pending of rewrite */
