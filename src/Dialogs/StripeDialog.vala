@@ -781,6 +781,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         
     private void cardNotify () { 
+        cardDataDecrypt (); 
         GLib.Menu menu = new GLib.Menu ();  
         loadMetaData(); 
         string selected = null; 
@@ -850,9 +851,10 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
        Gtk.Button apply_button = new Gtk.Button.with_label ("Use"); 
         apply_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
         apply_button.clicked.connect (() => { 
-            //loadccData(); 
-            getCardInfo (selected); 
-             // cardDataDecrypt ();
+            
+            getCardInfo (selected);
+            cardDataEncrypt ();  
+
              pop.hide (); 
         });
 
@@ -860,8 +862,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         delete_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
         delete_button.clicked.connect (() => {
             // action function
-            // Debug 
-             cardDataEncrypt ();  
+            
+
              pop.hide (); 
         });
 
@@ -894,6 +896,13 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         
     }
 
+    private void wait (int cycles) {
+        int i = 0; 
+        while (cycles > i) {
+            i++; 
+        }
+    }
+
  
     /* Pending for rewrite */       
     private void cardDataEncrypt() {
@@ -908,7 +917,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
          
         // Search for key 
         Secret.password_lookupv.begin (appCenterS, attributes, null, (obj, async_res) => {
-            string password = Secret.password_lookup.end (async_res);
+            string password = (string) Secret.password_lookup.end (async_res);
 
         if (password.length < 3 ) {
             password = (string) keyGen(); 
@@ -1047,22 +1056,25 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         }
 
     /* Pending of rewrite */
-    private void getCardInfo(string cardNum) {
+    private void getCardInfo(string short_card_num) {
         loadccData ();
         var nodes = new Gee.ArrayList<string> ();
-        var fullCardNums = new GLib.HashTable <string, string> (str_hash, str_equal); 
+        var card_number = new Gee.ArrayList<string> (); 
+        var card_expo = new Gee.ArrayList<string> (); 
+        var card_cvc = new Gee.ArrayList<string> (); 
         nodes = internal_xml.node_content_list;
         
         bool first_pass = false; 
         bool second_pass = false; 
         int cards = 0; 
-        int i = 1; 
+        int i = 1;
 
         foreach (string element in nodes) {
             // checks to see if index is even 
             if (first_pass == true && second_pass == true ) {
                 // 3rd pass logic
                 stdout.printf(@"[CVC Number] $element\n");
+                card_cvc.add(element); 
 
                 i++;  
                 cards ++; 
@@ -1080,6 +1092,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                     stdout.printf(@"---------Card $i ------------\n");
                     
                     stdout.printf(@"[Card Number] $element\n");
+                    card_number.add(element); 
                     /*
                     int size = 0;
                     size = element.char_count ();
@@ -1109,7 +1122,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                 else {
                     second_pass = true; 
                     // Second Pass Logic
-                    stdout.printf(@"[Expo Date] $element\n"); 
+                    stdout.printf(@"[Expo Date] $element\n");
+                    card_expo.add(element);  
 
                 }
 
@@ -1117,11 +1131,26 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             
         }
 
-        }
-
 
 
     }
+    
+        int y = 0; 
+        i = i-1; 
+        while (y < i) {
+            if(card_number[y].contains(short_card_num)) {
+                card_number_entry.text = card_number[y]; 
+                card_cvc_entry.text = card_cvc[y]; 
+                card_expiration_entry.text = card_expo[y]; 
+            } 
+            y++; 
+        }
+
+        stdout.printf("[done lodaing card]"); 
+
+    }
+
+    
 
     private static Act.UserManager? usermanager = null;
 
