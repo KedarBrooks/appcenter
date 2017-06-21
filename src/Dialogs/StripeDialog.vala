@@ -783,6 +783,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     private void cardNotify () { 
         GLib.Menu menu = new GLib.Menu ();  
         loadMetaData(); 
+        string selected = null; 
         var nodes = new Gee.ArrayList<string> ();
         var numbers  = new Gee.ArrayList<string> ();  
         nodes = internal_xml.node_content_list;
@@ -826,6 +827,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             stdout.printf("button trigered\n");
             //button.set_active (true);  
             card_number_entry.text = @"xxxx-xxxx-$element";
+            selected = element; 
             trigered = true;  
              
         }); 
@@ -848,7 +850,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
        Gtk.Button apply_button = new Gtk.Button.with_label ("Use"); 
         apply_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
         apply_button.clicked.connect (() => { 
-             cardDataDecrypt ();
+            //loadccData(); 
+            getCardInfo (selected); 
+             // cardDataDecrypt ();
              pop.hide (); 
         });
 
@@ -904,28 +908,21 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
          
         // Search for key 
         Secret.password_lookupv.begin (appCenterS, attributes, null, (obj, async_res) => {
-             strongkey = Secret.password_lookup.end (async_res);
-            /* DEBUG ONLY !!! */
-             
-        });
+            string password = Secret.password_lookup.end (async_res);
 
-      //  if (strongkey == "") { 
-       /// strongkey = keyGen(); 
-       // }
-
-        /* TODO: Add appending option for multi-card support */
-        // Create cc.xml (Remove | Depreciated )
-        // strongkey = (string) keyGen();
-
-        if (strongkey.length < 3 ) {
-            strongkey = (string) keyGen(); 
+        if (password.length < 3 ) {
+            password = (string) keyGen(); 
         }  
 
-        stdout.printf ("[key] " + strongkey +"\n"); 
-        stdout.printf ("[key] " + localuser +"\n");
+        else {
+            stdout.printf("[password found]\n"); 
+        }
+
+        stdout.printf ("[user] " + localuser +"\n"); 
+        stdout.printf ("[key] " + password +"\n");
 
         try { 
-            string[] spawn_args = {"aescrypt", "-e", "-p",  @"$strongkey", "cc.xml"};
+            string[] spawn_args = {"aescrypt", "-e", "-p",  @"$password", "cc.xml"};
             string[] spawn_args2 = {"shred", "-n", "3", "-u", "-z", "cc.xml"}; 
             string[] spawn_env = Environ.get ();
 		    string ls_stdout;
@@ -952,7 +949,19 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             }
             
             stdout.printf("[Unencrypted file] Purged");  
-            stdout.printf("[Encrypt complete]"); 
+            stdout.printf("[Encrypt complete]");  
+       
+     });
+
+      //  if (strongkey == "") { 
+       /// strongkey = keyGen(); 
+       // }
+
+        /* TODO: Add appending option for multi-card support */
+        // Create cc.xml (Remove | Depreciated )
+        // strongkey = (string) keyGen();
+
+       
         }
 
     public string keyGen() {  
@@ -996,17 +1005,20 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     } 
 
     private void cardDataDecrypt() {
+        stdout.printf("[File Decrypt]\n ");
         var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
         attributes["size"] = "64"; 
         attributes["type"] = "user"; 
         var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
                                             "size", Secret.SchemaAttributeType.INTEGER,
                                             "type", Secret.SchemaAttributeType.STRING); 
-        string strongkey ="";  
+          
          Secret.password_lookupv.begin(appCenterS,attributes,null,(obj,async_res) => {
-         string token = Secret.password_lookup.end(async_res);
+            string token = Secret.password_lookup.end (async_res);
          //stdout.printf(@"[read] $token\n");
          // strongkey = token; 
+
+        stdout.printf(@"[key]: $token\n"); 
 
           try { 
             string[] spawn_args = {"aescrypt", "-d", "-p", @"$token", "cc.xml.aes"};
@@ -1026,7 +1038,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 		    stdout.printf ("Error: %s\n", e.message);
             }
 
-            stdout.printf("[File Unencrypted] ");  
+            stdout.printf("[File Unencrypted]\n ");  
         
     });
 
@@ -1035,8 +1047,80 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         }
 
     /* Pending of rewrite */
-    private void getCardInfo(int index) {
+    private void getCardInfo(string cardNum) {
+        loadccData ();
+        var nodes = new Gee.ArrayList<string> ();
+        var fullCardNums = new GLib.HashTable <string, string> (str_hash, str_equal); 
+        nodes = internal_xml.node_content_list;
         
+        bool first_pass = false; 
+        bool second_pass = false; 
+        int cards = 0; 
+        int i = 1; 
+
+        foreach (string element in nodes) {
+            // checks to see if index is even 
+            if (first_pass == true && second_pass == true ) {
+                // 3rd pass logic
+                stdout.printf(@"[CVC Number] $element\n");
+
+                i++;  
+                cards ++; 
+                first_pass = false; 
+                second_pass = false;
+                stdout.printf(@"--------------------------\n"); 
+            }
+
+            else { 
+
+            if (second_pass == false) {
+                if (first_pass == false)  {
+                    first_pass = true; 
+                    // First Pass Logic
+                    stdout.printf(@"---------Card $i ------------\n");
+                    
+                    stdout.printf(@"[Card Number] $element\n");
+                    /*
+                    int size = 0;
+                    size = element.char_count ();
+                    stdout.printf(@"card size = $size"); 
+                    int a = 0; 
+                    var builder = new StringBuilder(); 
+                    char[] cNum = new char[size];
+                    for (int x = 0; x < size; x++){
+                    cNum[x] = (char)element.get_char(element.index_of_nth_char(x)); 
+                    } 
+                
+                    //int size = element.length;
+                  
+                    a = (size - 4); 
+
+                    while (a < size) {
+                        // Get last 4 digits
+                        builder.append((string)cNum[a]); 
+                        a++;  
+                    }
+
+                    string endDigits = (string) builder.str; 
+                    stdout.printf(@"[Last 4 digits] $endDigits\n"); 
+                    * */
+
+                }
+                else {
+                    second_pass = true; 
+                    // Second Pass Logic
+                    stdout.printf(@"[Expo Date] $element\n"); 
+
+                }
+
+            }
+            
+        }
+
+        }
+
+
+
     }
 
     private static Act.UserManager? usermanager = null;
