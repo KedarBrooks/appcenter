@@ -404,10 +404,11 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
     private void file_check () {
         string userN = user();          
 
-        var file = File.new_for_path (@"/home/$userN/appcenter/cc.xml");
+        var file = File.new_for_path (@"/home/$userN/appcenter/cc.xml.aes");
         if(!file.query_exists ()) { 
             stderr.printf ("File '%s' doesn't exist. Attempting to recreate..\n", file.get_path ());
-           
+            file.new_for_path(@"/home/$userN/appcenter/cc.xml.aes");
+
             cc_create(file,userN); 
         }
 

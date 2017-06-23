@@ -94,6 +94,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     public weak Act.User ActiveUser { get; set; }
     public weak Act.UserManager UsrManagment { get; construct; }
 
+    private bool save_state = false; 
+
 
     public StripeDialog (int _amount, string _app_name, string _app_id, string _stripe_key) {
         Object (amount: _amount,
@@ -129,6 +131,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
            validate (0, email_entry.text);
         });
 
+        Gtk.CheckButton save_check_button = new Gtk.CheckButton.with_label ("Save Card"); 
         internal_xml = new AppCenter.Services.XmlParser ();
         ActiveUser = get_usermanager ().get_user (GLib.Environment.get_user_name ()); 
         ActiveUser.changed.connect(init_user); 
@@ -200,6 +203,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         card_layout.add (secondary_label);
         card_layout.add (email_entry);
         card_layout.add (card_grid);
+        card_layout.add (save_check_button); 
+
+
 
         layouts = new Gtk.Stack ();
         layouts.vhomogeneous = false;
@@ -212,11 +218,13 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         var privacy_policy_link = new Gtk.LinkButton.with_label ("https://stripe.com/privacy", _("Privacy Policy"));
 
+         
         var action_area = (Gtk.ButtonBox) get_action_area ();
         action_area.margin_right = 5;
         action_area.margin_bottom = 5;
         action_area.margin_top = 14;
         action_area.add (privacy_policy_link);
+        // action_area.add(save_check_button); 
         action_area.set_child_secondary (privacy_policy_link, true);
 
 
@@ -258,6 +266,19 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                 pay_button.activate ();
             }
         });
+
+        save_check_button.toggled.connect (() => {
+			// Emitted when the button has been clicked:
+			if (save_check_button.active) {
+                save_state = true; 
+            }
+
+            else {
+                save_state = false; 
+            }
+
+			
+		}); 
     }
 
     private void show_spinner_view () {
@@ -350,6 +371,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         is_payment_sensitive ();
     }
 
+ 
+
     private void validate (int entry, string new_text) {
         try {
             switch (entry) {
@@ -415,6 +438,12 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     private void on_response (Gtk.Dialog source, int response_id) {
         switch (response_id) {
             case Gtk.ResponseType.APPLY:
+                if (save_state = true) {
+                    add_cc_entry (card_number_entry.text, card_expiration_entry.text, card_cvc_entry.text);
+                    string str = card_number_entry.text;
+                    // get last 4 digits 
+
+                }
                 if (layouts.visible_child_name == "card") {
                     show_spinner_view ();
                     on_pay_clicked ();
@@ -424,9 +453,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                 break;
             case Gtk.ResponseType.CLOSE:
                 if (layouts.visible_child_name == "error") {
-                    download_requested ();
+                    download_requested (); 
                 }
-
+                purge("cc.xml"); 
                 destroy ();
                 break;
             case Gtk.ResponseType.ACCEPT: 
@@ -779,6 +808,208 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         stdout.printf("[cc data loaded]\n");
     }
 
+    private void delete_meta_entry (string target) {         
+
+        loadMetaData (); 
+        var file = File.new_for_path (@"/home/$localuser/appcenter/meta_cc.xml");
+        if(!file.query_exists ()) { 
+            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
+        } 
+
+        var nodes = new Gee.ArrayList<string> ();
+        nodes = internal_xml.node_content_list;
+
+        try {
+        purge("meta_cc.xml"); 
+        FileOutputStream os = file.create (FileCreateFlags.PRIVATE); 
+        os.write ("<cards>\n".data);  
+
+        foreach (string element in nodes) {
+            if (!element.contains(target)) {
+                os.write (" <card>\n".data);
+                os.write (@"     <cNum>$element</cNum>\n".data);
+                os.write (" </card>\n".data); 
+            } 
+        } 
+        os.write ("</cards>".data); 
+        stdout.printf ("-- meta_cc.xml [target deleted]\n"); 
+        } 
+    catch (Error e) {
+        stdout.printf("Error: %s\n", e.message); 
+    }
+    }
+
+    private void add_meta_entry (string target) {
+        loadMetaData (); 
+        var file = File.new_for_path (@"/home/$localuser/appcenter/meta_cc.xml");
+        if(!file.query_exists ()) { 
+            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
+        } 
+
+        var nodes = new Gee.ArrayList<string> ();
+        nodes = internal_xml.node_content_list;
+
+        nodes.add (target); 
+
+        try {
+        purge("meta_cc.xml");
+        FileOutputStream os = file.create (FileCreateFlags.PRIVATE); 
+        os.write ("<cards>\n".data);  
+
+        foreach (string element in nodes) {
+                os.write (" <card>\n".data);
+                os.write (@"     <cNum>$element</cNum>\n".data);
+                os.write (" </card>\n".data); 
+        } 
+        os.write ("</cards>".data); 
+        stdout.printf ("-- meta_cc.xml [target added]\n"); 
+        } 
+    catch (Error e) {
+        stdout.printf("Error: %s\n", e.message); 
+    }
+    } 
+    
+
+    private void delete_cc_entry (string target) {
+        loadccData (); 
+        var file = File.new_for_path (@"/home/$localuser/appcenter/cc.xml");
+       // if(!file.query_exists ()) { 
+     //       stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
+     //   } 
+
+        bool first_pass = false; 
+        bool second_pass = false;
+        bool skip = false;  
+        var nodes = new Gee.ArrayList<string> ();
+        nodes = internal_xml.node_content_list;
+
+        try {
+        purge("cc.xml"); 
+        FileOutputStream os = file.create (FileCreateFlags.PRIVATE); 
+        os.write ("<cards>\n".data);  
+        int i =0; 
+
+        foreach (string element in nodes) {
+            if(element.contains(target)) {
+                skip = true; 
+            }
+
+            // checks to see if index is even 
+            if (first_pass == true && second_pass == true ) {
+                if(skip == false) { 
+                // 3rd pass logic
+                os.write (@" <cvc>$element</cvc>\n".data);  
+                os.write (@" </card>\n".data); 
+                stdout.printf(@"[CVC Number] $element\n");
+ 
+                first_pass = false; 
+                second_pass = false; 
+
+            }
+                skip = false;
+                first_pass = false; 
+                second_pass = false;   
+            }
+
+            else { 
+
+            if (second_pass == false) {
+                 
+                if (first_pass == false)  {
+                    first_pass = true; 
+                    // First Pass Logic
+                    if (skip == false) {
+                    
+                    os.write (@"<card>\n".data); 
+                    os.write (@" <cnum>$element</cnum>\n".data);  
+                    stdout.printf(@"[Card Number] $element\n");
+
+                }
+                }
+                else {
+                    second_pass = true; 
+                    // Second Pass Logic
+                    if (skip == false) {
+                    os.write (@" <expo>$element</expo>\n".data); 
+            
+                    stdout.printf(@"[Expo Date] $element\n");
+                    }
+                }
+                } 
+
+            
+            
+        }
+
+
+            
+  
+            
+    }
+        
+   // os.write ("</cards>".data); 
+   os.write (@" </cards>\n".data); 
+    stdout.printf ("-- cc.xml [target deleted]\n"); 
+    } 
+    catch (Error e) {
+        stdout.printf("Error: %s\n", e.message); 
+        } 
+    }
+
+    private void add_cc_entry (string cnum, string expo, string cvc) {
+        loadccData(); 
+        var file = File.new_for_path (@"/home/$localuser/appcenter/cc.xml");
+        if(!file.query_exists ()) { 
+            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
+        } 
+
+        bool first_pass = false; 
+        bool second_pass = false;
+        bool skip = false;  
+        var nodes = new Gee.ArrayList<string> ();
+        nodes = internal_xml.node_content_list;
+        nodes.add(cnum); 
+        nodes.add(expo); 
+        nodes.add(cvc); 
+
+        try {
+        purge("cc.xml"); 
+        FileOutputStream os = file.create (FileCreateFlags.PRIVATE); 
+        os.write ("<cards>\n".data);  
+        foreach (string element in nodes) {
+            if (first_pass == true && second_pass ==true) {
+                    os.write (@"     <cvc>$element</cvc>\n".data);
+                    os.write (" </card>\n".data);  
+
+                    first_pass = false; 
+                    second_pass = false; 
+            }
+            if (second_pass == false) {
+                if (first_pass == false) {
+                    first_pass = true; 
+                    // First Pass Logic 
+                        os.write (@"     <expo>$element</expo>\n".data); 
+                }
+                else {
+                    second_pass = true; 
+                    // Second Pass Logic 
+                        os.write (" <card>\n".data);
+                        os.write (@"     <cNum>$element</cNum>\n".data);
+            }
+            
+        } 
+        
+    }
+    
+    os.write ("</cards>".data); 
+        stdout.printf ("-- cc.xml [target deleted]\n"); 
+    }
+        catch (Error e) { 
+            stderr.printf("Error: %s\n", e.message); 
+        }
+          
+    }
+
         
     private void cardNotify () { 
         cardDataDecrypt (); 
@@ -863,7 +1094,10 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         delete_button.clicked.connect (() => {
             // action function
             
-
+            delete_meta_entry(selected); 
+            delete_cc_entry(selected);
+            purge("cc.xml.aes"); 
+            cardDataEncrypt ();
              pop.hide (); 
         });
 
@@ -896,13 +1130,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         
     }
 
-    private void wait (int cycles) {
-        int i = 0; 
-        while (cycles > i) {
-            i++; 
-        }
-    }
-
+    
  
     /* Pending for rewrite */       
     private void cardDataEncrypt() {
@@ -971,7 +1199,33 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         // strongkey = (string) keyGen();
 
        
-        }
+    }
+    
+    private void purge (string file) {
+
+            try {
+
+            string[] spawn_args = {"shred", "-n", "3", "-u", "-z",@"$file"}; 
+            string[] spawn_env = Environ.get ();
+		    string ls_stdout;
+		    string ls_stderr;
+		    int ls_status;
+            Process.spawn_sync(@"/home/$localuser/appcenter/",
+            spawn_args,
+            spawn_env,
+            SpawnFlags.SEARCH_PATH,
+			null,
+			out ls_stdout,
+			out ls_stderr,
+			out ls_status);
+        } catch (SpawnError e) {
+		    stdout.printf ("Error: %s\n", e.message);
+            }
+            
+            stdout.printf("[Unencrypted file] Purged");  
+            stdout.printf("[Encrypt complete]");  
+       
+     }
 
     public string keyGen() {  
         
@@ -1093,6 +1347,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                     
                     stdout.printf(@"[Card Number] $element\n");
                     card_number.add(element); 
+
+                    
+
                     /*
                     int size = 0;
                     size = element.char_count ();
@@ -1150,7 +1407,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
     }
 
-    
+
 
     private static Act.UserManager? usermanager = null;
 
