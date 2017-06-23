@@ -30,6 +30,7 @@ vala_precompile(VALA_C ${EXEC_NAME}
     Widgets/UpdateHeaderRow.vala
     Widgets/HumbleButton.vala
     Widgets/Switcher.vala
+    Services/XmlParser.vala
     Services/DbusInterfaces.vala
     Services/DBusServer.vala
     ${CMAKE_CURRENT_BINARY_DIR}/config.vala
@@ -37,12 +38,11 @@ PACKAGES
     appstream
     gtk+-3.0>=3.12
     gee-0.8
+    libxml-2.0
     granite
     packagekit-glib2
     libsoup-2.4 
     json-glib-1.0
-    libxml-2.0
-    xmlbird
     libsecret-1
     AccountsService-1.0
     ${UNITY_PACKAGES}
