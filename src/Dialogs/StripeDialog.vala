@@ -697,117 +697,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                 return _(DEFAULT_ERROR_MESSAGE);
         }
     }
-
-    private void createMetaData(string cardNum) {
-        // write to meta-cc.xml 
-        string parent = null; 
-        string localuser = user();
-        string path = (@"/home/$localuser/appcenter/meta_cc.xml"); 
-        Xml.Doc* doc = Xml.Parser.parse_file (path);
-        if (doc == null) {
-            stderr.printf ("File %s not found\n", path); 
-            return; 
-        }  
-
-        int i =0; 
-        Xml.Node* root = doc->get_root_element (); 
-        if (root ==null) {
-            delete doc; 
-            stderr.printf ("meta_cc.xml is empty"); 
-            return; 
-        }
-
-        parent = root->name;
-
-        // parse_node(root);
-        var node_name = new ArrayList<string> (); 
-        var node_content = new ArrayList<string> ();
-        var  element_name = new ArrayList<string> ();
-        var element_content = new ArrayList<string> (); 
-
-        for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
-            // Spaces between tags are also nodes, discard them
-            if (iter->type != Xml.ElementType.ELEMENT_NODE) {
-                continue;
-            }
-            node_name[i] = iter->name;
-            node_content[i] = iter->get_content ();
-            
-         // Now parse the node's properties (attributes)
-        // delete doc;
-        i = 0;   
-        for (Xml.Attr* prop = iter->properties; prop !=null; prop->next) {
-            string attr_name = prop->name; 
-            string attr_content = prop->children->content;
-            element_name[i] = attr_name; 
-            element_content[i] = attr_content;
-            i++;              
-        }
-        }
-        
-        Xml.Ns* ns = new Xml.Ns (null, "", "meta");
-        ns->type = Xml.ElementType.ELEMENT_NODE;
-        doc->set_root_element (parent);
-        i = 0;
-
-        element_name.insert(i+1,"cNum"); 
-        element_content.insert(i+1, meta_generation(cardNum));   
-
-        foreach (string element in element_name) {
-            root->new_prop (element,element_content[i]); 
-            i++; 
-        }
-        
-        var file = File.new_for_path (path); 
-        if(!file.query_exists()) { 
-            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ()); 
-            // Error correction here 
-
-        }
-
-         string xmlstr;
-        doc->dump_memory (out xmlstr);
-
-        try {
-            FileOutputStream os = file.create  (FileCreateFlags.PRIVATE); 
-            os.write (xmlstr.data);
-            stdout.printf ("-- meta_cc.xml [updated]\n");
-	        } 
-        catch (GLib.Error e) {
-		    stdout.printf ("Error: %s\n", e.message);
-	        }
-            delete doc; 
-        }
-
-    private string meta_generation (string cardNum) {
-        // Get late four digits of card
-        var builder = new StringBuilder();
-        string final_cNum = null;
-
-        char[] cNum = new char[cardNum.length];
-        for (int i = 0; i < cardNum.length; i++){
-        cNum[i] = (char)cardNum.get_char(cardNum.index_of_nth_char(i)); 
-        }  
-
-        int size = cNum.length; 
-        int a = 0;
-
-        while(a < size-4) {
-        // fill blank space
-            builder.append("*");
-            a++;  
-        }
-
-        while (a < size) {
-        // Grab the last 4 digits 
-            builder.append((string)cNum[a]);
-            a++;  
-        }
-
-        final_cNum = builder.str;
-
-        return final_cNum; 
-    }
     
     private bool loadMetaData() { 
         AppCenter.Services.XmlParser internal_xml = new AppCenter.Services.XmlParser (); 
@@ -908,9 +797,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     private void delete_cc_entry (string target) {
         loadccData (); 
         var file = File.new_for_path (@"/home/$localuser/appcenter/cc.xml");
-       // if(!file.query_exists ()) { 
-     //       stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
-     //   } 
 
         bool first_pass = false; 
         bool second_pass = false;
@@ -921,7 +807,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         FileOutputStream os = file.create (FileCreateFlags.PRIVATE);  
         try {
         
-        // purge("cc.xml"); 
         os.write ("<cards>\n".data);  
         int i =0; 
 
@@ -980,20 +865,14 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             
     }
 
-    stdout.printf("[i-count]: %d",i); 
-        
-   // os.write ("</cards>".data); 
-
    if (i == 3) {
-         
-         
-            os.write (" <card>\n".data);
-            os.write (@"     <cNum></cNum>\n".data);
-            os.write (@"     <expo></expo>\n".data);
-            os.write (@"     <cvc></cvc>\n".data); 
-            os.write (" </card>\n".data);
-            os.write ("</cards>\n".data);
-             stdout.printf ("-- cc.xml [target deleted]\n");  
+        os.write (" <card>\n".data);
+        os.write (@"     <cNum></cNum>\n".data);
+        os.write (@"     <expo></expo>\n".data);
+        os.write (@"     <cvc></cvc>\n".data); 
+        os.write (" </card>\n".data);
+        os.write ("</cards>\n".data);
+        stdout.printf ("-- cc.xml [target deleted]\n");  
    } 
 
    else { 
@@ -1143,10 +1022,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     } 
         else {
         
-        //pop.add(box); 
         pop.bind_model (menu, null);
-        //box.pack_start(lb, expand);
-        //box.pack_start (new Gtk.Label ("1"), false, false, 0);
         pop.show_all (); 
         pop.set_visible (true); 
     }
@@ -1270,15 +1146,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             stdout.printf("[Encrypt complete]");  
        
      });
-
-      //  if (strongkey == "") { 
-       /// strongkey = keyGen(); 
-       // }
-
-        /* TODO: Add appending option for multi-card support */
-        // Create cc.xml (Remove | Depreciated )
-        // strongkey = (string) keyGen();
-
        
     }
     
@@ -1323,10 +1190,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                                             "size", Secret.SchemaAttributeType.INTEGER,
                                             "type", Secret.SchemaAttributeType.STRING);
         
-        stdout.printf ("[appcenter] unable to find key, generating a new key\n");
-        // Secret.Collection.create(service, "appcenter","aac", Secret.CollectionCreateFlags.COLLECTION_CREATE_NONE, cancellable);
-        // Secret.Collection.load_items(service); 
-         
+        stdout.printf ("[appcenter] unable to find key, generating a new key\n"); 
          /*Keygen starts*/
 
         int i =0;
@@ -1429,33 +1293,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
                     stdout.printf(@"[Card Number] $element\n");
                     card_number.add(element); 
 
-                    
-
-                    /*
-                    int size = 0;
-                    size = element.char_count ();
-                    stdout.printf(@"card size = $size"); 
-                    int a = 0; 
-                    var builder = new StringBuilder(); 
-                    char[] cNum = new char[size];
-                    for (int x = 0; x < size; x++){
-                    cNum[x] = (char)element.get_char(element.index_of_nth_char(x)); 
-                    } 
-                
-                    //int size = element.length;
-                  
-                    a = (size - 4); 
-
-                    while (a < size) {
-                        // Get last 4 digits
-                        builder.append((string)cNum[a]); 
-                        a++;  
-                    }
-
-                    string endDigits = (string) builder.str; 
-                    stdout.printf(@"[Last 4 digits] $endDigits\n"); 
-                    * */
-
                 }
                 else {
                     second_pass = true; 
@@ -1468,8 +1305,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             }
             
         }
-
-
 
     }
     
@@ -1484,7 +1319,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             y++; 
         }
 
-        stdout.printf("[done lodaing card]"); 
+        stdout.printf("[done lodaing card]\n"); 
 
     }
 
