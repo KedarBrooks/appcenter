@@ -23,6 +23,7 @@ public class AppCenter.Services.XmlParser {
     public static Gee.ArrayList<string> node_content_list;
     public static Gee.ArrayList<string> element_name_list;
     public static Gee.ArrayList<string> element_content_list;
+    public static bool empty; 
 
     public static string content; 
  
@@ -34,6 +35,7 @@ public class AppCenter.Services.XmlParser {
     }
 
     public string xml_parse_filepath (string path) {
+        this.empty = false; 
         // Parse the xml document from path
         Xml.Parser.init ();
         // array.append_val ("1456"); 
@@ -114,9 +116,13 @@ public class AppCenter.Services.XmlParser {
                 }
                 string node_name = iter->name; 
                 string node_content = iter->get_content ();
-                this.content = node_content; 
+                this.content = node_content;
+                // Prevents empty nodes  
+                if (this.content !="NULL") {
+                    this.empty = true; 
                 this.node_name_list.add(node_name);
                 this.node_content_list.add(@"$node_content");
+                }
                 debug_print_xml(node_name,node_content); 
 
                 parse_properties(iter);
@@ -139,9 +145,12 @@ public class AppCenter.Services.XmlParser {
             string attr_name = prop->name; 
 
             string attr_content = prop->children->content;
-
+            // Provents empty properties 
+            if (attr_content != "") {
+            this.empty = true; 
             this.element_name_list.add(attr_name);
             this.element_content_list.add(@"$attr_content");
+            }
             debug_print_xml(attr_name, attr_content, '|');
             i++;
 

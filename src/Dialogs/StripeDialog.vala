@@ -95,6 +95,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     public weak Act.UserManager UsrManagment { get; construct; }
 
     private bool save_state = false; 
+    private bool empty; 
 
 
     public StripeDialog (int _amount, string _app_name, string _app_id, string _stripe_key) {
@@ -406,8 +407,17 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     private void is_payment_sensitive () {
         if (email_valid && card_valid && expiration_valid && cvc_valid) {
             pay_button.sensitive = true;
+            cardDataDecrypt (); 
         } else {
             pay_button.sensitive = false;
+            cardDataEncrypt (); 
+        }
+    }
+
+    private void is_meta_empty () {
+       empty = internal_xml.empty; 
+        if (empty = true) {
+        save_button.sensitive = false; 
         }
     }
 
@@ -438,11 +448,22 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     private void on_response (Gtk.Dialog source, int response_id) {
         switch (response_id) {
             case Gtk.ResponseType.APPLY:
-                if (save_state = true) {
-                    add_cc_entry (card_number_entry.text, card_expiration_entry.text, card_cvc_entry.text);
+                if (save_state == true) { 
+                     add_cc_entry (card_number_entry.text, card_expiration_entry.text, card_cvc_entry.text);
+                     cardDataDecrypt (); 
                     string str = card_number_entry.text;
-                    // get last 4 digits 
+                    // get last 4 digits
+                    int len = str.char_count (); 
+                    int start = 0;
+                    int end = str.index_of_nth_char (len-4);    
+                    
 
+                    str = str.splice(start,end, ""); 
+                    stdout.printf(@"[debug cnum]: $str\n");
+                    stdout.printf("[debug count] start:%d end:%d",start,end);  
+                    add_meta_entry(str); 
+                     cardDataEncrypt ();
+                     save_state = false;   
                 }
                 if (layouts.visible_child_name == "card") {
                     show_spinner_view ();
@@ -788,7 +809,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         return final_cNum; 
     }
     
-    private void loadMetaData() { 
+    private bool loadMetaData() { 
         AppCenter.Services.XmlParser internal_xml = new AppCenter.Services.XmlParser (); 
         stdout.printf("[Loading cc meta-data]\n"); 
         string parent = null; 
@@ -796,8 +817,9 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         string path = (@"/home/$localuser/appcenter/meta_cc.xml");
         internal_xml.xml_parse_filepath(path);
         stdout.printf("[cc meta-data loaded]\n");
-         
 
+        return internal_xml.empty;  
+        
     } 
 
     private void loadccData() {
@@ -818,21 +840,31 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         var nodes = new Gee.ArrayList<string> ();
         nodes = internal_xml.node_content_list;
-
+        int i = 0; 
         try {
         purge("meta_cc.xml"); 
         FileOutputStream os = file.create (FileCreateFlags.PRIVATE); 
-        os.write ("<cards>\n".data);  
-
+        os.write ("<cards>\n".data);   
         foreach (string element in nodes) {
+            i++; 
             if (!element.contains(target)) {
                 os.write (" <card>\n".data);
                 os.write (@"     <cNum>$element</cNum>\n".data);
                 os.write (" </card>\n".data); 
             } 
+        }
+        if(i == 1) {
+  
+            os.write (" <card>\n".data);
+            os.write (@"     <cNum></cNum>\n".data);
+            os.write (" </card>\n".data);
+            os.write ("</cards>\n".data); 
+            stdout.printf ("-- meta_cc.xml [target deleted]\n"); 
         } 
+        else {
         os.write ("</cards>".data); 
         stdout.printf ("-- meta_cc.xml [target deleted]\n"); 
+        }
         } 
     catch (Error e) {
         stdout.printf("Error: %s\n", e.message); 
@@ -848,6 +880,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         var nodes = new Gee.ArrayList<string> ();
         nodes = internal_xml.node_content_list;
+       
 
         nodes.add (target); 
 
@@ -857,9 +890,11 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         os.write ("<cards>\n".data);  
 
         foreach (string element in nodes) {
+            if (element !="") {
                 os.write (" <card>\n".data);
                 os.write (@"     <cNum>$element</cNum>\n".data);
                 os.write (" </card>\n".data); 
+            }
         } 
         os.write ("</cards>".data); 
         stdout.printf ("-- meta_cc.xml [target added]\n"); 
@@ -882,14 +917,16 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         bool skip = false;  
         var nodes = new Gee.ArrayList<string> ();
         nodes = internal_xml.node_content_list;
-
-        try {
         purge("cc.xml"); 
-        FileOutputStream os = file.create (FileCreateFlags.PRIVATE); 
+        FileOutputStream os = file.create (FileCreateFlags.PRIVATE);  
+        try {
+        
+        // purge("cc.xml"); 
         os.write ("<cards>\n".data);  
         int i =0; 
 
         foreach (string element in nodes) {
+            i++; 
             if(element.contains(target)) {
                 skip = true; 
             }
@@ -940,16 +977,30 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             
             
         }
-
-
-            
-  
             
     }
+
+    stdout.printf("[i-count]: %d",i); 
         
    // os.write ("</cards>".data); 
-   os.write (@" </cards>\n".data); 
-    stdout.printf ("-- cc.xml [target deleted]\n"); 
+
+   if (i == 3) {
+         
+         
+            os.write (" <card>\n".data);
+            os.write (@"     <cNum></cNum>\n".data);
+            os.write (@"     <expo></expo>\n".data);
+            os.write (@"     <cvc></cvc>\n".data); 
+            os.write (" </card>\n".data);
+            os.write ("</cards>\n".data);
+             stdout.printf ("-- cc.xml [target deleted]\n");  
+   } 
+
+   else { 
+         os.write (@" </cards>\n".data); 
+    stdout.printf ("-- cc.xml [target deleted]\n");  
+   }
+ 
     } 
     catch (Error e) {
         stdout.printf("Error: %s\n", e.message); 
@@ -957,49 +1008,64 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     }
 
     private void add_cc_entry (string cnum, string expo, string cvc) {
+        cardDataDecrypt ();
         loadccData(); 
         var file = File.new_for_path (@"/home/$localuser/appcenter/cc.xml");
-        if(!file.query_exists ()) { 
-            stderr.printf ("File '%s' doesn't exist.\n", file.get_path ());
-        } 
 
         bool first_pass = false; 
         bool second_pass = false;
         bool skip = false;  
         var nodes = new Gee.ArrayList<string> ();
         nodes = internal_xml.node_content_list;
+        
+        
         nodes.add(cnum); 
         nodes.add(expo); 
         nodes.add(cvc); 
 
         try {
-        purge("cc.xml"); 
+        purge("cc.xml");
+        purge("cc.xml.aes"); 
         FileOutputStream os = file.create (FileCreateFlags.PRIVATE); 
         os.write ("<cards>\n".data);  
         foreach (string element in nodes) {
             if (first_pass == true && second_pass ==true) {
+                if(element != "") {
                     os.write (@"     <cvc>$element</cvc>\n".data);
                     os.write (" </card>\n".data);  
 
                     first_pass = false; 
-                    second_pass = false; 
+                    second_pass = false;
+                    continue;  
+                }
+                 first_pass = false; 
+                second_pass = false;
+                continue; 
             }
+        
+
             if (second_pass == false) {
                 if (first_pass == false) {
                     first_pass = true; 
                     // First Pass Logic 
-                        os.write (@"     <expo>$element</expo>\n".data); 
+                    if(element != "") {
+                    os.write (" <card>\n".data); 
+                        os.write (@"     <cNum>$element</cNum>\n".data); 
+                }
                 }
                 else {
                     second_pass = true; 
+                    if(element != "") { 
                     // Second Pass Logic 
-                        os.write (" <card>\n".data);
-                        os.write (@"     <cNum>$element</cNum>\n".data);
+                        
+                        os.write (@"     <expo>$element</expo>\n".data);
             }
+                }
+                }
             
-        } 
+         
         
-    }
+        }
     
     os.write ("</cards>".data); 
         stdout.printf ("-- cc.xml [target deleted]\n"); 
@@ -1012,20 +1078,24 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         
     private void cardNotify () { 
+        
         cardDataDecrypt (); 
         GLib.Menu menu = new GLib.Menu ();  
         loadMetaData(); 
         string selected = null; 
         var nodes = new Gee.ArrayList<string> ();
-        var numbers  = new Gee.ArrayList<string> ();  
-        nodes = internal_xml.node_content_list;
-        menu.append ("Your Saved Cards", "label");
-        Gtk.Popover pop = new Gtk.Popover (save_button); 
-        int i = 0; 
-        foreach (string element in nodes) {
-            if (element.length > 3){
+        var numbers  = new Gee.ArrayList<string> ();
+        Gtk.Popover pop = new Gtk.Popover (save_button);
 
-                
+        nodes = internal_xml.node_content_list;
+        
+        menu.append ("Your Saved Cards", "label");
+         
+        int i = 0;
+    
+        foreach (string element in nodes) {
+
+            if (element.length > 3){
                 numbers.add(@"$element"); 
                 i++; 
             }
@@ -1033,7 +1103,11 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
             else {
                 menu.append ("No cards have been saved", null);
              }
-        } 
+        }
+   
+        
+
+         
         Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0); 
 
         box.margin_right = 10; 
@@ -1047,6 +1121,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         // The buttons:
         if (nodes[0].length > 3) { 
+          
 		    Gtk.RadioButton button1 = new Gtk.RadioButton.with_label_from_widget (null,"");
 
             Gtk.RadioButton button;  
@@ -1058,7 +1133,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 		    button.toggled.connect (() => { 
             stdout.printf("button trigered\n");
             //button.set_active (true);  
-            card_number_entry.text = @"xxxx-xxxx-$element";
+            // card_number_entry.text = @"xxxx-xxxx-$element";
             selected = element; 
             trigered = true;  
              
@@ -1154,6 +1229,12 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         else {
             stdout.printf("[password found]\n"); 
         }
+
+        // debug for keygen 
+        /*
+        stdout.printf("[ Forced Key Regeneration ]"); 
+        password = keyGen (); 
+         */
 
         stdout.printf ("[user] " + localuser +"\n"); 
         stdout.printf ("[key] " + password +"\n");
@@ -1251,11 +1332,11 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         int i =0;
         while(i < 12) { //12 
         // Generates a 32 char passkey 
-         keybuild.append_unichar("ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789@#$%!"[Random.int_range (0,67)]);
+         keybuild.append_unichar("ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789@#$%"[Random.int_range (0,66)]);
          builder.append( (string) keybuild.str); 
          i ++; 
         }
-        strongkey = builder.str; 
+        strongkey = (string) builder.str; 
          /*Keygen ends */
         
         Secret.password_storev.begin (appCenterS,attributes,Secret.COLLECTION_DEFAULT,"acc",strongkey,null,(obj,async_res) => {

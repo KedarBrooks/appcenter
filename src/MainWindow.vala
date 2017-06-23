@@ -129,7 +129,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         // ActiveUser.changed.connect(menu_add); 
         ActiveUser.changed.connect(file_check);
         internal_xml = new AppCenter.Services.XmlParser (); 
-        // file_check();
+         
 
 
         return_button = new Gtk.Button ();
@@ -407,7 +407,7 @@ public class AppCenter.MainWindow : Gtk.ApplicationWindow {
         var file = File.new_for_path (@"/home/$userN/appcenter/cc.xml.aes");
         if(!file.query_exists ()) { 
             stderr.printf ("File '%s' doesn't exist. Attempting to recreate..\n", file.get_path ());
-            file.new_for_path(@"/home/$userN/appcenter/cc.xml.aes");
+            file = file.new_for_path(@"/home/$userN/appcenter/cc.xml");
 
             cc_create(file,userN); 
         }
