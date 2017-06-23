@@ -1,4 +1,0 @@
-validate-desktop-file 6 0.000891169
-validate-daemon-desktop-file 6 0.000843485
-validate-appdata 6 0.00681468
----
