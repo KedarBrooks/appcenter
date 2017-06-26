@@ -113,7 +113,7 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         trigered = false; 
 
-        var primary_label = new Gtk.Label ("AppCenter Dev");
+        var primary_label = new Gtk.Label ("AppCenter");
         primary_label.get_style_context ().add_class ("primary");
 
         var secondary_label = new Gtk.Label (app_name);
@@ -957,7 +957,6 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         
     private void cardNotify () { 
-        
         cardDataDecrypt (); 
         GLib.Menu menu = new GLib.Menu ();  
         loadMetaData(); 
@@ -1088,8 +1087,8 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
         // Data Encryption & Storage here 
         string strongkey ="";
         var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
-        attributes["size"] = "64"; 
-        attributes["type"] = "user"; 
+        attributes["size"] = "78"; 
+        attributes["type"] = "appcenter"; 
         var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
                                             "size", Secret.SchemaAttributeType.INTEGER,
                                             "type", Secret.SchemaAttributeType.STRING);
@@ -1175,15 +1174,14 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
        
      }
 
-    public string keyGen() {  
+    private string keyGen() {  
         
-        // service = new Secret.Service (); 
         var keybuild = new StringBuilder(); 
         string strongkey;
         var builder = new StringBuilder();
         var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
-        attributes["size"] = "64"; 
-        attributes["type"] = "user"; 
+        attributes["size"] = "78"; 
+        attributes["type"] = "appcenter"; 
         Cancellable cancellable = new Cancellable ();
         
         var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
@@ -1195,12 +1193,12 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
 
         int i =0;
         while(i < 12) { //12 
-        // Generates a 32 char passkey 
+        // Generates a passkey 
          keybuild.append_unichar("ABCDEFGHIJKLMNOPQRSTUVWZWZabcdefghijklmnopqrstuvwxyz0123456789@#$%"[Random.int_range (0,66)]);
          builder.append( (string) keybuild.str); 
          i ++; 
         }
-        strongkey = (string) builder.str; 
+        strongkey = builder.str; 
          /*Keygen ends */
         
         Secret.password_storev.begin (appCenterS,attributes,Secret.COLLECTION_DEFAULT,"acc",strongkey,null,(obj,async_res) => {
@@ -1213,18 +1211,20 @@ public class AppCenter.Widgets.StripeDialog : Gtk.Dialog    {
     } 
 
     private void cardDataDecrypt() {
+
         stdout.printf("[File Decrypt]\n ");
         var attributes = new GLib.HashTable<string,string> (str_hash, str_equal); 
-        attributes["size"] = "64"; 
-        attributes["type"] = "user"; 
+        attributes["size"] = "78"; 
+        attributes["type"] = "appcenter"; 
         var appCenterS = new Secret.Schema ("org.appcenter.Password", Secret.SchemaFlags.NONE,
                                             "size", Secret.SchemaAttributeType.INTEGER,
                                             "type", Secret.SchemaAttributeType.STRING); 
-          
+					    
          Secret.password_lookupv.begin(appCenterS,attributes,null,(obj,async_res) => {
-            string token = Secret.password_lookup.end (async_res);
-         //stdout.printf(@"[read] $token\n");
-         // strongkey = token; 
+            string token = Secret.password_lookup.end (async_res);  
+        if (token.length < 3 ) {
+            token = (string) keyGen(); 
+        }
 
         stdout.printf(@"[key]: $token\n"); 
 
